@@ -107,10 +107,10 @@ tr:nth-child(even) {
     <div class="w3-section w3-bottombar w3-padding-16">
     </div>
 <div class="row">
-  <div class="column" style="background-color:#aaa;">
+  <div class="column" style="background-color:orange;">
     <h2 class="w3-center">Terjual</h2>
   </div>
-  <div class="column" style="background-color:#bbb;">
+  <div class="column" style="background-color:green;">
     <h2 class="w3-center">Pendapatan</h2>
   </div>
 </div>

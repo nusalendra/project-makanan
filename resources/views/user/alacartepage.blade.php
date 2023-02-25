@@ -129,8 +129,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Roll</b></p>
         <p>Sushi dengan isian timun segar dan nasi khas jepang</p>
         <p>Rp 13.000,00</p>
-        <button class="button button3"><i class="fa fa-plus"></i></button>
-        <button class="button button3"><i class="fa fa-minus"></i></button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -139,8 +142,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Original</b></p>
         <p>Sushi original dengan nori dan nasi khas jepang</p>
         <p>Rp 12.000,00</p>
-        <button class="button button3"><i class="fa fa-plus"></i></button>
-        <button class="button button3"><i class="fa fa-minus"></i></button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -149,8 +155,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Sashimi</b></p>
         <p>Sushi original jepang dengan topping daging salmon segar</p>
         <p>Rp 18.000,00</p>
-        <button class="button button3"><i class="fa fa-plus"></i></button>
-        <button class="button button3"><i class="fa fa-minus"></i></button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
     </div>
     <div class="w3-row-padding">
@@ -173,7 +182,29 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         </div>
         </div>
         
-
+<div id="output"></div>
+<!-- Load Babel -->
+<!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Your custom script here -->
+<script type="text/babel">
+jQuery(document).ready(($) => {
+        $('.quantity').on('click', '.plus', function(e) {
+            let $input = $(this).prev('input.qty');
+            let val = parseInt($input.val());
+            $input.val( val+1 ).change();
+        });
+ 
+        $('.quantity').on('click', '.minus', 
+            function(e) {
+            let $input = $(this).next('input.qty');
+            var val = parseInt($input.val());
+            if (val > 0) {
+                $input.val( val-1 ).change();
+            } 
+        });
+    });
+</script>
 
 </body>
 </html>

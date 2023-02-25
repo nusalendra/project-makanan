@@ -26,6 +26,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   transition-duration: 0.4s;
   cursor: pointer;
 }
+.buttonbtm {
+  position:absolute;
+  bottom:10%;
+}
 .button3 {
   background-color: white; 
   color: black; 
@@ -125,7 +129,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Roll</b></p>
         <p>Sushi dengan isian timun segar dan nasi khas jepang</p>
         <p>Rp 13.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -134,7 +139,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Original</b></p>
         <p>Sushi original dengan nori dan nasi khas jepang</p>
         <p>Rp 12.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -143,9 +149,31 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Sashimi</b></p>
         <p>Sushi original jepang dengan topping daging salmon segar</p>
         <p>Rp 18.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
+    <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nama</th>
+        <th>Qty</th> 
+        <th>Harga</th> 
+        </tr>
+    <table class="table">
+        <tr>
+        <th>Total</th>
+        <th>Qty</th> 
+        <th>Harga</th> 
+        </tr>
+        </div>
+        </div>
+        <div class="w3-container">
+        <button class="buttonbtm button3">Order</button>
+        </div>
+        </div>
+        
+
 
 </body>
 </html>

@@ -81,8 +81,8 @@ tr:nth-child(even) {
     <div class="w3-section w3-bottombar w3-padding-16">
       <span class="w3-margin-right">Filter:</span> 
       <button class="w3-button w3-black">ALL</button>
-      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-book w3-margin-right"></i>Pesanan Terakhir</button></a>
-      <a href="/pagealacarte"><button class="w3-button w3-white w3-hide-small"><i class="fa fa-calendar-check-o w3-margin-right"></i>Riwayat Pemesanan</button></a>
+      <a href=""><button class="w3-button w3-white"><i class="fa fa-book w3-margin-right"></i>Pesanan Terakhir</button></a>
+      <a href=""><button class="w3-button w3-white w3-hide-small"><i class="fa fa-calendar-check-o w3-margin-right"></i>Riwayat Pemesanan</button></a>
     </div>
     </div>
   </header>
@@ -94,16 +94,19 @@ tr:nth-child(even) {
   <tr>
         <th>Nama Pemesan</th>
         <th>Makanan</th> 
+        <th>Qty</th>
         <th>Status Pesanan</th>
-  </tr>
-  @foreach ($pemesanan as $pemesanan)
-  <tr>
+        </tr>
+        @foreach ($pemesanan as $pemesanan)
+        <tr>
         <td>{{$pemesanan->nama_pmsn}}</td>
         <td>{{$pemesanan->makanan}}</td>
         <td></td>
-  @endforeach
-  </tr> 
-  </table>
+        <td></td>
+        <td></td>
+        @endforeach
+        </tr> 
+    </table>
   </div>
 
 </body>

@@ -26,6 +26,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   transition-duration: 0.4s;
   cursor: pointer;
 }
+.buttonbtm {
+  position:absolute;
+  bottom:10%;
+}
 .button3 {
   background-color: white; 
   color: black; 
@@ -125,7 +129,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Teh</b></p>
         <p>Teh segar dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -134,7 +139,8 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Jeruk</b></p>
         <p>Jeruk segar murni dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -143,9 +149,29 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Coklat</b></p>
         <p>Es susu coklat manis</p>
         <p>Rp 7.000,00</p>
-        <button class="button button3" data-toggle="modal" data-target="#myModal">Order!</button>
+        <button class="button button3"><i class="fa fa-plus"></i></button>
+        <button class="button button3"><i class="fa fa-minus"></i></button>
       </div>
     </div>
-
+    <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nama</th>
+        <th>Qty</th> 
+        <th>Harga</th> 
+        </tr>
+    <table class="table">
+        <tr>
+        <th>Total</th>
+        <th>Qty</th> 
+        <th>Harga</th> 
+        </tr>
+      </div>
+    </div>
+    <div class="w3-container">
+    <button class="buttonbtm button3">Order</button>
+    </div>
+    </div>
+    
 </body>
 </html>

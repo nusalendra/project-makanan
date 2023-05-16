@@ -3,18 +3,22 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\orderan;
 
 class user_controller extends Controller
 {
     public function indexuser(){
-        return view('user.homepage');
+        $orderan = orderan::all();
+        return view('user.homepage',compact('orderan'));
     }
 
     public function indexminum(){
-        return view('user.minumanpage');
+        $orderan = orderan::all();
+        return view('user.minumanpage', compact('orderan'));
     }
 
     public function indexalacarte(){
-        return view('user.alacartepage');
+        $orderan = orderan::all();
+        return view('user.alacartepage', compact('orderan'));
     }
 }

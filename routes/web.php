@@ -22,6 +22,7 @@ Route::get('/', function () {
 route::get('/homepage','user_controller@indexuser');
 route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
+route::get('/landingpage','landingpage_Controller@landingpage');
 
 //KARYAWAN
 
@@ -36,3 +37,6 @@ route::get('/homekaryawan','karyawan_controller@homekaryawan');
 
 //KOKI
 Route::get('/koki','koki_controller@koki'); 
+
+//ADDORDERAN
+route::post('/addorderan','orderan_controller@addorderan');

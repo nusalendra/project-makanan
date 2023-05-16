@@ -16,9 +16,10 @@ return new class extends Migration
         Schema::create('orderan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nama');
+            $table->string('no_hp');
+            $table->string('lokasi');
             $table->string('qty');
             $table->string('harga');
-            $table->string('total');
             $table->timestamps();
         });
     }

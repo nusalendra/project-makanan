@@ -10,5 +10,5 @@ class orderan extends Model
     use HasFactory;
     protected $table = 'orderan';
     protected $primarykey = 'id';
-    protected $fillable = ['nama','qty','harga','total'];
+    protected $fillable = ['nama','no_hp','lokasi','qty','harga'];
 }

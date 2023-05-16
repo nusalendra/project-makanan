@@ -85,41 +85,78 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     </div>
     </div>
   </header>
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Orderan</h4>
-        </div>
-        <div class="modal-body">
-        <form action="" method="POST">
-          {{csrf_field()}}
-          <div class="form-group">
-              <label for="exampleInputEmail1">Nama</label>
-              <input name=""type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-           </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">No HP</label>
-              <input name=""type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-           </div>
-           <div class="form-group">
-                 <label for="exampleInputEmail1">Pilih Lokasi Resto</label>
-                 <select class="selectpicker form-control" name="">
-                 <option>Sushi Key Ubud, Jl. Raya Nyuh Kuning, MAS, Kecamatan Ubud, Kabupaten Gianyar, Bali</option>
-                 <option>Sushi Key Canggu, Jl. Raya Canggu, Kerobokan, Kec. Kuta Utara, Kabupaten Badung, Bal</option>
-                 </select>
-            </div>
-        </form>
-        </div>
-      
-          <div class="modal-footer">
-            <button type="submit" class="btn btn-default" data-dismiss="modal">Bayar</button>
-          </div>
-       
-      </div>
-    </div>
-  </div>
+
+  <!-- MODAL --> 
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal-dialog" role="document">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="exampleModalLabel">Orderan</h5>
+</div>
+<div class="modal-body">
+    <form action="/addorderan" method="POST">
+      {{csrf_field()}}
+      <div class="form-group">
+                                    <div class="form-group">
+                                        <label for="email" class="cols-sm-2 control-label">Nama</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"></span>
+                                                <input type="text" class="form-control" name="nama" id="email" placeholder="Silahkan masukkan nama anda.." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="cols-sm-2 control-label">No HP</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"></span>
+                                                <input type="text" class="form-control" name="no_hp" id="email" placeholder="Silahkan masukkan no hp anda.." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <label for="name" class="cols-sm-2 control-label">Lokasi</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
+                                                <select name="lokasi"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="Ubud">Ubud</option>
+                                                    <option value="Canggu">Canggu</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"></span>
+                                                <input type="text" class="form-control" name="qty" id="email" placeholder="Silahkan masukkan jumlah item.." />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="cols-sm-2 control-label">Harga</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"></span>
+                                                <input type="text" class="form-control" name="harga" id="email" placeholder="Silahkan masukkan harga item.." value="Rp. "/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                   
+                                   
+                                   
+<div class="modal-footer">
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+<button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- ENDMODAL -->
 
   <!-- First Photo Grid-->
   <div class="w3-row-padding">
@@ -129,11 +166,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Teh</b></p>
         <p>Teh segar dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <form id='myform' method='POST' class='quantity' action='#'>
-          <input type='button' value='-' class='qtyminus minus' field='quantity' />
-          <input type='text' name='quantity' value='0' class='qty' />
-          <input type='button' value='+' class='qtyplus plus' field='quantity' />
-        </form>
+        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+            Order
+         </button>
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -142,11 +177,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Jeruk</b></p>
         <p>Jeruk segar murni dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <form id='myform' method='POST' class='quantity' action='#'>
-          <input type='button' value='-' class='qtyminus minus' field='quantity' />
-          <input type='text' name='quantity' value='0' class='qty' />
-          <input type='button' value='+' class='qtyplus plus' field='quantity' />
-        </form>
+        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+            Order
+         </button>
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -155,11 +188,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Coklat</b></p>
         <p>Es susu coklat manis</p>
         <p>Rp 7.000,00</p>
-        <form id='myform' method='POST' class='quantity' action='#'>
-          <input type='button' value='-' class='qtyminus minus' field='quantity' />
-          <input type='text' name='quantity' value='0' class='qty' />
-          <input type='button' value='+' class='qtyplus plus' field='quantity' />
-        </form>
+        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+            Order
+         </button>
       </div>
     </div>
     <div class="w3-row-padding">
@@ -169,20 +200,17 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <th>Qty</th> 
         <th>Harga</th> 
         </tr>
-    <table class="table">
-        <tr>
-        <th>Total</th>
-        <th>Qty</th> 
-        <th>Harga</th> 
+        @foreach($orderan as $orderan)
+        <td>{{$orderan->nama}}</td>
+        <td>{{$orderan->qty}}</td>
+        <td>{{$orderan->harga}}</td>
         </tr>
+        @endforeach
       </div>
-    </div>
-    <div class="w3-container">
-    <button class="buttonbtm button3">Order</button>
     </div>
     </div>
   
-<div id="output"></div>
+    <div id="output"></div>
 <!-- Load Babel -->
 <!-- v6 <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script> -->
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -205,5 +233,6 @@ jQuery(document).ready(($) => {
         });
     });
 </script>
+
 </body>
 </html>

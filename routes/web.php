@@ -2,6 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\karyawan_controller;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Auth\Events\PasswordReset;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,6 +20,7 @@ use App\Http\Controllers\karyawan_controller;
 Route::get('/', function () {
     return view('welcome');
 });
+
 
 //USER
 route::get('/homepage','user_controller@indexuser');
@@ -40,3 +44,6 @@ Route::get('/koki','koki_controller@koki');
 
 //ADDORDERAN
 route::post('/addorderan','orderan_controller@addorderan');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

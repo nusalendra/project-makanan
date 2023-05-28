@@ -109,7 +109,7 @@ body, html {
   </div>
   <div class="w3-display-middle w3-center">
     <span class="w3-text-white" style="font-size:40px">SELAMAT DATANG DI WEBSITE<br>SUSHI KEY</span>
-    <p><a href="/homep" class="button button1">ORDER!</a></p>
+    <p><a href="/homepage" class="button button1">ORDER!</a></p>
   </div>
 </header>
 

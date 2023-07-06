@@ -28,6 +28,9 @@ route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
 route::get('/landingpage','landingpage_Controller@landingpage');
 
+//ADMIN
+route::get('/homeadmin','AdminController@indexadmin');
+
 //KARYAWAN
 
 route::post('/addpemesanan','karyawan_controller@addpemesanan');

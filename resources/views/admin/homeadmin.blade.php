@@ -71,7 +71,7 @@ tr:nth-child(even) {
 }
 
 </style>
-    <title>KARYAWAN PAGE</title>
+    <title>ADMIN PAGE</title>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
     <!-- Sidebar/menu -->
@@ -80,8 +80,8 @@ tr:nth-child(even) {
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b>KARYAWAN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to karyawan page!</p>
+    <h4><b>ADMIN PAGE</b></h4>
+    <p class="w3-text-white">Welcome to admin page!</p>
   </div>
 </nav>
 <nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
@@ -89,11 +89,11 @@ tr:nth-child(even) {
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b>KARYAWAN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to karyawan page!</p>
+    <h4><b>ADMIN PAGE</b></h4>
+    <p class="w3-text-white">Welcome to admin page!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="homekaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DASHBOARD</a> 
+    <a href="homekaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
     <a href="datamakanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MAKANAN</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>PESANAN</a>
     <a href="simpan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-check fa-fw w3-margin-right"></i>SIMPAN</a>
@@ -106,27 +106,18 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Dashboard Karyawan</b></h1>
+    <h1><b>Dashboard Admin</b></h1>
     <div class="w3-section w3-bottombar w3-padding-16">
+      <button class="w3-button w3-black">ALL</button>
+      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Makanan</button></a>
+      <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
+      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Snack</button></a>
     </div>
-    <div class="dropdown">
-  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Cek Pendapatan dan Penjualan
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">1 hari</a></li>
-    <li><a href="#">2 hari</a></li>
-    <li><a href="#">3 hari</a></li>
-  </ul>
-</div>
-<br>
-<div class="row">
-  <div class="column" style="background-color:orange;">
-    <h2 class="w3-center">Terjual</h2>
-  </div>
-  <div class="column" style="background-color:green;">
-    <h2 class="w3-center">Pendapatan</h2>
-  </div>
-</div>
+    <a href="/homepage"><button class="w3-button w3-white"><i class=" w3-margin-right"></i>Tambah Data</button></a>
+   
+     
+ 
+
 
 
 

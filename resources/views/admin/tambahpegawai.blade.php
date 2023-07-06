@@ -93,7 +93,7 @@ tr:nth-child(even) {
     <p class="w3-text-white">Welcome to admin page!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
+  <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
     <a href="tambahlokasi" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-map-marker fa-fw w3-margin-right"></i>TAMBAH LOKASI</a> 
     <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>TAMBAH DATA PEGAWAI</a>
     <a href="/loginkaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
@@ -105,28 +105,84 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Dashboard Admin</b></h1>
-    <div class="w3-section w3-bottombar w3-padding-16">
-      <button class="w3-button w3-black">ALL</button>
-      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Makanan</button></a>
-      <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
-      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Snack</button></a>
+    <h1><b>Halaman Tambah Data Pegawai</b></h1>
+  <header class="w3-container">
+    <div class="modal-body">
+        <form action="/" method="POST">
+          {{csrf_field()}}
+            <div class="form-group">
+            <label for="exampleInputEmail1">NIP</label>
+            <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nama Pegawai</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+           <div class="form-group">
+              <label for="exampleInputEmail1">Username</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+           <div class="form-group">
+              <label for="exampleInputEmail1">Password</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+           <div class="form-group">
+              <label for="exampleInputEmail1">Lokasi Penempatan</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+
+         </div>
+
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+      </form>
     </div>
-    <a href="/tambahmakanan"><button class="w3-button w3-white">Tambah Data</button></a>
-   
-     
-    <div class="w3-row">
+  </header>
+</div>    
+</div>
+
+<div class="w3-row" style="margin-left:320px">
+    <h1><b>Data Pegawai Sushi Key</b></h1>
     <table class="table">
         <tr>
-        <th>No Produk</th>
-        <th>Nama Produk</th> 
-        <th>Harga</th>
-        <th>Gambar</th>
-        <th>Kategori</th>
-        <th>Action</th> 
+        <th>NIP</th>
+        <th>Nama Pegawai</th> 
+        <th>Username</th>
+        <th>Password</th>
+        <th>Lokasi Penempatan</th>
+        
         </tr>
 
       </div>
+
+     
+ 
 
 
 

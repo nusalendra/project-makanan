@@ -30,6 +30,10 @@ route::get('/landingpage','landingpage_Controller@landingpage');
 
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
+route::get('/loginadmin','AdminController@loginadmin');
+route::get('/tambahmakanan','AdminController@tambahmakanan');
+route::get('/tambahlokasi','AdminController@tambahlokasi');
+route::get('/tambahpegawai','AdminController@tambahpegawai');
 
 //KARYAWAN
 

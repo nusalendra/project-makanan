@@ -108,54 +108,36 @@ tr:nth-child(even) {
     <h1><b>Halaman Tambah Data Pegawai</b></h1>
   <header class="w3-container">
     <div class="modal-body">
-        <form action="/" method="POST">
+        <form action="/addpegawai" method="POST">
           {{csrf_field()}}
-            <div class="form-group">
-            <label for="exampleInputEmail1">NIP</label>
-            <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
-			      @error('')
-                <span class="invalid-feedback" role="alert" >
-                	<strong>{{ $message }}</strong>
-                </span>
-            @enderror
+          <div class="form-group">
+              <label for="exampleInputEmail1">NIP</label>
+              <input name="nip"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
-
-            <div class="form-group">
+           <div class="form-group">
               <label for="exampleInputEmail1">Nama Pegawai</label>
-              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
-			      @error('')
-                <span class="invalid-feedback" role="alert" >
-                	<strong>{{ $message }}</strong>
-                </span>
-            @enderror
+              <input name="nama_pegawai"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Username</label>
-              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
-			      @error('')
-                <span class="invalid-feedback" role="alert" >
-                	<strong>{{ $message }}</strong>
-                </span>
-            @enderror
+              <input name="username"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Password</label>
-              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
-			      @error('')
-                <span class="invalid-feedback" role="alert" >
-                	<strong>{{ $message }}</strong>
-                </span>
-            @enderror
+              <input name="password"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">Lokasi Penempatan</label>
-              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('') is-invalid @enderror" name="" value="{{ old('') }}" required autocomplete="" autofocus />
-			      @error('')
-                <span class="invalid-feedback" role="alert" >
-                	<strong>{{ $message }}</strong>
-                </span>
-            @enderror
-           </div>
+           <label for="name" class="cols-sm-2 control-label">Lokasi Penempatan</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                              
+                                                <select name="lokasi_penempatan"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="Outlet Cabang Canggu">Outlet Cabang Canggu</option>
+                                                    <option value="Outlet Cabang Ubud">Outlet Cabang Ubud</option>
+                                                </select>
+                                            </div>
+                                        </div>
+          
+          
 
          </div>
 
@@ -176,7 +158,18 @@ tr:nth-child(even) {
         <th>Username</th>
         <th>Password</th>
         <th>Lokasi Penempatan</th>
-        
+        <th>Action</th>
+        </tr>
+        @foreach($data_pegawai as $pegawai)
+        <tr>
+        <td>{{$pegawai->nip}}</td>   
+        <td>{{$pegawai->nama_pegawai}}</td> 
+        <td>{{$pegawai->username}}</td> 
+        <td>{{$pegawai->password}}</td> 
+        <td>{{$pegawai->lokasi_penempatan}}</td> 
+        <td><a href="/prosesviewdata/{{$pegawai->id}}">Ubah Data</a><a>|</a><a href="/deletepegawai/{{$pegawai->id}}}">Hapus Data</a></td>
+        </tr>
+        @endforeach
         </tr>
 
       </div>

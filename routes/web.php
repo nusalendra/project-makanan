@@ -31,9 +31,20 @@ route::get('/landingpage','landingpage_Controller@landingpage');
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
 route::get('/loginadmin','AdminController@loginadmin');
+//FUNCTION DATA MAKANAN
 route::get('/tambahmakanan','AdminController@tambahmakanan');
 route::get('/tambahlokasi','AdminController@tambahlokasi');
+//FUNCTION DATA LOKASI
+route::post('/addlokasi','AdminController@addlokasi');
+route::get('/editlokasi/{id}','AdminController@editlokasi')->name('editlokasi');
+route::get('/prosesviewdatalokasi/{id}','AdminController@findidlokasi');
+route::get('/deletelokasi/{id}','AdminController@hapuslokasi');
+//FUNCTION DATA PEGAWAI
 route::get('/tambahpegawai','AdminController@tambahpegawai');
+route::post('/addpegawai','AdminController@addpegawai');
+route::get('/editpegawai/{id}','AdminController@editpegawai')->name('editpegawai');
+route::get('/prosesviewdata/{id}','AdminController@findidpegawai');
+route::get('/deletepegawai/{id}','AdminController@hapuspegawai');
 
 //KARYAWAN
 

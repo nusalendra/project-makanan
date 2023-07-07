@@ -105,53 +105,32 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Halaman Tambah Data Lokasi Outlet</b></h1>
+    <h1><b>Halaman Edit Data Lokasi Outlet</b></h1>
   <header class="w3-container">
     <div class="modal-body">
-        <form action="/addlokasi" method="POST">
+    <form action="{{route('editlokasi',['id'=>$data_lokasi->id])}}" method="GET">
           {{csrf_field()}}
-          <div class="form-group">
+            <div class="form-group">
               <label for="exampleInputEmail1">Kode</label>
-              <input name="kode"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="kode"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_lokasi->kode}}">
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Lokasi Outlet</label>
-              <input name="nama_lokasi"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="nama_lokasi"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_lokasi->nama_lokasi}}">
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Nama Jalan</label>
-              <input name="jalan"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="jalan"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_lokasi->jalan}}" >
            </div>
-         </div>
+          
 
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+        <button type="submit" class="btn btn-primary w3-orange">SUBMIT</button>
       </form>
-    </div>
   </header>
 </div>    
 </div>
 
-<div class="w3-row" style="margin-left:320px">
-    <h1><b>Data Lokasi Outlet Sushi Key</b></h1>
-    <table class="table">
-        <tr>
-        <th>Kode</th>
-        <th>Lokasi Outlet</th> 
-        <th>Nama Jalan</th>
-        <th>Action</th>
-        </tr>
-        @foreach($data_lokasi as $lokasi)
-        <tr>
-        <td>{{$lokasi->kode}}</td>   
-        <td>{{$lokasi->nama_lokasi}}</td> 
-        <td>{{$lokasi->jalan}}</td> 
-        <td><a href="/prosesviewdatalokasi/{{$lokasi->id}}">Ubah Data</a><a>|</a><a href="/deletelokasi/{{$lokasi->id}}">Hapus Data</a></td>
-        </tr>
-        @endforeach
-        </tr>
-
-      </div>
 
      
  

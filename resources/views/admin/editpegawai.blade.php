@@ -105,53 +105,43 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Halaman Tambah Data Lokasi Outlet</b></h1>
+    <h1><b>Halaman Edit Data Pegawai</b></h1>
   <header class="w3-container">
     <div class="modal-body">
-        <form action="/addlokasi" method="POST">
+    <form action="{{route('editpegawai',['id'=>$data_pegawai->id])}}" method="GET">
           {{csrf_field()}}
-          <div class="form-group">
-              <label for="exampleInputEmail1">Kode</label>
-              <input name="kode"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+            <div class="form-group">
+              <label for="exampleInputEmail1">NIP</label>
+              <input name="nip"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_pegawai->nip}}">
            </div>
            <div class="form-group">
-              <label for="exampleInputEmail1">Lokasi Outlet</label>
-              <input name="nama_lokasi"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <label for="exampleInputEmail1">Nama Pegawai</label>
+              <input name="nama_pegawai"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_pegawai->nama_pegawai}}">
            </div>
            <div class="form-group">
-              <label for="exampleInputEmail1">Nama Jalan</label>
-              <input name="jalan"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <label for="exampleInputEmail1">Username</label>
+              <input name="username"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_pegawai->username}}" >
            </div>
-         </div>
-
+           <div class="form-group">
+              <label for="exampleInputEmail1">Password</label>
+              <input name="password"type="" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$data_pegawai->password}}">
+            </div>
+            <label for="name" class="cols-sm-2 control-label">Lokasi Penempatan</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <select name="lokasi_penempatan"class="form-control" id="exampleFormControlSelect1" value="{{$data_pegawai->lokasi_penempatan}}">
+                                                    <option value="Outlet Cabang Canggu">Outlet Cabang Canggu</option>
+                                                    <option value="Outlet Cabang Ubud">Outlet Cabang Ubud</option>
+                                                </select>
+                                            </div>
+                                        </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+        <button type="submit" class="btn btn-primary w3-orange">SUBMIT</button>
       </form>
-    </div>
   </header>
 </div>    
 </div>
 
-<div class="w3-row" style="margin-left:320px">
-    <h1><b>Data Lokasi Outlet Sushi Key</b></h1>
-    <table class="table">
-        <tr>
-        <th>Kode</th>
-        <th>Lokasi Outlet</th> 
-        <th>Nama Jalan</th>
-        <th>Action</th>
-        </tr>
-        @foreach($data_lokasi as $lokasi)
-        <tr>
-        <td>{{$lokasi->kode}}</td>   
-        <td>{{$lokasi->nama_lokasi}}</td> 
-        <td>{{$lokasi->jalan}}</td> 
-        <td><a href="/prosesviewdatalokasi/{{$lokasi->id}}">Ubah Data</a><a>|</a><a href="/deletelokasi/{{$lokasi->id}}">Hapus Data</a></td>
-        </tr>
-        @endforeach
-        </tr>
-
-      </div>
 
      
  

@@ -49,7 +49,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 </style>
-    <title>KOKI PAGE</title>
+    <title>PELAYAN PAGE</title>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
     <!-- Sidebar/menu -->
@@ -58,12 +58,12 @@ tr:nth-child(even) {
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b>KOKI PAGE</b></h4>
-    <p class="w3-text-white">Welcome to koki page!</p>
+    <h4><b>PELAYAN PAGE</b></h4>
+    <p class="w3-text-white">Welcome to pelayan page!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAPUR</a> 
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calendar-check-o fa-fw w3-margin-right"></i>FINISH</a> 
+    <a href="orderonline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a> 
+    <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
@@ -76,15 +76,7 @@ tr:nth-child(even) {
 <header id="">
 
     <div class="w3-container">
-    <h1><b>Tabel Daftar Orderan</b></h1>
-    <table class="table">
-        <tr>
-        <th>No Order</th>
-        <th>Action</th> 
-        <th>Status Orderan</th>
-        </tr>
-    </table>
-    </div>
+   
   </header>
 
   <!-- First Photo Grid-->

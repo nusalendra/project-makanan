@@ -43,16 +43,16 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
   <!-- About Section -->
   <div class="w3-content w3-justify w3-text-black" id="about">
-    <h2 class="w3-text-light-black">Tambah Data Makanan</h2> 
+    <h2 class="w3-text-light-black">Edit Data Makanan</h2> 
     <hr style="width:240px" class="w3-opacity">
       
   <header class="w3-container">
     <div class="modal-body">
-        <form action="/addmakanan" method="POST" enctype="multipart/form-data">
+    <form action="{{route('editmakanan',['id'=>$tambahmakanan->id])}}" method="GET" enctype="multipart/form-data">
           {{csrf_field()}}
            <div class="form-group">
            <label for="">Pilih Kategori</label>        
-                 <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror" name="kategori" value="{{ old('kategori')}}" required autocomplete="" autofocus />>
+                 <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror" name="kategori" value="{{$tambahmakanan->kategori}}" required autocomplete="" autofocus />>
                  <option></option>
                  <option>Makanan</option> 
                  <option>Minuman</option>
@@ -66,7 +66,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
             
             <div class="form-group">
             <label for="exampleInputEmail1">No Produk</label>
-            <input id="exampleInputEmail1" type="number" placeholder="" class="form-control @error('no_produk') is-invalid @enderror" name="no_produk" value="{{ old('no_produk') }}" required autocomplete="" autofocus />
+            <input id="exampleInputEmail1" type="number" placeholder="" class="form-control @error('no_produk') is-invalid @enderror" name="no_produk"  value="{{$tambahmakanan->no_produk}}" required autocomplete="" autofocus />
 			      @error('no_produk')
                 <span class="invalid-feedback" role="alert" >
                 	<strong>{{ $message }}</strong>
@@ -76,7 +76,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
             <div class="form-group">
               <label for="exampleInputEmail1">Nama Produk</label>
-              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('nama_prdk') is-invalid @enderror" name="nama_prdk" value="{{ old('nama_prdk') }}" required autocomplete="" autofocus />
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('nama_prdk') is-invalid @enderror" name="nama_prdk" value="{{$tambahmakanan->nama_prdk}}" required autocomplete="" autofocus />
 			      @error('nama_prdk')
                 <span class="invalid-feedback" role="alert" >
                 	<strong>{{ $message }}</strong>
@@ -86,7 +86,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
            <div class="form-group">
               <label for="exampleInputEmail1">Harga</label>
-              <input id="exampleInputEmail1" value="Rp. " type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}" required autocomplete="" autofocus />
+              <input id="exampleInputEmail1" value="Rp. " type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{$tambahmakanan->harga}}" required autocomplete="" autofocus />
 			        @error('harga')
                 <span class="invalid-feedback" role="alert" >
                 	<strong>{{ $message }}</strong>
@@ -106,7 +106,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
          </div>
 
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
       </form>
     </div>
   </header>

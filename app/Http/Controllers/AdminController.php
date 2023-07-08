@@ -7,11 +7,13 @@ use Illuminate\Http\Request;
 use App\Models\Admin;
 use App\Models\Pegawai;
 use App\Models\Lokasi;
+use App\Models\tambahmakanan;
 
 class AdminController extends Controller
 {
     public function indexadmin(){
-        return view('admin.homeadmin');
+        $tambahmakanan = tambahmakanan::all();
+        return view('admin.homeadmin',compact('tambahmakanan'));
     }
 
     public function loginadmin(request $request){
@@ -89,6 +91,54 @@ class AdminController extends Controller
     public function hapuslokasi($id){
         lokasi::where('id',$id)->delete();
         return redirect()->back();
+    }
+
+    public function addmakanan(Request $request)
+    {
+        $request->validate([
+            'kategori'=>'required',
+            'no_produk'=>'required',
+            'nama_prdk'=>'required',
+            'harga'=>'required',
+            'images'=>'required',
+            // 'gambar'=>'required|mimes:jpeg,png,jpg,gif,svg|max:2048'
+        ]);
+        $input = $request->all();
+        $image = $request->file('images');
+        $destinationPath = 'makanan/';
+        $profileImage = date('YmdHis') . "." . $image->getClientOriginalExtension();
+        $input['images'] = "$profileImage";
+        $data=tambahmakanan::create($input);
+        $nama =$data->id . "" ."slider". "." . $image->getClientOriginalExtension();
+        tambahmakanan::where('id', $data->id)->update(['images' => $nama]);
+        $image->move($destinationPath, $nama);
+        // return $input;
+        return redirect('/homeadmin');
+    }
+
+    public function hapusmakanan($id){
+        tambahmakanan::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+    public function editmakanan(request $request, $id){
+        $tambahmakanan = tambahmakanan::find($id);
+        $tambahmakanan->kategori = $request->input('kategori');
+        $tambahmakanan->no_produk = $request->input('no_produk');
+        $tambahmakanan->nama_prdk = $request->input('nama_prdk');
+        $tambahmakanan->harga = $request->input('harga');
+        $tambahmakanan->images = $request->input('images');
+        $tambahmakanan->save();
+        return redirect('/homeadmin');
+    }
+
+    public function findidmakanan($id){
+        $tambahmakanan = tambahmakanan::where('id',$id)->first();
+        $data = [
+            'title' => 'tambahmakanan',
+            'tambahmakanan' => $tambahmakanan
+        ];
+        return view('admin.editmakanan',$data);
     }
 
 

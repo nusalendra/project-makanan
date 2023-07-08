@@ -33,13 +33,13 @@ body, html {
 }
 
 .button1 {
-  background-color: black; 
+  background-color: #f44336; 
   color: white; 
-  border: 2px solid #FF3D00;
+  border: 2px solid black;
 }
 
 .button1:hover {
-  background-color: #FF3D00;
+  background-color: black;
   color: white;
 }
 
@@ -91,13 +91,13 @@ body, html {
 <div class="w3-top">
   <div class="w3-row w3-padding w3-black">
     <div class="w3-col s3">
-      <a href="#" class="w3-button w3-block w3-black">HOME</a>
+      <a href="#" class="w3-button w3-block w3-red">HOME</a>
     </div>
     <div class="w3-col s4">
-      <a href="#menu" class="w3-button w3-block w3-black">MENU</a>
+      <a href="#menu" class="w3-button w3-block w3-red">MENU</a>
     </div>
     <div class="w3-col s5">
-      <a href="#where" class="w3-button w3-block w3-black">LOCATION</a>
+      <a href="#where" class="w3-button w3-block w3-red">LOCATION</a>
     </div>
   </div>
 </div>

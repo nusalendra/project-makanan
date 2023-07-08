@@ -31,9 +31,14 @@ route::get('/landingpage','landingpage_Controller@landingpage');
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
 route::get('/loginadmin','AdminController@loginadmin');
+
 //FUNCTION DATA MAKANAN
 route::get('/tambahmakanan','AdminController@tambahmakanan');
 route::get('/tambahlokasi','AdminController@tambahlokasi');
+route::post('/addmakanan','AdminController@addmakanan');
+route::get('/hapusmakanan/{id}','AdminController@hapusmakanan');
+route::get('/editmakanan/{id}','AdminController@editmakanan')->name('editmakanan');
+route::get('/prosesviewdatamakanan/{id}','AdminController@findidmakanan');
 //FUNCTION DATA LOKASI
 route::post('/addlokasi','AdminController@addlokasi');
 route::get('/editlokasi/{id}','AdminController@editlokasi')->name('editlokasi');
@@ -59,6 +64,10 @@ route::get('/homekaryawan','karyawan_controller@homekaryawan');
 
 //KOKI
 Route::get('/koki','koki_controller@koki'); 
+
+//PELAYAN
+route::get('/orderonline','PelayanController@indexpelayan');
+route::get('/orderoffline','PelayanController@indexpelayanoffline');
 
 //ADDORDERAN
 route::post('/addorderan','orderan_controller@addorderan');

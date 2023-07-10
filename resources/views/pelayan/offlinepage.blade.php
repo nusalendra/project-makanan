@@ -130,6 +130,18 @@ tr:nth-child(even) {
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
 <h1><b>MENU dan HARGA</b></h1>
+<div class="row">
+
+<div class="card-flyer">
+
+              <div class="text-box">
+                <div class="image-box">
+                    <img src="" alt="" />
+                </div>
+              </div>
+            </div>
+
+</div>
 </div>
 
 </div>

@@ -21,7 +21,8 @@ class AdminController extends Controller
     }
 
     public function tambahmakanan(request $request){
-        return view('admin.tambahmakanan');
+        $tambahmakanan = tambahmakanan::all();
+        return view('admin.tambahmakanan',compact('tambahmakanan'));
     }
 
     public function tambahlokasi(request $request){

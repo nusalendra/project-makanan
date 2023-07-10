@@ -56,9 +56,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+    <a href="/menu" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
+    <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a> 
+    <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
   </div>
   <div class="w3-panel w3-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
@@ -98,51 +98,40 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
       {{csrf_field()}}
       <div class="form-group">
                                     <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Nama</label>
+                                    <label for="name" class="cols-sm-2 control-label">Pesanan</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                                <span class="input-group-addon"></span>
-                                                <input type="text" class="form-control" name="nama" id="email" placeholder="Silahkan masukkan nama anda.." />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">No HP</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"></span>
-                                                <input type="text" class="form-control" name="no_hp" id="email" placeholder="Silahkan masukkan no hp anda.." />
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <label for="name" class="cols-sm-2 control-label">Lokasi</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"><i class="fa fa-user fa" aria-hidden="true"></i></span>
-                                                <select name="lokasi"class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="Ubud">Ubud</option>
-                                                    <option value="Canggu">Canggu</option>
+                                                <select name="pesanan"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="Sushi Roll + Es Teh">Sushi Roll + Es Teh</option>
+                                                    <option value="Sushi Original + Es Teh">Sushi Original + Es Teh</option>
+                                                    <option value="Sushi Sashimi + Es Teh">Sushi Sashimi + Es Teh</option>
                                                 </select>
                                             </div>
                                         </div>
-                                        <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"></span>
-                                                <input type="text" class="form-control" name="qty" id="email" placeholder="Silahkan masukkan jumlah item.." />
-                                            </div>
-                                        </div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Harga</label>
+                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
                                         <div class="cols-sm-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon"></span>
-                                                <input type="text" class="form-control" name="harga" id="email" placeholder="Silahkan masukkan harga item.." value="Rp. "/>
+                                            <div class="quantity">
+                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
+                                            <input type='text' name='qty' value='0' class='qty' />
+                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
+                                            
                                             </div>
                                         </div>
                                     </div>
+                                   
+                                        <label for="name" class="cols-sm-2 control-label">Harga</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                              
+                                                <select name="harga"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="25000">Rp 25.000,00</option>
+                                                    <option value="22000">Rp 22.000,00</option>
+                                                    <option value="23000">Rp 23.000,00</option>
+                                                </select>
+                                            </div>
+                                        </div>
                                     </div>
                                    
                                    
@@ -166,9 +155,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Roll + Es Teh</b></p>
         <p>Paket lengkap sushi roll dengan es teh</p>
         <p>Rp 25.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+        
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -177,9 +164,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Original + Es Teh</b></p>
         <p>Paket lengkap sushi original dengan es teh</p>
         <p>Rp 22.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+       
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -188,20 +173,23 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Sushi Sashimi + Es Teh</b></p>
         <p>Paket lengkap sushi sashimi dengan es teh</p>
         <p>Rp 23.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+        
       </div>
+    </div>
+    <div class="w3-row-padding w3-center">
+    <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+        Order
+    </button>
     </div>
     <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>Nama</th>
+        <th>Pesanan</th>
         <th>Qty</th> 
         <th>Harga</th> 
         </tr>
         @foreach($orderan as $orderan)
-        <td>{{$orderan->nama}}</td>
+        <td>{{$orderan->pesanan}}</td>
         <td>{{$orderan->qty}}</td>
         <td>{{$orderan->harga}}</td>
         </tr>

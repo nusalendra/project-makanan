@@ -167,7 +167,7 @@ tr:nth-child(even) {
         <td>{{$pegawai->username}}</td> 
         <td>{{$pegawai->password}}</td> 
         <td>{{$pegawai->lokasi_penempatan}}</td> 
-        <td><a href="/prosesviewdata/{{$pegawai->id}}">Ubah Data</a><a>|</a><a href="/deletepegawai/{{$pegawai->id}}}">Hapus Data</a></td>
+        <td><a href="/prosesviewdata/{{$pegawai->id}}" class="btn fa fa-edit w3-blue"></a><a> </a><a href="/deletepegawai/{{$pegawai->id}}}" class="btn fa fa-trash w3-red"></a></td>
         </tr>
         @endforeach
         </tr>

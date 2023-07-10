@@ -146,7 +146,7 @@ tr:nth-child(even) {
         <td>{{$lokasi->kode}}</td>   
         <td>{{$lokasi->nama_lokasi}}</td> 
         <td>{{$lokasi->jalan}}</td> 
-        <td><a href="/prosesviewdatalokasi/{{$lokasi->id}}">Ubah Data</a><a>|</a><a href="/deletelokasi/{{$lokasi->id}}">Hapus Data</a></td>
+        <td><a href="/prosesviewdatalokasi/{{$lokasi->id}}" class="btn fa fa-edit w3-blue"></a><a> </a><a href="/deletelokasi/{{$lokasi->id}}" class="btn fa fa-trash w3-red"></a></td>
         </tr>
         @endforeach
         </tr>

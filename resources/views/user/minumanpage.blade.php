@@ -56,9 +56,9 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="#portfolio" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
-    <a href="#about" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>ABOUT</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-envelope fa-fw w3-margin-right"></i>CONTACT</a>
+    <a href="/menu" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
+    <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a> 
+    <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
   </div>
   <div class="w3-panel w3-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
@@ -166,9 +166,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Teh</b></p>
         <p>Teh segar dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
     </div>
     <div class="w3-third w3-container w3-margin-bottom">
@@ -177,9 +179,11 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Jeruk</b></p>
         <p>Jeruk segar murni dengan gula dan es batu</p>
         <p>Rp 5.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
     </div>
     <div class="w3-third w3-container">
@@ -188,20 +192,27 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
         <p><b>Es Coklat</b></p>
         <p>Es susu coklat manis</p>
         <p>Rp 7.000,00</p>
-        <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-            Order
-         </button>
+        <form id='myform' method='POST' class='quantity' action='#'>
+          <input type='button' value='-' class='qtyminus minus' field='quantity' />
+          <input type='text' name='quantity' value='0' class='qty' />
+          <input type='button' value='+' class='qtyplus plus' field='quantity' />
+        </form>
       </div>
+    </div>
+    <div class="w3-row-padding w3-center">
+    <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+        Order
+    </button>
     </div>
     <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>Nama</th>
+        <th>Pesanan</th>
         <th>Qty</th> 
         <th>Harga</th> 
         </tr>
         @foreach($orderan as $orderan)
-        <td>{{$orderan->nama}}</td>
+        <td>{{$orderan->pesanan}}</td>
         <td>{{$orderan->qty}}</td>
         <td>{{$orderan->harga}}</td>
         </tr>

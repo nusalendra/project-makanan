@@ -40,6 +40,21 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   background-color: #f44336;
   color: white;
 }
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
 
 
 </style>
@@ -75,39 +90,47 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
     <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
     <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
     <div class="w3-container">
-    <h1><b>PROFIL</b></h1>
+    <h1><b>KERANJANG</b></h1>
     <div class="w3-section w3-bottombar ">
     </div>
-    <div class="form-group">
-    <label for="">Nama:</label>
-    <input type="" class="form-control" id="">
-  </div>
-  <div class="form-group">
-    <label for="pwd">Password:</label>
-    <input type="password" class="form-control" id="pwd">
-    <input type="checkbox" onclick="myFunction()"> Show Password
-  <script>
-      function myFunction() {
-      var x = document.getElementById("pwd");
-      if (x.type === "password") {
-          x.type = "text";
-      } else {
-          x.type = "password";
-    }
-}
-</script>
+    <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Pesanan</th>
+        <th>Qty</th> 
+        <th>Harga</th> 
+        </tr>
+        @foreach($orderan as $orderan)
+        <td>{{$orderan->pesanan}}</td>
+        <td>{{$orderan->qty}}</td>
+        <td>{{$orderan->harga * $orderan->qty}}</td>
+        </tr>
+        @endforeach
+      </div>
+</div>
+</div>
+</div>
+<!-- ENDMODAL -->
 
-  </div>
-  <div class="form-group">
-    <label for="email">Email:</label>
-    <input type="email" class="form-control" id="email">
-  </div>
-  <div class="form-group">
-    <label for="tlp">Telepon:</label>
-    <input type="number" class="form-control" id="tlp">
-  </div>
-  <button type="submit" class="btn fa w3-blue">Simpan</button>
-    </div>
-  </header>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Your custom script here -->
+<script type="text/babel">
+jQuery(document).ready(($) => {
+        $('.quantity').on('click', '.plus', function(e) {
+            let $input = $(this).prev('input.qty');
+            let val = parseInt($input.val());
+            $input.val( val+1 ).change();
+        });
+ 
+        $('.quantity').on('click', '.minus', 
+            function(e) {
+            let $input = $(this).next('input.qty');
+            var val = parseInt($input.val());
+            if (val > 0) {
+                $input.val( val-1 ).change();
+            } 
+        });
+    });
+</script>
 </body>
 </html>

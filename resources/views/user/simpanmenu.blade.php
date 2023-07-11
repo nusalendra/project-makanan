@@ -103,9 +103,16 @@ tr:nth-child(even) {
         @foreach($orderan as $orderan)
         <td>{{$orderan->pesanan}}</td>
         <td>{{$orderan->qty}}</td>
-        <td>{{$orderan->harga * $orderan->qty}}</td>
+        <td>Rp.{{$orderan->harga * $orderan->qty}},00</td>
         </tr>
         @endforeach
+      </div>
+      <table class="table">
+        <tr>
+        <th>Total</th>
+        </tr>
+        <td>Rp.{{$total_orderan->totalorderan}},00</td>
+        </tr>
       </div>
 </div>
 </div>

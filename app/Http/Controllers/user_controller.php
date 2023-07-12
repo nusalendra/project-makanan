@@ -36,5 +36,13 @@ class user_controller extends Controller
         $total_orderan = orderan::selectraw("sum(harga*qty) as totalorderan")->first();
         return view('user.simpanmenu',compact('orderan','total_orderan'));
     }
+
+    public function invoice(request $request){
+        $orderan = orderan::all();
+        $total_orderan = orderan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('user.invoice',compact('orderan','total_orderan'));
+    }
+
+
 }
 

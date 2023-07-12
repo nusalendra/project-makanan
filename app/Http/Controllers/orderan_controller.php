@@ -30,5 +30,28 @@ class orderan_controller extends Controller
         return redirect('homepage')->with('sukses','Data Telah Di Tambah!');  
     }
 
+    public function hapusorderan($id){
+        orderan::where('id',$id)->delete();
+        return redirect()->back();
+    }
+
+    public function editorderan(request $request, $id){
+        $orderan = orderan::find($id);
+        $orderan->pesanan = $request->input('pesanan');
+        $orderan->qty = $request->input('qty');
+        $orderan->harga = $request->input('harga'); 
+        $orderan->save();
+        return redirect('/keranjang');
+    }
+
+    public function findidorderan($id){
+        $orderan = orderan::where('id',$id)->first();
+        $data = [
+            'title' => 'orderan',
+            'orderan' => $orderan
+        ];
+        return view('user.editorderan',$data);
+    }
+
     
 }

@@ -5,6 +5,7 @@ use App\Http\Controllers\karyawan_controller;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Auth\Events\PasswordReset;
+use App\Http\Controllers\orderan_controller;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ route::get('/landingpage','landingpage_Controller@landingpage');
 route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');
+route::get('/invoice','user_controller@invoice');
 
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
@@ -42,11 +44,13 @@ route::post('/addmakanan','AdminController@addmakanan');
 route::get('/hapusmakanan/{id}','AdminController@hapusmakanan');
 route::get('/editmakanan/{id}','AdminController@editmakanan')->name('editmakanan');
 route::get('/prosesviewdatamakanan/{id}','AdminController@findidmakanan');
+
 //FUNCTION DATA LOKASI
 route::post('/addlokasi','AdminController@addlokasi');
 route::get('/editlokasi/{id}','AdminController@editlokasi')->name('editlokasi');
 route::get('/prosesviewdatalokasi/{id}','AdminController@findidlokasi');
 route::get('/deletelokasi/{id}','AdminController@hapuslokasi');
+
 //FUNCTION DATA PEGAWAI
 route::get('/tambahpegawai','AdminController@tambahpegawai');
 route::post('/addpegawai','AdminController@addpegawai');
@@ -55,7 +59,6 @@ route::get('/prosesviewdata/{id}','AdminController@findidpegawai');
 route::get('/deletepegawai/{id}','AdminController@hapuspegawai');
 
 //KARYAWAN
-
 route::post('/addpemesanan','karyawan_controller@addpemesanan');
 route::get('/loginkaryawan','karyawan_controller@loginkaryawan');
 route::get('/deletepemesanan/{id}','karyawan_controller@deletepemesanan');
@@ -74,6 +77,9 @@ route::get('/orderoffline','PelayanController@indexpelayanoffline');
 
 //ADDORDERAN
 route::post('/addorderan','orderan_controller@addorderan');
+route::get('/hapusorderan/{id}','orderan_controller@hapusorderan');
+route::get('/prosesviewdataorderan/{id}','orderan_controller@findidorderan');
+route::get('/editorderan/{id}','orderan_controller@editorderan')->name('editorderan');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

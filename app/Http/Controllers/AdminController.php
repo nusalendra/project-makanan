@@ -128,7 +128,7 @@ class AdminController extends Controller
         $tambahmakanan->no_produk = $request->input('no_produk');
         $tambahmakanan->nama_prdk = $request->input('nama_prdk');
         $tambahmakanan->harga = $request->input('harga');
-        $tambahmakanan->images = $request->input('images');
+        $tambahmakanan->images = $request->input('images'); 
         $tambahmakanan->save();
         return redirect('/homeadmin');
     }

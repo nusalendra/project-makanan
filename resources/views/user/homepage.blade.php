@@ -114,7 +114,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
                                         <div class="cols-sm-10">
                                             <div class="quantity">
                                             <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                            <input type='text' name='qty' value='0' class='qty' />
+                                            <input type='text' name='qty' value='1' class='qty' />
                                             <input type='button' value='+' class='qtyplus plus' field='qty' />
                                             
                                             </div>

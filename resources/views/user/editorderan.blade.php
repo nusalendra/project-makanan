@@ -40,21 +40,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   background-color: #f44336;
   color: white;
 }
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 6px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 
 
 </style>
@@ -77,7 +62,7 @@ tr:nth-child(even) {
   </div>
   <div class="w3-panel w3-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <a href="https://www.instagram.com/sushikey.bali/" class="fa fa-instagram w3-hover-opacity"></a>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -85,68 +70,46 @@ tr:nth-child(even) {
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
-
-<header id="portfolio">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-    <div class="w3-container">
-    <h1><b>KERANJANG</b></h1>
-    <div class="w3-section w3-bottombar ">
-    </div>
-    <div class="w3-row-padding">
-    <table class="table">
-        <tr>
-        <th>Pesanan</th>
-        <th>Qty</th> 
-        <th>Harga satuan</th>
-        <th>Harga</th> 
-        <th>Action</th>
-        </tr>
-        @foreach($orderan as $orderan)
-        <td>{{$orderan->pesanan}}</td>
-        <td>{{$orderan->qty}}</td>
-        <td>Rp.{{$orderan->harga}},00</td>
-        <td>Rp.{{$orderan->harga * $orderan->qty}},00</td>
-        <td>
-          <a class="btn fa fa-trash w3-red" data-toggle="modal" data-target="#myModal"></a>
-          <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">WARNING!</h4>
+<div class="w3-container">
+    <h1><b>Halaman Edit Data Lokasi Outlet</b></h1>
+<form action="{{route('editorderan',['id'=>$orderan->id])}}" method="GET">
+{{csrf_field()}}
+<div class="form-group">
+<label for="name" class="cols-sm-2 control-label">Pesanan</label>
+    <div class="cols-sm-10">
+        <div class="input-group">
+            <select name="pesanan"class="form-control" id="exampleFormControlSelect1" value="{{$orderan->pesanan}}">
+                <option value="Sushi Roll + Es Teh">Sushi Roll + Es Teh</option>
+                <option value="Sushi Original + Es Teh">Sushi Original + Es Teh</option>
+                <option value="Sushi Sashimi + Es Teh">Sushi Sashimi + Es Teh</option>
+            </select>
         </div>
-        <div class="modal-body">
-          <p>Apakah anda yakin ingin menghapus pesanan?</p>
+    </div>
+</div>
+<div class="form-group">
+    <label for="email" class="cols-sm-2 control-label">Qty</label>
+    <div class="cols-sm-10">
+        <div class="quantity">
+        <input type='button' value='-' class='qtyminus minus' field='qty' />
+        <input type='text' name='qty' value="{{$orderan->qty}}" class='qty'  />
+        <input type='button' value='+' class='qtyplus plus' field='qty' />
+        </div>
+    </div>
+</div>
+    <label for="name" class="cols-sm-2 control-label">Harga</label>
+    <div class="cols-sm-10">
+        <div class="input-group">
+            <select name="harga" class="form-control" id="exampleFormControlSelect1" value="{{$orderan->harga}}">
+                <option value="25000">Rp 25.000,00</option>
+                <option value="22000">Rp 22.000,00</option>
+                <option value="23000">Rp 23.000,00</option>
+            </select>
         </div>
         <div class="modal-footer">
-         <a href="/hapusorderan/{{$orderan->id}}" class="btn btn-primary">Delete</a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
+            <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
     </div>
-  </div>
-</div>
 
-          <a href="/prosesviewdataorderan/{{$orderan->id}}" class="btn fa fa-file-text w3-blue"></a>
-        </td>
-        </tr>
-        @endforeach
-      </div>
-      <table class="table">
-        <tr><h3>Total Harga <b> Rp. {{$total_orderan->totalorderan}},00 </b></h3>
-          <a href="/invoice" class="btn w3-red">INVOICE</a></td>
-        </tr>
-      </div>
-</div>
-</div>
-</div>
-<!-- ENDMODAL -->
- <!-- Modal -->
- 
- 
-
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <!-- Your custom script here -->
 <script type="text/babel">
 jQuery(document).ready(($) => {

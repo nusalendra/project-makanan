@@ -72,6 +72,24 @@ tr:nth-child(even) {
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
+<div class="w3-container">
+    <h1><b>ORDERAN ONLINE</b></h1>
+    <div class="w3-section w3-bottombar ">
+    </div>
+    <table>
+  <tr>
+    <th>ID order</th>
+    <th>Pesanan</th>
+    <th>Lokasi</th>
+  </tr>
+  @foreach($orderan as $orderan)
+  <tr>
+    <td>{{$orderan->id}}</td>
+    <td>{{$orderan->pesanan}}</th>
+    <td>{{$orderan->lokasi}}</td>
+  </tr>
+  @endforeach
+</table>
 
 <header id="">
 

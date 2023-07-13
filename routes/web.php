@@ -32,6 +32,7 @@ route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');
 route::get('/invoice','user_controller@invoice');
+route::get('/selesai','user_controller@selesai');
 
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');

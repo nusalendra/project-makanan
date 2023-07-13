@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('orderan', function (Blueprint $table) {
             $table->increments('id');
             $table->string('pesanan');
+            $table->string('lokasi');
             $table->bigInteger('qty');
             $table->bigInteger('harga');
             $table->timestamps();

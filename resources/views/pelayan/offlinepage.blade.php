@@ -118,6 +118,29 @@ tr:nth-child(even) {
               <label for="exampleInputEmail1">Nomor Meja</label>
               <input name="nama_lokasi"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
+           <div class="form-group">
+                                    <label for="name" class="cols-sm-2 control-label">Pesanan</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                                <select name="pesanan"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="Sushi Roll + Es Teh">Sushi Roll + Es Teh</option>
+                                                    <option value="Sushi Original + Es Teh">Sushi Original + Es Teh</option>
+                                                    <option value="Sushi Sashimi + Es Teh">Sushi Sashimi + Es Teh</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
+                                        <div class="cols-sm-10">
+                                            <div class="quantity">
+                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
+                                            <input type='text' name='qty' value='1' class='qty' />
+                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
+                                            
+                                            </div>
+                                        </div>
+                                    </div>
 
         <div class="modal-footer">
         <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
@@ -130,17 +153,35 @@ tr:nth-child(even) {
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
 <h1><b>MENU dan HARGA</b></h1>
-<div class="row">
-
-<div class="card-flyer">
-
-              <div class="text-box">
-                <div class="image-box">
-                    <img src="" alt="" />
-                </div>
-              </div>
-            </div>
-
+<!-- First Photo Grid-->
+<div class="w3-row-padding">
+    <div class="w3-third w3-container w3-margin-bottom">
+      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
+      <div class="w3-container w3-white">
+        <p><b>Sushi Roll + Es Teh</b></p>
+        <p>Paket lengkap sushi roll dengan es teh</p>
+        <p>Rp 25.000,00</p>
+        
+      </div>
+    </div>
+    <div class="w3-third w3-container w3-margin-bottom">
+      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
+      <div class="w3-container w3-white">
+        <p><b>Sushi Original + Es Teh</b></p>
+        <p>Paket lengkap sushi original dengan es teh</p>
+        <p>Rp 22.000,00</p>
+       
+      </div>
+    </div>
+    <div class="w3-third w3-container">
+      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
+      <div class="w3-container w3-white">
+        <p><b>Sushi Sashimi + Es Teh</b></p>
+        <p>Paket lengkap sushi sashimi dengan es teh</p>
+        <p>Rp 23.000,00</p>
+        
+      </div>
+    </div>
 </div>
 </div>
 
@@ -155,6 +196,25 @@ tr:nth-child(even) {
  <!-- First Photo Grid-->
  
 </div> 
-
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Your custom script here -->
+<script type="text/babel">
+jQuery(document).ready(($) => {
+        $('.quantity').on('click', '.plus', function(e) {
+            let $input = $(this).prev('input.qty');
+            let val = parseInt($input.val());
+            $input.val( val+1 ).change();
+        });
+ 
+        $('.quantity').on('click', '.minus', 
+            function(e) {
+            let $input = $(this).next('input.qty');
+            var val = parseInt($input.val());
+            if (val > 0) {
+                $input.val( val-1 ).change();
+            } 
+        });
+    });
+</script>
 </body>
 </html>

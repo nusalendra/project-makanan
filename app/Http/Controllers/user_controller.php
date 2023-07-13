@@ -43,6 +43,9 @@ class user_controller extends Controller
         return view('user.invoice',compact('orderan','total_orderan'));
     }
 
+    public function selesai(){
+        return view('user.selesai');
+    }
 
 }
 

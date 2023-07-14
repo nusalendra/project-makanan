@@ -62,7 +62,7 @@ tr:nth-child(even) {
     <p class="w3-text-white">Welcome to koki page!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN ONLINE</a> 
+  <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN ONLINE</a> 
     <a href="/kokioffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN OFFLINE</a> 
     <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
@@ -75,23 +75,24 @@ tr:nth-child(even) {
 
 <header id="">
 
-    <div class="w3-container">
-    <h1><b>Tabel Daftar Orderan Online</b></h1>
+<div class="w3-row-padding">
+<div class="w3-container">
+    <h1><b>Tabel Daftar Orderan Offline</b></h1>
     <table class="table">
-    <tr>
-    <th>ID order</th>
-    <th>Pesanan</th>
-    <th>Lokasi</th>
-  </tr>
-  @foreach($orderan as $orderan)
-  <tr>
-    <td>{{$orderan->id}}</td>
-    <td>{{$orderan->pesanan}}</th>
-    <td>{{$orderan->lokasi}}</td>
-  </tr>
-  @endforeach
-    </table>
-    </div>
+        <tr>
+        <th>Nama Pelanggan</th>
+        <th>Nomor Meja</th>
+        <th>Pesanan</th> 
+        <th>Qty</th>
+        </tr>
+        @foreach($Orderoffline as $orderoffline)
+        <tr>
+          <td>{{$orderoffline->nama_pelanggan}}</td>
+          <td>{{$orderoffline->no_meja}}</td>
+          <td>{{$orderoffline->pesanan}}</td>
+          <td>{{$orderoffline->qty}}</td>
+        </tr>
+        @endforeach
   </header>
 
   <!-- First Photo Grid-->

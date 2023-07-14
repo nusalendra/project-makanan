@@ -70,12 +70,17 @@ route::get('/simpan','karyawan_controller@simpan');
 route::get('/homekaryawan','karyawan_controller@homekaryawan');
 
 //KOKI
-Route::get('/koki','koki_controller@koki'); 
+Route::get('/koki','koki_controller@koki');
+Route::get('/kokioffline','koki_controller@kokioffline');  
 
 //PELAYAN
 route::get('/orderonline','PelayanController@indexpelayan');
 route::get('/orderoffline','PelayanController@indexpelayanoffline');
 route::post('/addorderoffline','PelayanController@addorderoffline');
+route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');
+route::get('/editorderoffline/{id}','PelayanController@editorderoffline')->name('editorderoffline');
+route::get('/prosesviewdataorderoffline/{id}','PelayanController@findidorderoffline');
+
 
 //ADDORDERAN
 route::post('/addorderan','orderan_controller@addorderan');

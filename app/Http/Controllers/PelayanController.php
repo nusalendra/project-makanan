@@ -46,6 +46,6 @@ class PelayanController extends Controller
             'title' => 'orderoffline',
             'orderoffline' => $orderoffline
         ];
-        return view('pelayan.offlinepage',$data);
+        return view('pelayan.editorderanoffline',$data);
     }
 }

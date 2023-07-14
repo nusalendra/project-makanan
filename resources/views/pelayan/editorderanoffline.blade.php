@@ -104,19 +104,19 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Silahkan Isi Pesanan Pelanggan</b></h1>
+    <h1><b>Edit data orderan offline</b></h1>
   <header class="w3-container">
   <div class="w3-section w3-bottombar w3-padding-6">
     <div class="modal-body">
-        <form action="/addorderoffline" method="POST">
+    <form action="{{route('editorderoffline',['id'=>$orderoffline->id])}}" method="GET">
           {{csrf_field()}}
           <div class="form-group">
               <label for="exampleInputEmail1">Nama Pelanggan</label>
-              <input name="nama_pelanggan"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="nama_pelanggan" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$orderoffline->nama_pelanggan}}">
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Nomor Meja</label>
-              <input name="no_meja"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="no_meja" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$orderoffline->no_meja}}">
            </div>
            <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
@@ -152,105 +152,12 @@ tr:nth-child(even) {
                                                 </select>
                                             </div>
                                         </div>
-
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
         
       </form>
       
     </div>
-</div>
-  </header>
-</div>    
-
-</div>
-
-
-<div class="w3-main" style="margin-left:300px">
-<div class="w3-container">
-  
-<h1><b>MENU dan HARGA</b></h1>
-<!-- First Photo Grid-->
-<div class="w3-row-padding">
-    <div class="w3-third w3-container w3-margin-bottom">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
-      <div class="w3-container w3-white">
-        <p><b>Sushi Roll + Es Teh</b></p>
-        <p>Paket lengkap sushi roll dengan es teh</p>
-        <p>Rp 25.000,00</p>
-        
-      </div>
-    </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
-      <div class="w3-container w3-white">
-        <p><b>Sushi Original + Es Teh</b></p>
-        <p>Paket lengkap sushi original dengan es teh</p>
-        <p>Rp 22.000,00</p>
-       
-      </div>
-    </div>
-    <div class="w3-third w3-container">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
-      <div class="w3-container w3-white">
-        <p><b>Sushi Sashimi + Es Teh</b></p>
-        <p>Paket lengkap sushi sashimi dengan es teh</p>
-        <p>Rp 23.000,00</p>
-        
-      </div>
-    </div>
-   
-</div>
-</div>
-<div class="w3-row-padding">
-    <table class="table">
-        <tr>
-        <th>Nama Pelanggan</th>
-        <th>Nomor Meja</th>
-        <th>Pesanan</th> 
-        <th>Qty</th>
-        <th>Harga Satuan</th>
-        <th>Total Harga</th>
-        <th>Action</th>
-        </tr>
-        @foreach($orderoffline as $orderoffline)
-        <tr>
-          <td>{{$orderoffline->nama_pelanggan}}</td>
-          <td>{{$orderoffline->no_meja}}</td>
-          <td>{{$orderoffline->pesanan}}</td>
-          <td>{{$orderoffline->qty}}</td>
-          <td>Rp.{{$orderoffline->harga}},00</td>
-          <td>Rp.{{$orderoffline->harga * $orderoffline->qty}},00</td>
-          <td>
-          <a class="btn fa fa-trash w3-red" data-toggle="modal" data-target="#myModal"></a>
-          <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">WARNING!</h4>
-        </div>
-        <div class="modal-body">
-          <p>Apakah anda yakin ingin menghapus pesanan?</p>
-        </div>
-        <div class="modal-footer">
-         <a href="/hapusorderoffline/{{$orderoffline->id}}" class="btn btn-primary">Delete</a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        <a href="/prosesviewdataorderoffline/{{$orderoffline->id}}" class="btn fa fa-file-text w3-blue"></a>
-          </td>
-        </tr>
-        @endforeach
-</div>
-
-
- 
-
-
 
 
  <!-- First Photo Grid-->

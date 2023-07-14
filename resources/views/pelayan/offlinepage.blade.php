@@ -108,15 +108,15 @@ tr:nth-child(even) {
   <header class="w3-container">
   <div class="w3-section w3-bottombar w3-padding-6">
     <div class="modal-body">
-        <form action="" method="POST">
+        <form action="/addorderoffline" method="POST">
           {{csrf_field()}}
           <div class="form-group">
               <label for="exampleInputEmail1">Nama Pelanggan</label>
-              <input name="kode"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="nama_pelanggan"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
            <div class="form-group">
               <label for="exampleInputEmail1">Nomor Meja</label>
-              <input name="nama_lokasi"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
+              <input name="no_meja"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
            </div>
            <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
@@ -141,17 +141,34 @@ tr:nth-child(even) {
                                             </div>
                                         </div>
                                     </div>
+                                    <label for="name" class="cols-sm-2 control-label">Harga</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                              
+                                                <select name="harga"class="form-control" id="exampleFormControlSelect1">
+                                                    <option value="25000">Rp 25.000,00</option>
+                                                    <option value="22000">Rp 22.000,00</option>
+                                                    <option value="23000">Rp 23.000,00</option>
+                                                </select>
+                                            </div>
+                                        </div>
 
         <div class="modal-footer">
         <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+        
       </form>
+      
     </div>
 </div>
   </header>
 </div>    
+
 </div>
+
+
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
+  
 <h1><b>MENU dan HARGA</b></h1>
 <!-- First Photo Grid-->
 <div class="w3-row-padding">
@@ -182,9 +199,27 @@ tr:nth-child(even) {
         
       </div>
     </div>
+   
 </div>
 </div>
-
+<div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nama Pelanggan</th>
+        <th>Nomor Meja</th>
+        <th>Pesanan</th> 
+        <th>Qty</th>
+        <th>Harga</th>
+        </tr>
+        @foreach($orderoffline as $orderoffline)
+        <tr>
+          <td>{{$orderoffline->nama_pelanggan}}</td>
+          <td>{{$orderoffline->no_meja}}</td>
+          <td>{{$orderoffline->pesanan}}</td>
+          <td>{{$orderoffline->qty}}</td>
+          <td>{{$orderoffline->harga}}</td>
+        </tr>
+        @endforeach
 </div>
 
 

@@ -102,37 +102,59 @@ tr:nth-child(even) {
 <!-- Overlay effect when opening sidebar on small screens -->
 <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-<!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Edit data orderan offline</b></h1>
-  <header class="w3-container">
-  <div class="w3-section w3-bottombar w3-padding-6">
-    <div class="modal-body">
-    <form action="{{route('editorderoffline',['id'=>$orderoffline->id])}}" method="GET">
-          {{csrf_field()}}
-           <div class="form-group">
-                                    <label for="name" class="cols-sm-2 control-label">Pesanan</label>
-                                    <input disabled name="pesanan" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$orderoffline->pesanan}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                        <div class="cols-sm-10">
-                                            <div class="quantity">
-                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                            <input type='text' name='qty' value='1' class='qty' />
-                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
-                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                      
+<div class="w3-row-padding">
+<h1>Daftar Orderan Offline</h1>
+    <table class="table">
+        <tr>
+        <th>Select</th>
+        <th>Pesanan</th> 
+        <th>Qty</th>
+        <th>Harga Satuan</th>
+        <th>Total Harga</th>
+        <th>Action</th>
+        </tr>
+        @foreach($orderoffline as $orderoffline)
+        <tr>
+          <td><div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" checked></td>
+          <td>{{$orderoffline->pesanan}}</td>
+          <td>{{$orderoffline->qty}}</td>
+          <td>Rp.{{$orderoffline->harga}},00</td>
+          <td>Rp.{{$orderoffline->harga * $orderoffline->qty}},00</td>
+          <td>
+          <a class="btn fa fa-trash w3-red" data-toggle="modal" data-target="#myModal"></a>
+          <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">WARNING!</h4>
+        </div>
+        <div class="modal-body">
+          <p>Apakah anda yakin ingin menghapus pesanan?</p>
+        </div>
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
-        
-      </form>
-      
+         <a href="/hapusorderoffline/{{$orderoffline->id}}" class="btn btn-primary">Delete</a>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+        <a href="/prosesviewdataorderoffline/{{$orderoffline->id}}" class="btn fa fa-file-text w3-blue"></a>
+          </td>
+        </tr>
+        @endforeach
+</div>
+</div>
+</div>
+
+
+ 
+
+
 
 
  <!-- First Photo Grid-->
@@ -158,5 +180,13 @@ jQuery(document).ready(($) => {
         });
     });
 </script>
+
+<script>
+      function fun_remove() {
+         var element = document.getElementById("id_dropdown");
+         element.remove(element.selectedIndex);
+      }
+   </script>
+
 </body>
 </html>

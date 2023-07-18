@@ -15,8 +15,6 @@ return new class extends Migration
     {
         Schema::create('orderoffline', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('nama_pelanggan');
-            $table->string('no_meja');
             $table->string('pesanan');
             $table->string('qty');
             $table->string('harga');

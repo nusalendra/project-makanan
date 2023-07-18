@@ -10,6 +10,6 @@ class tambahmakanan extends Model
     use HasFactory;
     protected $table = 'tambahmakanan';
     protected $primarykey = 'id';
-    protected $fillable = ['kategori','no_produk','nama_prdk','harga','images']; 
+    protected $fillable = ['kategori','no_produk','nama_prdk','komposisi','qty','harga','images']; 
     
 }

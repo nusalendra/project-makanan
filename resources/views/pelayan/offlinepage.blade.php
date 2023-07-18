@@ -11,6 +11,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
@@ -95,7 +102,8 @@ tr:nth-child(even) {
   <div class="w3-bar-block">
     <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a> 
     <a href="orderonline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a>
-    <a href="/loginkaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
+    <a href="/keranjangoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
+    <a href="/loginpelayan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -108,24 +116,17 @@ tr:nth-child(even) {
   <header class="w3-container">
   <div class="w3-section w3-bottombar w3-padding-6">
     <div class="modal-body">
-        <form action="/addorderoffline" method="POST">
+        <form action="/addorderoffline" method="POST" >
           {{csrf_field()}}
-          <div class="form-group">
-              <label for="exampleInputEmail1">Nama Pelanggan</label>
-              <input name="nama_pelanggan"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">Nomor Meja</label>
-              <input name="no_meja"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
            <div class="form-group">
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                                <select name="pesanan"class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="Sushi Roll + Es Teh">Sushi Roll + Es Teh</option>
-                                                    <option value="Sushi Original + Es Teh">Sushi Original + Es Teh</option>
-                                                    <option value="Sushi Sashimi + Es Teh">Sushi Sashimi + Es Teh</option>
+                                                <select name="pesanan"class="select2 form-control" id="exampleFormControlSelect1">
+                                                <option></option>
+                                                @foreach($tambahmakanan as $tambahmakanan)
+                                                <option>{{$tambahmakanan->nama_prdk}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -144,12 +145,9 @@ tr:nth-child(even) {
                                     <label for="name" class="cols-sm-2 control-label">Harga</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                              
-                                                <select name="harga"class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="25000">Rp 25.000,00</option>
-                                                    <option value="22000">Rp 22.000,00</option>
-                                                    <option value="23000">Rp 23.000,00</option>
-                                                </select>
+                          
+                                            <input id="exampleInputEmail1" type="text" placeholder="" class="form-control" name="harga" required autocomplete="" autofocus />
+                                            </div>
                                             </div>
                                         </div>
 
@@ -200,52 +198,7 @@ tr:nth-child(even) {
       </div>
     </div>
    
-</div>
-</div>
-<div class="w3-row-padding">
-    <table class="table">
-        <tr>
-        <th>Nama Pelanggan</th>
-        <th>Nomor Meja</th>
-        <th>Pesanan</th> 
-        <th>Qty</th>
-        <th>Harga Satuan</th>
-        <th>Total Harga</th>
-        <th>Action</th>
-        </tr>
-        @foreach($orderoffline as $orderoffline)
-        <tr>
-          <td>{{$orderoffline->nama_pelanggan}}</td>
-          <td>{{$orderoffline->no_meja}}</td>
-          <td>{{$orderoffline->pesanan}}</td>
-          <td>{{$orderoffline->qty}}</td>
-          <td>Rp.{{$orderoffline->harga}},00</td>
-          <td>Rp.{{$orderoffline->harga * $orderoffline->qty}},00</td>
-          <td>
-          <a class="btn fa fa-trash w3-red" data-toggle="modal" data-target="#myModal"></a>
-          <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">WARNING!</h4>
-        </div>
-        <div class="modal-body">
-          <p>Apakah anda yakin ingin menghapus pesanan?</p>
-        </div>
-        <div class="modal-footer">
-         <a href="/hapusorderoffline/{{$orderoffline->id}}" class="btn btn-primary">Delete</a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-        <a href="/prosesviewdataorderoffline/{{$orderoffline->id}}" class="btn fa fa-file-text w3-blue"></a>
-          </td>
-        </tr>
-        @endforeach
-</div>
+
 
 
  
@@ -276,5 +229,17 @@ jQuery(document).ready(($) => {
         });
     });
 </script>
+
+<script>
+      function fun_remove() {
+         var element = document.getElementById("id_dropdown");
+         element.remove(element.selectedIndex);
+      }
+   </script>
+
+<script>
+    $('.select2').select2();
+</script>
+
 </body>
 </html>

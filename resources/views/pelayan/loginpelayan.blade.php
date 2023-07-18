@@ -29,14 +29,14 @@
 
   <div class="d-lg-flex half">
     
-    <div class="bg order-1 order-md-2" style="background-image: url('asset/images/sushi_1.jpg');"></div>
+    <div class="bg order-1 order-md-2" style="background-image: url('asset/images/kentang.jpg');"></div>
     <div class="contents order-2 order-md-1">
 
       <div class="container">
         <div class="row align-items-center justify-content-center">
           <div class="col-md-7">
           <h3 class="text-center"><strong> Selamat Datang </strong></h3>
-          <h3 class="text-center"><strong> Silahkan Login Admin</strong></h3>
+          <h3 class="text-center"><strong> Silahkan Login Pelayan</strong></h3>
             <p class="mb-4 text-center"><strong></strong></p>
               <div class="form-group first">
                 <label for="username" style="color: #ffff;">Username</label>
@@ -46,10 +46,7 @@
                 <label for="password" style="color: #ffff;">Password</label>
                 <input type="password" class="form-control" placeholder="Your Password" id="password" name="password" @if(isset($email) AND isset($pass)) value="{{$pass}}" @endif required autocomplete="current-password">
               </div>
-              
-             
-
-              <a href="/homeadmin"><button type="submit"class="btn btn-primary btn-block">Log In</button></a>
+              <a href="/orderonline"><button type="submit"class="btn btn-primary btn-block">Log In</button></a>
               <br>
               <a type="button" class="btn  btn-primary btn-block" href="">Register</a>
               <hr width="100%" noshade size="25%" style="color:#BB0A1E">
@@ -60,12 +57,7 @@
         </div>
       </div>
     </div>
-    
-    
   </div>
-    
-    
-
     <script src="{{asset('loginasset/js/jquery-3.3.1.min.js')}}"></script>
     <script src="{{asset('loginasset/js/popper.min.js')}}"></script>
     <script src="{{asset('loginasset/js/bootstrap.min.js')}}"></script>

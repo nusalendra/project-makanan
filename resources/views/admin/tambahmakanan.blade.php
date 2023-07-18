@@ -85,6 +85,27 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
            </div>
 
            <div class="form-group">
+              <label for="exampleInputEmail1">komposisi</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('komposisi') is-invalid @enderror" name="komposisi" value="{{ old('komposisi') }}" required autocomplete="" autofocus />
+			      @error('komposisi')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+
+           <div class="form-group">
+              <label for="email" class="cols-sm-2 control-label">Qty</label>
+                <div class="cols-sm-10">
+                  <div class="quantity">
+                  <input type='button' value='-' class='qtyminus minus' field='qty' />
+                  <input type='text' name='qty' value='1' class='qty' />
+                  <input type='button' value='+' class='qtyplus plus' field='qty' />
+                  </div>
+                </div>
+            </div>
+
+           <div class="form-group">
               <label for="exampleInputEmail1">Harga</label>
               <input id="exampleInputEmail1" value="Rp. " type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}" required autocomplete="" autofocus />
 			        @error('harga')
@@ -112,6 +133,27 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
   </header>
 </div>    
 </div>
+
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Your custom script here -->
+<script type="text/babel">
+jQuery(document).ready(($) => {
+        $('.quantity').on('click', '.plus', function(e) {
+            let $input = $(this).prev('input.qty');
+            let val = parseInt($input.val());
+            $input.val( val+1 ).change();
+        });
+ 
+        $('.quantity').on('click', '.minus', 
+            function(e) {
+            let $input = $(this).next('input.qty');
+            var val = parseInt($input.val());
+            if (val > 0) {
+                $input.val( val-1 ).change();
+            } 
+        });
+    });
+</script>
 
 <script>
     $('.select2').select2();

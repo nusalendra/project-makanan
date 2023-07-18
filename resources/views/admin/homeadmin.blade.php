@@ -156,7 +156,7 @@ input:checked + .slider:before {
     <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
     <a href="tambahlokasi" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-map-marker fa-fw w3-margin-right"></i>TAMBAH LOKASI</a> 
     <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>TAMBAH DATA PEGAWAI</a>
-    <a href="/loginkaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
+    <a href="/loginadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -179,6 +179,7 @@ input:checked + .slider:before {
         <th>Kategori</th>
         <th>No Produk</th>
         <th>Nama Produk</th> 
+        <th>Komposisi</th>
         <th>Harga</th>
         <th>Gambar</th>
         <th>Action</th> 
@@ -188,6 +189,7 @@ input:checked + .slider:before {
         <td>{{$tambahmakanan->kategori}}</td>   
         <td>{{$tambahmakanan->no_produk}}</td> 
         <td>{{$tambahmakanan->nama_prdk}}</td> 
+        <td>{{$tambahmakanan->komposisi}}</td> 
         <td>{{$tambahmakanan->harga}}</td> 
         <td><img src="{{asset('makanan/'.$tambahmakanan->images)}}" height="35px" width="35px"></td>
         <td>

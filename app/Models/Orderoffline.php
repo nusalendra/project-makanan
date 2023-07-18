@@ -10,5 +10,5 @@ class Orderoffline extends Model
     use HasFactory;
     protected $table = 'orderoffline';
     protected $primarykey = 'id';
-    protected $fillable = ['nama_pelanggan','no_meja','pesanan','qty','harga'];
+    protected $fillable = ['pesanan','qty','harga'];
 }

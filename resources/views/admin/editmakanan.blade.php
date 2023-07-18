@@ -85,6 +85,16 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
            </div>
 
            <div class="form-group">
+              <label for="exampleInputEmail1">Komposisi</label>
+              <input id="exampleInputEmail1" type="" placeholder="" class="form-control @error('komposisi') is-invalid @enderror" name="komposisi" value="{{$tambahmakanan->komposisi}}" required autocomplete="" autofocus />
+			      @error('komposisi')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+           </div>
+
+           <div class="form-group">
               <label for="exampleInputEmail1">Harga</label>
               <input id="exampleInputEmail1" value="Rp. " type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{$tambahmakanan->harga}}" required autocomplete="" autofocus />
 			        @error('harga')

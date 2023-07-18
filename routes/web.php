@@ -31,8 +31,11 @@ route::get('/landingpage','landingpage_Controller@landingpage');
 route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');
+route::get('/editkeranjang/{id}','user_controller@editkeranjang')->name('editkeranjang');
+route::get('/prosesviewdatakeranjang/{id}','user_controller@findidkeranjang');
 route::get('/invoice','user_controller@invoice');
 route::get('/selesai','user_controller@selesai');
+route::get('/loginuser','user_controller@loginuser');
 
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
@@ -71,18 +74,20 @@ route::get('/homekaryawan','karyawan_controller@homekaryawan');
 
 //KOKI
 Route::get('/koki','koki_controller@koki');
-Route::get('/kokioffline','koki_controller@kokioffline');  
+Route::get('/kokioffline','koki_controller@kokioffline');
+Route::get('/loginkoki','koki_controller@loginkoki');  
 
 //PELAYAN
 route::get('/orderonline','PelayanController@indexpelayan');
 route::get('/orderoffline','PelayanController@indexpelayanoffline');
+route::get('/keranjangoffline','PelayanController@keranjangoffline');
 route::post('/addorderoffline','PelayanController@addorderoffline');
 route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');
 route::get('/editorderoffline/{id}','PelayanController@editorderoffline')->name('editorderoffline');
 route::get('/prosesviewdataorderoffline/{id}','PelayanController@findidorderoffline');
+route::get('/loginpelayan','PelayanController@loginpelayan');
 
-
-//ADDORDERAN
+//ADDORDERANl
 route::post('/addorderan','orderan_controller@addorderan');
 route::get('/hapusorderan/{id}','orderan_controller@hapusorderan');
 route::get('/prosesviewdataorderan/{id}','orderan_controller@findidorderan');

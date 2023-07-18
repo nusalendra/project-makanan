@@ -19,4 +19,8 @@ class koki_controller extends Controller
         $Orderoffline = Orderoffline::all();
         return view('koki.kokioffline',compact('Orderoffline'));
     }
+
+    public function loginkoki(request $request){
+        return view('koki.loginkoki');
+    }
 }

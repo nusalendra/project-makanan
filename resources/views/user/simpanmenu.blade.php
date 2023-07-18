@@ -75,6 +75,7 @@ tr:nth-child(even) {
     <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a> 
     <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
     <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
+    <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
   <div class="w3-panel w3-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
@@ -98,40 +99,49 @@ tr:nth-child(even) {
     <table class="table">
         <tr>
         <th>Pesanan</th>
-        <th>Lokasi Outlet</th>
-        <th>Qty</th> 
         <th>Harga satuan</th>
-        <th>Harga</th> 
+        <th>Qty</th>
         <th>Action</th>
         </tr>
-        @foreach($orderan as $orderan)
-        <td>{{$orderan->pesanan}}</td>
-        <td>{{$orderan->lokasi}}</td>
-        <td>{{$orderan->qty}}</td>
-        <td>Rp.{{$orderan->harga}},00</td>
-        <td>Rp.{{$orderan->harga * $orderan->qty}},00</td>
-        <td>
-          <a class="btn fa fa-trash w3-red" data-toggle="modal" data-target="#myModal"></a>
-          <div class="modal fade" id="myModal" role="dialog">
+        @foreach($tambahmakanan as $tambahmakanan)
+        <td>{{$tambahmakanan->nama_prdk}}</td>
+        <td>{{$tambahmakanan->harga}}</td>
+        <td>{{$tambahmakanan->qty}}</td>
+        <td> <a href="/prosesviewdatakeranjang/{{$tambahmakanan->id}}" class="btn fa fa-edit w3-blue" data-toggle="modal" data-target="#myModal2"></a>
+        <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">WARNING!</h4>
+          <h4 class="modal-title">Tambah Jumlah</h4>
         </div>
         <div class="modal-body">
-          <p>Apakah anda yakin ingin menghapus pesanan?</p>
-        </div>
+        <form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="get">
+        <div class="form-group">
+              <label for="email" class="cols-sm-2 control-label">Qty</label>
+                <div class="cols-sm-10">
+                  <div class="quantity">
+                  <input type='button' value='-' class='qtyminus minus' field='qty' />
+                  <input type='text' name='qty' value='1' class='qty' />
+                  <input type='button' value='+' class='qtyplus plus' field='qty' />
+                  </div>
+                </div>
+            </div>
+        </form>
         <div class="modal-footer">
-         <a href="/hapusorderan/{{$orderan->id}}" class="btn btn-primary">Delete</a>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
         </div>
       </div>
     </div>
   </div>
 </div>
-          <a href="/prosesviewdataorderan/{{$orderan->id}}" class="btn fa fa-file-text w3-blue"></a>
-        </td>
+      </div>
+        </tr>
+      </div>
+</div>
+</div>
+</div>
+      </td>
         </tr>
         @endforeach
       </div>
@@ -162,6 +172,9 @@ tr:nth-child(even) {
 </div>
 </div>
 </div>
+<!-- ENDMODAL -->
+ <!-- Modal -->
+
 <!-- ENDMODAL -->
  <!-- Modal -->
  

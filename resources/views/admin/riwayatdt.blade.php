@@ -112,35 +112,54 @@ tr:nth-child(even) {
     <div class="w3-section w3-bottombar w3-padding-13">
 </div> 
 
-<table class="table">
-<tr>
-        <th>Select</th>
-        <th>Tgl</th>     
-        <th>ID</th>
-        <th>Kategori</th>
-        <th>Detail Order</th>
-        <th>Pembayaran</th>
-        <th>Ttl Qty</th>
-        <th>Ttl Pembayaran</th>
-        <th>Hasil</th>
-        <th>Unduh</th>
-  </tr>
-  <tr>
-        <td><div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1" checked></td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
-        <td>3</td>
 
-            
-  </tr>
-  </table>
+<div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nomor Pesanan</th>
+        <th>Pesanan</th>
+        <th>Harga satuan</th>
+        <th>Qty</th>
+        </tr>
+        <?php $no = 0;?>
+        @foreach($tambahmakanan as $tambahmakanan)
+        <?php $no++ ;?>
+        <tr>
+        <td>{{$no}}</td>
+        <td>{{$tambahmakanan->nama_prdk}}</td>
+        <td>{{$tambahmakanan->harga}}</td>
+        <td>{{$tambahmakanan->qty}}</td>
+        
+     
+        </tr> 
+
+        @endforeach
+      
+  
+
+      </table>
+      </div>
+
+      <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nomor Pesanan</th>
+        <th>Metode Pembayaran</th>
+        </tr>
+        <?php $no = 0;?>
+        @foreach($pembayaran as $pembayaran)
+        <?php $no++ ;?>
+        <tr>
+        <td>{{$no}}</td>
+        <td>{{$pembayaran->metode}}</td>
+        </tr> 
+
+        @endforeach
+      
+  
+
+      </table>
+      </div>
 
 
 </body>

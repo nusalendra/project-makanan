@@ -8,6 +8,7 @@ use App\Models\Admin;
 use App\Models\Pegawai;
 use App\Models\Lokasi;
 use App\Models\tambahmakanan;
+use App\Models\Pembayaran;
 
 class AdminController extends Controller
 {
@@ -151,8 +152,10 @@ class AdminController extends Controller
         return view('admin.dashboard');
     }
 
-    public function riwayatdt(){
-        return view('admin.riwayatdt');
+    public function riwayatdt(request $request){
+        $pembayaran = Pembayaran::all();
+        $tambahmakanan = tambahmakanan::all();
+        return view('admin.riwayatdt',compact('pembayaran','tambahmakanan'));
     }
 
 }

@@ -9,6 +9,41 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 <style>
+    * {
+  box-sizing: border-box;
+}
+
+#myInput {
+  background-image: url('/css/searchicon.png');
+  background-position: 10px 12px;
+  background-repeat: no-repeat;
+  width: 30%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; /* Prevent double borders */
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
   background-color: #4CAF50; /* Green */
@@ -48,6 +83,8 @@ td, th {
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+
+
 </style>
     <title>KARYAWAN PAGE</title>
 </head>
@@ -87,24 +124,31 @@ tr:nth-child(even) {
   <!-- First Photo Grid-->
   <div class="w3-row">
   <div class="w3-container">
-   <div class="w3-section w3-padding-13">
-    <h3>Data Penyimpanan Pemesanan</h3>
-    <div class="w3-section w3-bottombar w3-padding-13">
-</div> 
-   <input type="text" placeholder="Search..">
-  </div>
-  <table class="table">
-  <tr>
-    
-        <th>Tgl</th>     
-        <th>ID</th>
-        <th>Kategori</th>
-        <th>Detail Order</th>
-        <th>Type Pembayaran</th>
-        <th>Hasil</th>
-  </tr>
-  </table>
-  </div>
+   <div class="w3-section w3-padding-10">
+    <h3>Data Pesanan Masuk</h3>
+    <div class="w3-section w3-bottombar w3-padding-10">
+</div>
 
+<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search Kategori" title="Type in a name">
+
+<table>
+  <tr>
+    <th>Tanggal</th>
+    <th>ID Order</th>
+    <th>Kategori</th>
+    <th>Nama</th>
+    <th>Detail Pesanan</th>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td>ID</td>
+    <td>ON/OFF</td>
+    <td>P</td>
+    <td><button>Detail Order</button></td>
+  </tr>
+</table>
+  
+
+</div>
 </body>
 </html>

@@ -11,6 +11,13 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
@@ -106,58 +113,29 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Edit data orderan offline</b></h1>
+    <h1><b>Orderan Selesai</b></h1>
   <header class="w3-container">
   <div class="w3-section w3-bottombar w3-padding-6">
-    <div class="modal-body">
-    <form action="{{route('editorderoffline',['id'=>$orderoffline->id])}}" method="GET">
-          {{csrf_field()}}
-           <div class="form-group">
-                                    <label for="name" class="cols-sm-2 control-label">Pesanan</label>
-                                    <input disabled name="pesanan" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$orderoffline->pesanan}}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                        <div class="cols-sm-10">
-                                            <div class="quantity">
-                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                            <input type='text' name='qty' value='1' class='qty' />
-                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
-                                            
-                                            </div>
-                                        </div>
-                                    </div>
-                      
-        <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
-        
-      </form>
-      
-    </div>
+</div>
+<h4><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Cari Kategori" title="Type in a name"></h4>
 
-
- <!-- First Photo Grid-->
- 
-</div> 
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-<!-- Your custom script here -->
-<script type="text/babel">
-jQuery(document).ready(($) => {
-        $('.quantity').on('click', '.plus', function(e) {
-            let $input = $(this).prev('input.qty');
-            let val = parseInt($input.val());
-            $input.val( val+1 ).change();
-        });
- 
-        $('.quantity').on('click', '.minus', 
-            function(e) {
-            let $input = $(this).next('input.qty');
-            var val = parseInt($input.val());
-            if (val > 0) {
-                $input.val( val-1 ).change();
-            } 
-        });
-    });
-</script>
+<table>
+  <tr>
+    <th>No</th>
+    <th>Tanggal</th>
+    <th>Kategori</th>
+    <th>Pemesan</th>
+    <th>Detail Makanan</th>
+    <th>Action</th>
+  </tr>
+  <tr>
+    <td>01</td>
+    <td>22/12/1999</td>
+    <td>ONN/OFF</td>
+    <td>Nama</td>
+    <td>Detail Order</td>
+    <td>Dari Koki</td>
+  </tr>
+</table>
 </body>
 </html>

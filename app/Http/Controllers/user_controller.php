@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\tambahmakanan;
+use App\Models\Pembayaran;
 
 
 class user_controller extends Controller
@@ -42,12 +43,12 @@ class user_controller extends Controller
 
     public function editkeranjang(request $request, $id){
         $tambahmakanan = tambahmakanan::find($id);
-        $tambahmakanan->qty= $request->input('qty');
+        $tambahmakanan->qty = $request->input('qty');
         $tambahmakanan->save();
         return redirect('/keranjang');
     }
 
-    public function findidmakanan($id){
+    public function findidkeranjang($id){
         $tambahmakanan = tambahmakanan::where('id',$id)->first();
         $data = [
             'title' => 'tambahmakanan',
@@ -56,10 +57,12 @@ class user_controller extends Controller
         return view('user.simpanmenu',$data);
     }
 
+
     public function invoice(request $request){
-        $orderan = orderan::all();
-        $total_orderan = orderan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('user.invoice',compact('orderan','total_orderan'));
+        $tambahmakanan = tambahmakanan::all();
+        $pembayaran = Pembayaran::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('user.invoice',compact('tambahmakanan','total_orderan','pembayaran'));
     }
 
     public function selesai(){
@@ -68,6 +71,11 @@ class user_controller extends Controller
 
     public function loginuser(request $request){
         return view('user.loginuser');
+    }
+
+    public function addpembayaran(request $request){
+        Pembayaran::create($request->all());
+        return redirect('invoice')->with('sukses','penambahan telah berhasil!');
     }
 
 }

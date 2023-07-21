@@ -49,7 +49,7 @@ tr:nth-child(even) {
   background-color: #dddddd;
 }
 </style>
-    <title>KARYAWAN PAGE</title>
+    <title>KOKI PAGE</title>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
     <!-- Sidebar/menu -->
@@ -58,24 +58,14 @@ tr:nth-child(even) {
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b>KARYAWAN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to karyawan page!</p>
-  </div>
-</nav>
-<nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-      <i class="fa fa-remove"></i>
-    </a>
-    <h4><b>KARYAWAN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to karyawan page!</p>
+    <h4><b>KOKI PAGE</b></h4>
+    <p class="w3-text-white">Welcome to koki page!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="/homekaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DASHBOARD</a> 
-    <a href="datamakanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MAKANAN</a> 
-    <a href="/pesananmasuk" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>PESANAN</a>
-    <a href="simpan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-check fa-fw w3-margin-right"></i>RIWAYAT</a>
-    <a href="/loginkaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
+  <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN ONLINE</a> 
+    <a href="/kokioffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN OFFLINE</a> 
+    <a href="/orderselesaikoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-shopping-basket w3-margin-right"></i>ORDERAN SELESAI</a> 
+    <a href="/loginkoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -83,28 +73,22 @@ tr:nth-child(even) {
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
+<header id="">
+<div class="w3-row-padding">
+<div class="w3-container">
+    <h1><b>Tabel Daftar Order Selesai</b></h1>
+    <h4><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search For Hasil" title="Type in a name"></h4>
+    <table>
+  <tr>
+    <th>Id Order</th>
+    <th>Tanggalr</th>
+    <th>Detail Order</th>
+    <th>Hasil</th>
+  </tr>
+  </header>
 
   <!-- First Photo Grid-->
-  <div class="w3-row">
-  <div class="w3-container">
-   <div class="w3-section w3-padding-13">
-    <h3>Data Penyimpanan Pemesanan</h3>
-    <div class="w3-section w3-bottombar w3-padding-13">
-</div> 
-   <input type="text" placeholder="Search..">
-  </div>
-  <table class="table">
-  <tr>
-    
-        <th>Tgl</th>     
-        <th>ID</th>
-        <th>Kategori</th>
-        <th>Detail Order</th>
-        <th>Type Pembayaran</th>
-        <th>Hasil</th>
-  </tr>
-  </table>
-  </div>
+  
 
 </body>
 </html>

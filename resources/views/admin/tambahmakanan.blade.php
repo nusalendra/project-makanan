@@ -107,7 +107,7 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
 
            <div class="form-group">
               <label for="exampleInputEmail1">Harga</label>
-              <input id="exampleInputEmail1" value="Rp. " type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}" required autocomplete="" autofocus />
+              <input id="exampleInputEmail1" value="" type="" placeholder="" class="form-control @error('harga') is-invalid @enderror" name="harga" value="{{ old('harga') }}" required autocomplete="" autofocus />
 			        @error('harga')
                 <span class="invalid-feedback" role="alert" >
                 	<strong>{{ $message }}</strong>

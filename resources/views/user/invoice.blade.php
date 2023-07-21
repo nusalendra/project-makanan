@@ -188,11 +188,24 @@ tr:hover .cut { opacity: 1; }
 				</thead>
 				<tbody>
 				</tr>
-				@foreach($orderan as $orderan)
-				<td>{{$orderan->pesanan}}</td>
-				<td>{{$orderan->qty}}</td>
-				<td>Rp.{{$orderan->harga}},00</td>
+				@foreach($tambahmakanan as $tambahmakanan)
+				<td>{{$tambahmakanan->nama_prdk}}</td>
+				<td>{{$tambahmakanan->qty}}</td>
+				<td>Rp.{{$tambahmakanan->harga}},00</td>
 				</tr>
+				@endforeach
+				</tbody>
+			</table>
+			<table class="inventory">
+				<thead>
+					<tr>
+						<th><span contenteditable>Metode Pembayaran</span></th>
+					</tr>
+				</thead>
+				<tbody>
+				</tr>
+				@foreach($pembayaran as $pembayaran)
+				<td>{{$pembayaran->metode}}</td>
 				@endforeach
 				</tbody>
 			</table>

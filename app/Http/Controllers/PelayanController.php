@@ -55,4 +55,10 @@ class PelayanController extends Controller
     public function loginpelayan(request $request){
         return view('pelayan.loginpelayan');
     }
+
+    public function selesaiorderall(request $request){
+        return view('pelayan.selesaiorderall');
+    }
+    
 }
+

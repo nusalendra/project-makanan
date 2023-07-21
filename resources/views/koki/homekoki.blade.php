@@ -64,6 +64,7 @@ tr:nth-child(even) {
   <div class="w3-bar-block">
     <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN ONLINE</a> 
     <a href="/kokioffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN OFFLINE</a> 
+    <a href="/orderselesaikoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-shopping-basket w3-margin-right"></i>ORDERAN SELESAI</a> 
     <a href="/loginkoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
@@ -80,14 +81,19 @@ tr:nth-child(even) {
     <table class="table">
     <tr>
     <th>ID order</th>
+    <th>Tanggal</th>
     <th>Pesanan</th>
+    <th>Qty</th>
     <th>Lokasi</th>
+    <th>Action</th>
   </tr>
   @foreach($orderan as $orderan)
   <tr>
     <td>{{$orderan->id}}</td>
     <td>{{$orderan->pesanan}}</th>
+    <td>Qty</td>
     <td>{{$orderan->lokasi}}</td>
+    <td>Action</td>
   </tr>
   @endforeach
     </table>

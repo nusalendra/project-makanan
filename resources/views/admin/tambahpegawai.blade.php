@@ -93,9 +93,12 @@ tr:nth-child(even) {
     <p class="w3-text-white">Welcome to admin page!</p>
   </div>
   <div class="w3-bar-block">
-  <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
-    <a href="tambahlokasi" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-map-marker fa-fw w3-margin-right"></i>TAMBAH LOKASI</a> 
-    <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>TAMBAH DATA PEGAWAI</a>
+    <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cube fa-fw w3-margin-right"></i>DASHBOARD</a>
+    <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
+    <a href="tambahlokasi" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-map-marker fa-fw w3-margin-right"></i>DATA LOKASI</a> 
+    <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>DATA PEGAWAI</a>
+    <a href="/datacust" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>DATA CUSTOMER</a>
+    <a href="/riwayatdt" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-folder fa-fw w3-margin-right"></i>REPORT</a>
     <a href="/loginadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>

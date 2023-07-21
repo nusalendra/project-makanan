@@ -119,7 +119,7 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
       <div class="w3-container w3-white">
       <p><b>{{$tambahmakanan->nama_prdk}}</b></p>
       <p>{{$tambahmakanan->komposisi}}</p>
-      <p>{{$tambahmakanan->harga}}</p>
+      <p>Rp {{$tambahmakanan->harga}}</p>
       <div class="w3-row-padding w3-center">
     <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
         Add to Chard

@@ -64,6 +64,7 @@ tr:nth-child(even) {
   <div class="w3-bar-block">
   <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN ONLINE</a> 
     <a href="/kokioffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>DAFTAR ORDERAN OFFLINE</a> 
+    <a href="/orderselesaikoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-shopping-basket w3-margin-right"></i>ORDERAN SELESAI</a> 
     <a href="/loginkoki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
@@ -80,17 +81,20 @@ tr:nth-child(even) {
     <h1><b>Tabel Daftar Orderan Offline</b></h1>
     <table class="table">
         <tr>
+        <th>Id Order</th>
+        <th>Tanggal</th>
         <th>Nama Pelanggan</th>
-        <th>Nomor Meja</th>
         <th>Pesanan</th> 
         <th>Qty</th>
+        <th>Action</th>
         </tr>
         @foreach($Orderoffline as $orderoffline)
         <tr>
+          <td>Id Order</td>
           <td>{{$orderoffline->nama_pelanggan}}</td>
-          <td>{{$orderoffline->no_meja}}</td>
           <td>{{$orderoffline->pesanan}}</td>
           <td>{{$orderoffline->qty}}</td>
+          <td>Action</td>
         </tr>
         @endforeach
   </header>

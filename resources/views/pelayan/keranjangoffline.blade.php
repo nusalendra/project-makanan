@@ -96,6 +96,7 @@ tr:nth-child(even) {
     <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a> 
     <a href="orderonline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a>
     <a href="/keranjangoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
+    <a href="/selesaiorderall" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
     <a href="/loginpelayan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>

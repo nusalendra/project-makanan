@@ -53,4 +53,8 @@ class karyawan_controller extends Controller
         return view('karyawan.homekaryawan');
     }
 
+    public function pesananmasuk(){
+        return view('karyawan.pesananmasuk');
+    }
+
 }

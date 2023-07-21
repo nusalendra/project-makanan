@@ -95,8 +95,8 @@ tr:nth-child(even) {
   <div class="w3-bar-block">
     <a href="homekaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DASHBOARD</a> 
     <a href="datamakanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MAKANAN</a> 
-    <a href="#contact" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>PESANAN</a>
-    <a href="simpan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-check fa-fw w3-margin-right"></i>SIMPAN</a>
+    <a href="/pesananmasuk" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>PESANAN</a>
+    <a href="simpan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-check fa-fw w3-margin-right"></i>RIWAYAT</a>
     <a href="/loginkaryawan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
@@ -109,15 +109,7 @@ tr:nth-child(even) {
     <h1><b>Dashboard Karyawan</b></h1>
     <div class="w3-section w3-bottombar w3-padding-16">
     </div>
-    <div class="dropdown">
-  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Cek Pendapatan dan Penjualan
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">1 hari</a></li>
-    <li><a href="#">2 hari</a></li>
-    <li><a href="#">3 hari</a></li>
-  </ul>
-</div>
+
 <br>
 <div class="row">
   <div class="column" style="background-color:orange;">

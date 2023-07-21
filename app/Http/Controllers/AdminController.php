@@ -143,5 +143,16 @@ class AdminController extends Controller
         return view('admin.editmakanan',$data);
     }
 
+    public function datacust(){
+        return view('admin.datacust');
+    }
+
+    public function dashboard(){
+        return view('admin.dashboard');
+    }
+
+    public function riwayatdt(){
+        return view('admin.riwayatdt');
+    }
 
 }

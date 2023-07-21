@@ -13,15 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tambahmakanan', function (Blueprint $table) {
+        Schema::create('pembayaran', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('kategori');
-            $table->string('no_produk');
-            $table->string('nama_prdk');
-            $table->string('komposisi');
-            $table->bigInteger('qty');
-            $table->bigInteger('harga');
-            $table->string('images');
+            $table->string('metode');
             $table->timestamps();
         });
     }
@@ -33,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tambahmakanan');
+        Schema::dropIfExists('pembayaran');
     }
 };

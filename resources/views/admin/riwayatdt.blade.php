@@ -14,9 +14,9 @@
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
+  background-color: #FFFFFF; /* Green */
+  border: 0.5 px;
+  color: black;
   padding: 10px 22px;
   text-align: center;
   text-decoration: none;
@@ -70,66 +70,6 @@ tr:nth-child(even) {
   clear: both;
 }
 
-.switch {
-  position: relative;
-  display: inline-block;
-  width: 60px;
-  height: 34px;
-}
-
-.switch input { 
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-
-.slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: "";
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: .4s;
-  transition: .4s;
-}
-
-input:checked + .slider {
-  background-color: #2196F3;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
-  border-radius: 34px;
-}
-
-.slider.round:before {
-  border-radius: 50%;
-}
-
 </style>
     <title>ADMIN PAGE</title>
 </head>
@@ -168,48 +108,40 @@ input:checked + .slider:before {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h3><b>DATA MENU</b></h3>
+    <h3><b>Data Report</b></h3>
     <div class="w3-section w3-bottombar w3-padding-13">
-      <button class="w3-button w3-black">ALL</button>
-      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Makanan</button></a>
-      <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
-      <a href="/homepage"><button class="w3-button w3-white"><i class="fa fa-cutlery w3-margin-right"></i>Snack</button></a>
-    </div>
-    <a href="/tambahmakanan"><button class="w3-button w3-white">Tambah Data</button></a>
-    <div class="w3-row">
-    <table class="table">
-        <tr>
-        <th>Kategori</th>
-        <th>No Produk</th>
-        <th>Nama Produk</th> 
-        <th>Komposisi</th>
-        <th>Harga</th>
-        <th>Gambar</th>
-        <th>Action</th> 
-        </tr>
-        @foreach ($tambahmakanan as $tambahmakanan)
-        <tr>
-        <td>{{$tambahmakanan->kategori}}</td>   
-        <td>{{$tambahmakanan->no_produk}}</td> 
-        <td>{{$tambahmakanan->nama_prdk}}</td> 
-        <td>{{$tambahmakanan->komposisi}}</td> 
-        <td>{{$tambahmakanan->harga}}</td> 
-        <td><img src="{{asset('makanan/'.$tambahmakanan->images)}}" height="35px" width="35px"></td>
-        <td>
-        <label class="switch">
-          <input type="checkbox" checked>
-          <span class="slider round"></span>
-        </label>
-          <a href="/hapusmakanan/{{$tambahmakanan->id}}" class="btn fa fa-trash w3-red"></a>
-          <a href="/prosesviewdatamakanan/{{$tambahmakanan->id}}" class="btn fa fa-edit w3-blue"></a>
-        </td>
-        </tr>
-        @endforeach
-      </div>
-
- <!-- First Photo Grid-->
- 
 </div> 
+
+<table class="table">
+<tr>
+        <th>Select</th>
+        <th>Tgl</th>     
+        <th>ID</th>
+        <th>Kategori</th>
+        <th>Detail Order</th>
+        <th>Pembayaran</th>
+        <th>Ttl Qty</th>
+        <th>Ttl Pembayaran</th>
+        <th>Hasil</th>
+        <th>Unduh</th>
+  </tr>
+  <tr>
+        <td><div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1" checked></td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+        <td>3</td>
+
+            
+  </tr>
+  </table>
+
 
 </body>
 </html>

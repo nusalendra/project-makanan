@@ -23,4 +23,8 @@ class koki_controller extends Controller
     public function loginkoki(request $request){
         return view('koki.loginkoki');
     }
+
+    public function orderselesaikoki(request $request){
+        return view('koki.orderselesaikoki');
+    }
 }

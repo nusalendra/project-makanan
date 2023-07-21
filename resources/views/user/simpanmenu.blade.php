@@ -108,7 +108,62 @@ tr:nth-child(even) {
         <td>{{$tambahmakanan->harga}}</td>
         <td>{{$tambahmakanan->qty}}</td>
         <td> <a href="/prosesviewdatakeranjang/{{$tambahmakanan->id}}" class="btn fa fa-edit w3-blue" data-toggle="modal" data-target="#myModal2"></a>
-        <div class="modal fade" id="myModal2" role="dialog">
+     
+        </tr>
+        @endforeach
+      </div>
+</div>
+</div>
+</div>
+ 
+      </div>
+      <table class="table">
+        <tr><h3>Total Harga <b> Rp {{$tambahmakanan->harga * $tambahmakanan->qty}},00 </b></h3>
+        <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
+      
+  <!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Pastikan pesanan anda sudah sesuai sebelum melakukan pembayaran</h4>
+        </div>
+        <div class="modal-body">
+         <h4><b>Silahkan Pilih Metode Pembayaran</b></h4>
+         <form action="/addpembayaran" method="POST">
+         {{csrf_field()}}
+          <div class="form-group">
+          <label for="">Pilih Pembayaran</label>        
+                 <select name="metode" class="form-control select2 @error('metode') is-invalid @enderror" name="metode" value="{{ old('metode')}}" required autocomplete=""  autofocus />>
+                 <option></option>
+                 <option value="QRIS">QRIS</option> 
+                 <option value="OVO">OVO</option>
+                 <option value="GOPAY">GOPAY</option>
+                 </select>                 
+                 @error('metode')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+                @enderror
+          </div>
+         
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Bayar</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+        </tr>
+      </div>
+</div>
+</div>
+</div>
+<!-- ENDMODAL -->
+<div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
@@ -116,67 +171,27 @@ tr:nth-child(even) {
           <h4 class="modal-title">Tambah Jumlah</h4>
         </div>
         <div class="modal-body">
-        <form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="get">
+        <form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="GET" enctype="multipart/form-data">
+        {{csrf_field()}}
         <div class="form-group">
               <label for="email" class="cols-sm-2 control-label">Qty</label>
-                <div class="cols-sm-10">
+            
                   <div class="quantity">
-                  <input type='button' value='-' class='qtyminus minus' field='qty' />
-                  <input type='text' name='qty' value='1' class='qty' />
+                  <input type='button' value="-" class='qtyminus minus' field='qty' />
+                  <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty' />
                   <input type='button' value='+' class='qtyplus plus' field='qty' />
-                  </div>
+               
                 </div>
             </div>
-        </form>
         <div class="modal-footer">
         <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
         </div>
       </div>
     </div>
   </div>
+  </form>
 </div>
       </div>
-        </tr>
-      </div>
-</div>
-</div>
-</div>
-      </td>
-        </tr>
-        @endforeach
-      </div>
-      <table class="table">
-        <tr><h3>Total Harga <b> Rp. {{$total_orderan->totalorderan}},00 </b></h3>
-        <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
-
-  <!-- Modal -->
-  <div class="modal fade" id="myModal1" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Pembayaran</h4>
-        </div>
-        <div class="modal-body">
-         <h4>Pastikan pesanan anda sudah sesuai sebelum melakukan pembayaran</h4>
-        <div class="modal-footer">
-          <a href="/invoice" class="btn btn-primary w3-green">Bayar</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
-        </tr>
-      </div>
-</div>
-</div>
-</div>
-<!-- ENDMODAL -->
- <!-- Modal -->
-
-<!-- ENDMODAL -->
- <!-- Modal -->
  
  
 

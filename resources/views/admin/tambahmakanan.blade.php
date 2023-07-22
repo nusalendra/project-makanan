@@ -54,8 +54,8 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
            <label for="">Pilih Kategori</label>        
                  <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror" name="kategori" value="{{ old('kategori')}}" required autocomplete="" autofocus />>
                  <option></option>
-                 <option>Makanan</option> 
-                 <option>Minuman</option>
+                 <option value="Makanan">Makanan</option> 
+                 <option value="Minuman">Minuman</option>
                  </select>                 
                  @error('kategori')
                 <span class="invalid-feedback" role="alert" >
@@ -95,12 +95,12 @@ body, h1,h2,h3,h4,h5,h6 {font-family: "Montserrat", sans-serif}
            </div>
 
            <div class="form-group">
-              <label for="email" class="cols-sm-2 control-label">Qty</label>
+             
                 <div class="cols-sm-10">
                   <div class="quantity">
-                  <input type='button' value='-' class='qtyminus minus' field='qty' />
-                  <input type='text' name='qty' value='1' class='qty' />
-                  <input type='button' value='+' class='qtyplus plus' field='qty' />
+                  <input type='button' value='-' class='qtyminus minus' field='qty' style="display: none"/>
+                  <input type='text' name='qty' value='1' class='qty' style="display: none" />
+                  <input type='button' value='+' class='qtyplus plus' field='qty' style="display: none"/>
                   </div>
                 </div>
             </div>

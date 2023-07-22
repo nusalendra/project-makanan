@@ -101,12 +101,14 @@ tr:nth-child(even) {
         <th>Pesanan</th>
         <th>Harga satuan</th>
         <th>Qty</th>
+        <th>Total Harga per Menu</th>
         <th>Action</th>
         </tr>
         @foreach($tambahmakanan as $tambahmakanan)
         <td>{{$tambahmakanan->nama_prdk}}</td>
-        <td>{{$tambahmakanan->harga}}</td>
+        <td>Rp.{{$tambahmakanan->harga}},00</td>
         <td>{{$tambahmakanan->qty}}</td>
+        <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
         <td> <a href="/prosesviewdatakeranjang/{{$tambahmakanan->id}}" class="btn fa fa-edit w3-blue" data-toggle="modal" data-target="#myModal2"></a>
      
         </tr>
@@ -118,7 +120,7 @@ tr:nth-child(even) {
  
       </div>
       <table class="table">
-        <tr><h3>Total Harga <b> Rp {{$tambahmakanan->harga * $tambahmakanan->qty}},00 </b></h3>
+        <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
         <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
       
   <!-- Modal -->

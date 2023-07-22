@@ -37,7 +37,7 @@ class user_controller extends Controller
     public function keranjang(request $request){
         $orderan = orderan::all();
         $tambahmakanan = tambahmakanan::all();
-        $total_orderan = orderan::selectraw("sum(harga*qty) as totalorderan")->first();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
         return view('user.simpanmenu',compact('orderan','total_orderan','tambahmakanan'));
     }
 

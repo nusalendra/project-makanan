@@ -40,25 +40,10 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   background-color: #f44336;
   color: white;
 }
-table {
-  font-family: arial, sans-serif;
-  border-collapse: collapse;
-  width: 100%;
-}
-
-td, th {
-  border: 1px solid #dddddd;
-  text-align: left;
-  padding: 6px;
-}
-
-tr:nth-child(even) {
-  background-color: #dddddd;
-}
 
 
 </style>
-    <title>KASIR</title>
+    <title>USER PAGE</title>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
     <!-- Sidebar/menu -->
@@ -72,11 +57,14 @@ tr:nth-child(even) {
   </div>
   <div class="w3-bar-block">
     <a href="/menu" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
+    <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a> 
+    <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
+    <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
     <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
   <div class="w3-panel w3-large">
     <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <a href="https://www.instagram.com/sushikey.bali/" class="fa fa-instagram w3-hover-opacity"></a>
+    <i class="fa fa-instagram w3-hover-opacity"></i>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -84,36 +72,25 @@ tr:nth-child(even) {
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
-
-<header id="portfolio">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-    <div class="w3-container">
-    <h1><b>HALAMAN KASIR</b></h1>
-    <div class="w3-section w3-bottombar ">
+<div class="w3-container">
+    <h1><b>Halaman Edit Qty pesanan</b></h1>
+<form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="GET">
+{{csrf_field()}}
+<div class="form-group">
+    <label for="email" class="cols-sm-2 control-label">Qty</label>
+    <div class="cols-sm-10">
+        <div class="quantity">
+        <input type='button' value='-' class='qtyminus minus' field='qty' />
+        <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty'  />
+        <input type='button' value='+' class='qtyplus plus' field='qty' />
+        </div>
     </div>
-    <h1><b>TABEL ORDERAN OFFLINE</b></h1>
-    <div class="w3-row-padding">
-    <table class="table">
-        <tr>
-        <th>Pesanan</th>
-        <th>Harga satuan</th>
-        <th>Qty</th>
-        <th>Total Harga per Menu</th>
-        </tr>
-        @foreach($tambahmakanan as $tambahmakanan)
-        <tr>
-        <td>{{$tambahmakanan->nama_prdk}}</td>
-        <td>Rp.{{$tambahmakanan->harga}},00</td>
-        <td>{{$tambahmakanan->qty}}</td>
-        <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
-        </tr>
-        @endforeach
-        </table>
-        <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
-        <a href="/downloadPDF/cetakinvoice"><button type="button" class="btn btn-default btn-lg w3-red">Cetak Invoice</button></a>
+</div>
+        <div class="modal-footer" style="width:50%">
+            <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
+    </div>
 
-<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <!-- Your custom script here -->
 <script type="text/babel">
 jQuery(document).ready(($) => {

@@ -102,22 +102,40 @@ tr:nth-child(even) {
         <th>Harga satuan</th>
         <th>Qty</th>
         <th>Total Harga per Menu</th>
-        <th>Action</th>
+        <th>Edit QTY</th>
+        <th>Simpan</th>
+        <th style="display:none">Hapus</th>
         </tr>
         @foreach($tambahmakanan as $tambahmakanan)
         <td>{{$tambahmakanan->nama_prdk}}</td>
         <td>Rp.{{$tambahmakanan->harga}},00</td>
         <td>{{$tambahmakanan->qty}}</td>
         <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
-        <td> <a href="/prosesviewdatakeranjang/{{$tambahmakanan->id}}" class="btn fa fa-edit w3-blue" data-toggle="modal" data-target="#myModal2"></a>
-     
+        <td><form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="GET">
+{{csrf_field()}}
+<div class="form-group">
+    <div class="cols-sm-10">
+        <div class="quantity">
+        <input type='button' value='-' class='qtyminus minus' field='qty' />
+        <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty'  />
+        <input type='button' value='+' class='qtyplus plus' field='qty' />
+        </div>
+    </div>
+</div>
+      <td>
+        <div class="">
+            <button type="submit" class="btn btn-primary w3-blue">SIMPAN</button>
+    </div>
+</td>
+</form>
+  </td>
+  <td style="display:none"><a href="/hapusmakanan/{{$tambahmakanan->id}}" class="btn fa fa-trash w3-red"></a></td>
         </tr>
         @endforeach
       </div>
 </div>
 </div>
 </div>
- 
       </div>
       <table class="table">
         <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
@@ -177,12 +195,11 @@ tr:nth-child(even) {
         {{csrf_field()}}
         <div class="form-group">
               <label for="email" class="cols-sm-2 control-label">Qty</label>
-            
+              <div class="cols-sm-10">
                   <div class="quantity">
-                  <input type='button' value="-" class='qtyminus minus' field='qty' />
+                  <input type='button' value="-" class='qtyminus minus' field='qty'/>
                   <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty' />
                   <input type='button' value='+' class='qtyplus plus' field='qty' />
-               
                 </div>
             </div>
         <div class="modal-footer">

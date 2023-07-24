@@ -54,7 +54,12 @@ class user_controller extends Controller
             'title' => 'tambahmakanan',
             'tambahmakanan' => $tambahmakanan
         ];
-        return view('user.simpanmenu',$data);
+        return view('user.editqty',$data);
+    }
+
+    public function hapusmakanan($id){
+        tambahmakanan::where('id',$id)->delete();
+        return redirect()->back();
     }
 
 

@@ -148,8 +148,10 @@ class AdminController extends Controller
         return view('admin.datacust');
     }
 
-    public function dashboard(){
-        return view('admin.dashboard');
+    public function dashboard(request $request){
+        $tambahmakanan = tambahmakanan::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('admin.dashboard',compact('tambahmakanan'));
     }
 
     public function riwayatdt(request $request){

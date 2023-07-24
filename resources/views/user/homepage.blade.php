@@ -96,14 +96,13 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   <h5 class="modal-title" id="exampleModalLabel">WARNING!</h5>
 </div>
 <div class="modal-body">
-    <h4><b>Anda hanya bisa memilih sekali</b></h4><br>
+    <h4><b>Menu Sudah Anda Pilih</b></h4><br>
     <h4>Selanjutnya menu dapat anda lihat dan tambah jumlah di halaman keranjang </h4>
                                    
                                    
                                    
 <div class="modal-footer">
-<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-<button type="submit" class="btn btn-primary">Submit</button>
+<button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
 </form>
 </div>
 </div>

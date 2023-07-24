@@ -7,13 +7,26 @@ use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\Orderoffline;
 use App\Models\tambahmakanan;
-
+use PDF;
 
 class PelayanController extends Controller
 {
     public function indexpelayan(request $request){
         $orderan = orderan::all();
         return view('pelayan.onlinepage',compact('orderan'));
+    }
+
+    public function indexkasir(request $request){
+        $tambahmakanan = tambahmakanan::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('kasir.homekasir',compact('tambahmakanan','total_orderan'));
+    }
+
+    public function download_invoice(){
+        $tambahmakanan = tambahmakanan::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        $pdf = PDF::loadView('download.cetakinvoice',compact('tambahmakanan','total_orderan'));
+        return $pdf->download('Invoice.pdf');
     }
 
     public function indexpelayanoffline(request $request){

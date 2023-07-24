@@ -122,13 +122,25 @@ tr:nth-child(even) {
   </ul>
 </div>
 
-<br>r
+<br>
 <div class="row">
-  <div class="column" style="background-color:orange;">
-    <h3 class="w3-center">Terjual</h3>
-  </div>
-  <div class="column" style="background-color:green;">
+  <div class="column" style="background-color:white;">
     <h3 class="w3-center">Pendapatan</h3>
+    <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nomor Pesanan</th>
+        <th>Pemasukkan</th>
+        </tr>
+        <?php $no = 0;?>
+        @foreach($tambahmakanan as $tambahmakanan)
+        <?php $no++ ;?>
+        <tr>
+        <td>{{$no}}</td>
+        <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
+        </tr> 
+        @endforeach
+      </table>
   </div>
 </div>
 

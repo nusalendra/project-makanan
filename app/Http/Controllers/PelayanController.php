@@ -12,14 +12,27 @@ use PDF;
 class PelayanController extends Controller
 {
     public function indexpelayan(request $request){
-        $orderan = orderan::all();
-        return view('pelayan.onlinepage',compact('orderan'));
+        $tambahmakanan = tambahmakanan::all();
+        return view('pelayan.onlinepage',compact('tambahmakanan'));
     }
 
     public function indexkasir(request $request){
         $tambahmakanan = tambahmakanan::all();
         $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
         return view('kasir.homekasir',compact('tambahmakanan','total_orderan'));
+    }
+
+    public function hitungkembalian(request $request){
+        $operasi = $request->input('operasi');
+        $bil_pertama = $request->input('bil_1');
+        $bil_kedua = $request->input('bil_2');
+        $result = 0;
+
+        if($operasi == "kurang"){
+            $result = $bil_pertama - $bil_kedua;
+        }
+
+        return redirect('kasir')->with('info','kembaliannya : '.$result);
     }
 
     public function download_invoice(){

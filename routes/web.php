@@ -41,8 +41,10 @@ route::get('/hapusmakanan','user_controller@hapusmakanan');
 
 //KASIR
 route::get('/kasir','PelayanController@indexkasir');
+route::post('/kembalian','PelayanController@hitungkembalian');
 //Generate PDF Invoice
 route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
+
 //ADMIN
 route::get('/homeadmin','AdminController@indexadmin');
 route::get('/loginadmin','AdminController@loginadmin');

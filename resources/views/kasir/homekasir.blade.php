@@ -84,11 +84,7 @@ tr:nth-child(even) {
 
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
-
-<header id="portfolio">
-    <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;" class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-    <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i class="fa fa-bars"></i></span>
-    <div class="w3-container">
+<div class="w3-container">
     <h1><b>HALAMAN KASIR</b></h1>
     <div class="w3-section w3-bottombar ">
     </div>
@@ -112,7 +108,25 @@ tr:nth-child(even) {
         </table>
         <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
         <a href="/downloadPDF/cetakinvoice"><button type="button" class="btn btn-default btn-lg w3-red">Cetak Invoice</button></a>
+</div>
 
+<form method="post" action="/kembalian">		
+{{csrf_field()}}	
+			<input type="text" name="bil_1" class="bil" autocomplete="off" placeholder="Masukkan Uang Bayar">
+			<input type="text" name="bil_2" class="bil" autocomplete="off" placeholder="Masukkan Total Belanja">
+			<select class="opt" name="operasi">
+				<option value="kurang">-</option>
+			</select>
+			<button type="submit" class="btn btn-info">Hasil</button>								
+		</form>
+    <div class="w3-container">
+      @if(session('info'))
+      <div class="alert alert-info">
+        {{session('info')}}
+      </div>
+      @endif
+    </div>
+        
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <!-- Your custom script here -->
 <script type="text/babel">

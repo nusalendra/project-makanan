@@ -160,4 +160,17 @@ class AdminController extends Controller
         return view('admin.riwayatdt',compact('pembayaran','tambahmakanan'));
     }
 
+    public function hitungpemasukan(request $request){
+        $operasi = $request->input('operasi');
+        $bil_pertama = $request->input('bil_1');
+        $bil_kedua = $request->input('bil_2');
+        $result = 0;
+
+        if($operasi == "tambah"){
+            $result = $bil_pertama + $bil_kedua;
+        }
+
+        return redirect('dashboard')->with('info','pemasukkan anda : '.$result);
+    }
+
 }

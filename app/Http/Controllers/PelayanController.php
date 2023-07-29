@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\Orderoffline;
 use App\Models\tambahmakanan;
+use App\Models\Pembayaran;
 use PDF;
 
 class PelayanController extends Controller
@@ -17,9 +18,24 @@ class PelayanController extends Controller
     }
 
     public function indexkasir(request $request){
+        $orderoffline = Orderoffline::all();
         $tambahmakanan = tambahmakanan::all();
         $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.homekasir',compact('tambahmakanan','total_orderan'));
+        return view('kasir.homekasir',compact('tambahmakanan','total_orderan','orderoffline'));
+    }
+
+    public function indexkasironline(request $request){
+        $tambahmakanan = tambahmakanan::all();
+        $pembayaran = Pembayaran::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('kasir.kasironline',compact('tambahmakanan','total_orderan','pembayaran'));
+    }
+
+    public function indexdetailpesanan(request $request){
+        $tambahmakanan = tambahmakanan::all();
+        $orderoffline = Orderoffline::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('kasir.detailpesanan',compact('tambahmakanan','total_orderan','orderoffline'));
     }
 
     public function hitungkembalian(request $request){
@@ -32,7 +48,7 @@ class PelayanController extends Controller
             $result = $bil_pertama - $bil_kedua;
         }
 
-        return redirect('kasir')->with('info','kembaliannya : '.$result);
+        return redirect('detailpesanan')->with('info','kembaliannya : '.$result);
     }
 
     public function download_invoice(){

@@ -143,6 +143,21 @@ tr:nth-child(even) {
       </table>
   </div>
 </div>
-
+<form method="post" action="/hitungpendapatan">		
+{{csrf_field()}}	
+			<input type="text" name="bil_1" class="bil" autocomplete="off" >
+			<input type="text" name="bil_2" class="bil" autocomplete="off" >
+			<select class="opt" name="operasi">
+				<option value="tambah">+</option>
+			</select>
+			<button type="submit" class="btn btn-info">Hasil</button>								
+		</form>
+    <div class="w3-container">
+      @if(session('info'))
+      <div class="alert alert-info">
+        {{session('info')}}
+      </div>
+      @endif
+    </div>
 </body>
 </html>

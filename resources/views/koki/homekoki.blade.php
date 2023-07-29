@@ -84,16 +84,13 @@ tr:nth-child(even) {
     <th>Tanggal</th>
     <th>Pesanan</th>
     <th>Qty</th>
-    <th>Lokasi</th>
-    <th>Action</th>
   </tr>
-  @foreach($orderan as $orderan)
+  @foreach($tambahmakanan as $tambahmakanan)
   <tr>
-    <td>{{$orderan->id}}</td>
-    <td>{{$orderan->pesanan}}</th>
-    <td>Qty</td>
-    <td>{{$orderan->lokasi}}</td>
-    <td>Action</td>
+    <td>{{$tambahmakanan->id}}</td>
+    <td>{{$tambahmakanan->created_at}}</td>
+    <td>{{$tambahmakanan->nama_prdk}}</td>
+    <td>{{$tambahmakanan->qty}}</td>
   </tr>
   @endforeach
     </table>

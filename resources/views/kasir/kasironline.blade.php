@@ -89,21 +89,47 @@ tr:nth-child(even) {
     <h1><b>HALAMAN KASIR</b></h1>
     <div class="w3-section w3-bottombar ">
     </div>
-    <h1><b>TABEL ORDERAN OFFLINE</b></h1>
+    <h1><b>TABEL ORDERAN ONLINE</b></h1>
     <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>ID Pesanan </th>
-        <th>Action</th>
+        <th>Nomor Pesanan</th>
+        <th>Pesanan</th>
+        <th>Harga Satuan</th>
+        <th>Jumlah Pesanan (Qty)</th>
+        <th>Harga Total per Menu</th>
         </tr>
-        @foreach($orderoffline as $orderoffline)
+        <?php $no = 0;?>
+         @foreach($tambahmakanan as $tambahmakanan)
+         <?php $no++ ;?>
         <tr>
-        <td>{{$orderoffline->id}}</td>
-        <td><a href="/detailpesanan"><button type="button" class="btn btn-default btn-lg w3-red">Detail Pesanan</button> </a></td>
+        <td>{{$no}}</td>
+        <td>{{$tambahmakanan->nama_prdk}}</td>
+        <td>Rp.{{$tambahmakanan->harga}},00</td>
+        <td>{{$tambahmakanan->qty}}</td>
+        <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
         </tr>
         @endforeach
         </table>
 </div>
+
+<div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nomor Pesanan</th>
+        <th>Metode Pembayaran</th>
+        </tr>
+        <?php $no = 0;?>
+        @foreach($pembayaran as $pembayaran)
+         <?php $no++ ;?>
+        <tr>
+        <td>{{$no}}</td>
+        <td>{{$pembayaran->metode}}</td>
+        </tr>
+        @endforeach
+        </table>
+</div>
+
 
 
 </body>

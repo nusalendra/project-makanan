@@ -71,7 +71,7 @@ tr:nth-child(even) {
     <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a> 
+  <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a> 
     <a href="/kasironline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a> 
     <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
@@ -93,18 +93,61 @@ tr:nth-child(even) {
     <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>ID Pesanan </th>
-        <th>Action</th>
+        <th>Pesanan</th> 
+        <th>Qty</th>
+        <th>Harga Satuan</th>
+        <th>Total Harga</th>
         </tr>
         @foreach($orderoffline as $orderoffline)
         <tr>
-        <td>{{$orderoffline->id}}</td>
-        <td><a href="/detailpesanan"><button type="button" class="btn btn-default btn-lg w3-red">Detail Pesanan</button> </a></td>
+        <td>{{$orderoffline->pesanan}}</td>
+          <td>{{$orderoffline->qty}}</td>
+          <td>Rp.{{$orderoffline->harga}},00</td>
+          <td>Rp.{{$orderoffline->harga * $orderoffline->qty}},00</td>
         </tr>
         @endforeach
         </table>
+        <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
+        <a href="/downloadPDF/cetakinvoice"><button type="button" class="btn btn-default btn-lg w3-red">Cetak Invoice</button></a>
 </div>
 
+<form method="post" action="/kembalian">		
+{{csrf_field()}}	
+			<input type="text" name="bil_1" class="bil" autocomplete="off" placeholder="Masukkan Uang Bayar">
+			<input type="text" name="bil_2" class="bil" autocomplete="off" placeholder="Masukkan Total Belanja">
+			<select class="opt" name="operasi">
+				<option value="kurang">-</option>
+			</select>
+			<button type="submit" class="btn btn-info">Hasil</button>								
+		</form>
+    <div class="w3-container">
+      @if(session('info'))
+      <div class="alert alert-info">
+        {{session('info')}}
+      </div>
+      @endif
+    </div>
+        
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<!-- Your custom script here -->
+<script type="text/babel">
+jQuery(document).ready(($) => {
+        $('.quantity').on('click', '.plus', function(e) {
+            let $input = $(this).prev('input.qty');
+            let val = parseInt($input.val());
+            $input.val( val+1 ).change();
+        });
+ 
+        $('.quantity').on('click', '.minus', 
+            function(e) {
+            let $input = $(this).next('input.qty');
+            var val = parseInt($input.val());
+            if (val > 0) {
+                $input.val( val-1 ).change();
+            } 
+        });
+    });
+</script>
 
 </body>
 </html>

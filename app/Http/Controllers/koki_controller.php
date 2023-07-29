@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 use App\Models\pemesanan;
 use App\Models\orderan;
 use App\Models\Orderoffline;
+use App\Models\tambahmakanan;
 
 class koki_controller extends Controller
 {
     public function koki(request $request){
         $pemesanan = pemesanan::paginate(100);
-        $orderan = orderan::all();
-        return view('koki.homekoki',compact('pemesanan','orderan'));
+        $tambahmakanan = tambahmakanan::all();
+        return view('koki.homekoki',compact('pemesanan','tambahmakanan'));
     }
 
     public function kokioffline(request $request){

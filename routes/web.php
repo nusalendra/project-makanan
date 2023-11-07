@@ -18,16 +18,16 @@ use App\Http\Controllers\orderan_controller;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 
 //USER
 route::get('/homepage','user_controller@indexuser');
 route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
-route::get('/landingpage','landingpage_Controller@landingpage');
+route::get('/','landingpage_Controller@landingpage');
 route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');
@@ -35,7 +35,8 @@ route::get('/editkeranjang/{id}','user_controller@editkeranjang')->name('editker
 route::get('/prosesviewdatakeranjang/{id}','user_controller@findidkeranjang');
 route::get('/invoice','user_controller@invoice');
 route::get('/selesai','user_controller@selesai');
-route::get('/loginuser','user_controller@loginuser');
+// route::get('/loginuser','user_controller@loginuser');
+route::view('/loginuser','user.loginuser');
 route::post('/addpembayaran','user_Controller@addpembayaran');
 route::get('/hapusmakanan','user_controller@hapusmakanan');
 

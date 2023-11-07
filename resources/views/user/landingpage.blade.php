@@ -91,14 +91,24 @@ body, html {
 <div class="w3-top">
   <div class="w3-row w3-padding w3-black">
     <div class="w3-col s3">
-      <a href="#" class="w3-button w3-block w3-red">HOME</a>
-    </div>
-    <div class="w3-col s4">
       <a href="#menu" class="w3-button w3-block w3-red">MENU</a>
     </div>
-    <div class="w3-col s5">
+    <div class="w3-col s4">
       <a href="#where" class="w3-button w3-block w3-red">LOCATION</a>
     </div>
+    <div class="w3-col s5">
+    @guest 
+    <a href="/loginuser" class="w3-button w3-block w3-red">LOGIN!</a>
+    @else
+    @if (Auth::user()->isUser == 1)
+    <a href="/homepage" class="w3-button w3-block w3-red">ORDER NOW!</a>
+    @endif
+    @if (Auth::user()->isPelayan == 1)
+    <a href="/orderanonline" class="w3-button w3-block w3-red">ORDER NOW!</a>
+    @endif
+    @endguest
+    </div>
+   
   </div>
 </div>
 
@@ -109,7 +119,6 @@ body, html {
   </div>
   <div class="w3-display-middle w3-center">
     <span class="w3-text-white" style="font-size:40px">SELAMAT DATANG DI WEBSITE<br>SUSHI KEY</span>
-    <p><a href="/homepage" class="button button1">ORDER!</a></p>
   </div>
 </header>
 

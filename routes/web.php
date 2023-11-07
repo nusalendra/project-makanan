@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\orderan_controller;
+use App\Http\Controllers\Auth\LoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -113,3 +114,6 @@ route::get('/editorderan/{id}','orderan_controller@editorderan')->name('editorde
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::post('/login',[LoginController::class,'Login'])->name('user.login');
+Route::post('logout',[LoginController::class,'logout'])->name('logout');

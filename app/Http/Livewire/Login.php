@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 
 class Login extends Component
 {
-    public $users, $email, $passwordField, $name,$password;
+    public $users, $username, $email, $passwordField, $name,$password;
     public $registerForm = false;
     public function render()
     {
@@ -34,6 +34,7 @@ class Login extends Component
        $data= User::create([
         'name' => $this->name, 
         'email' => $this->email,
+        'username' => $this->username,
         'password' => $this->password,
         'isUser' => true,
         'isPelayan' => false,

@@ -42,7 +42,7 @@ route::post('/addpembayaran','user_Controller@addpembayaran');
 route::get('/hapusmakanan','user_controller@hapusmakanan');
 
 //KASIR
-route::get('/kasir','PelayanController@indexkasir');
+route::get('/kasir','PelayanController@indexkasir')->name('kasir');;
 route::get('/kasironline','PelayanController@indexkasironline');
 route::get('/detailpesanan','PelayanController@indexdetailpesanan');
 route::post('/kembalian','PelayanController@hitungkembalian');
@@ -51,7 +51,7 @@ route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::
 
 //ADMIN
 route::post('/hitungpendapatan','AdminController@hitungpemasukan');
-route::get('/homeadmin','AdminController@indexadmin');
+route::get('/homeadmin','AdminController@indexadmin')->name('homeadmin');
 route::get('/loginadmin','AdminController@loginadmin');
 route::get('/datacust','AdminController@datacust');
 route::get('/dashboard','AdminController@dashboard');
@@ -90,13 +90,13 @@ route::get('/homekaryawan','karyawan_controller@homekaryawan');
 route::get('/pesananmasuk','karyawan_controller@pesananmasuk');
 
 //KOKI
-Route::get('/koki','koki_controller@koki');
+Route::get('/koki','koki_controller@koki')->name('homekoki');
 Route::get('/kokioffline','koki_controller@kokioffline');
 Route::get('/loginkoki','koki_controller@loginkoki');  
 Route::get('/orderselesaikoki','koki_controller@orderselesaikoki');  
 
 //PELAYAN
-route::get('/orderonline','PelayanController@indexpelayan');
+route::get('/orderonline','PelayanController@indexpelayan')->name('homepelayan');
 route::get('/orderoffline','PelayanController@indexpelayanoffline');
 route::get('/keranjangoffline','PelayanController@keranjangoffline');
 route::post('/addorderoffline','PelayanController@addorderoffline');

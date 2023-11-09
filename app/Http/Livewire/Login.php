@@ -59,8 +59,26 @@ class Login extends Component
         ]);
 
         if(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){
-            return redirect()->route('user.homepage');
+            if(Auth::user()->isUser == true){
+                return redirect()->route('homepages'); 
+            } 
+            elseif(Auth::user()->isKasir == true){
+                return redirect()->route('kasir'); 
+            } 
+            elseif(Auth::user()->isPelayan == true){
+                return redirect()->route('homepelayan'); 
+            } 
+            elseif(Auth::user()->isKoki == true){
+                return redirect()->route('homekoki'); 
+            } 
+            elseif(Auth::user()->isAdmin == true){
+                return redirect()->route('homeadmin'); 
+            } 
+            
         }
+        // elseif(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){
+        //     return redirect()->route('kasir');
+        // }
     }
 
    

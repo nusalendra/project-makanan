@@ -52,19 +52,20 @@
           <h3 class="text-center"><strong> Selamat Datang </strong></h3>
           <h3 class="text-center"><strong> Silahkan Login User</strong></h3>
             <p class="mb-4 text-center"><strong></strong></p>
-            <form method="POST" action="{{ ('login') }}">
+            <form>
               @csrf
               <div class="form-group first">
                 <label for="username" style="color: #ffff;">Username</label>
-                <input type="text" class="form-control @error('email') is-invalid @enderror" name="email" @if(isset($email) AND isset($pass)) value="{{$email}}" @endif id="email" placeholder="Masukkan Username" id="username" required autocomplete="email" autofocus>
+                <input type="text" class="form-control" wire:model="username"  id="email" placeholder="Masukkan Username" id="username">
               </div>
               <div class="form-group last mb-3">
                 <label for="password" style="color: #ffff;">Password</label>
-                <input type="password" class="form-control" placeholder="Masukkan Password" id="password" name="password" @if(isset($email) AND isset($pass)) value="{{$pass}}" @endif required autocomplete="current-password">
+                <input type="password" class="form-control" placeholder="Masukkan Password" id="password" wire:model="password">
               </div>
               <!-- <a href="/homepage"><button type="submit"class="btn btn-primary btn-block">Log In</button></a> -->
-              <button type="submit"class="btn btn-primary btn-block">Log In</button>
+              <button wire:click.prevent="LoginStore" class="btn btn-success btn-block">Log In</button>
               <br>
+              <!-- raiso len -->
           </form>
               <a type="button" class="btn btn-primary btn-block" wire:click.prevent="register" href="">Register</a>
               <hr width="100%" noshade size="25%" style="color:#BB0A1E">

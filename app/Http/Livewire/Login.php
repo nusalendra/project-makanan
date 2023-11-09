@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 
 class Login extends Component
 {
@@ -19,13 +20,15 @@ class Login extends Component
         $this->registerForm = !$this->registerForm;
     }
 
+  
     private function resetInputFields(){
         $this->name = '';
         $this->email = '';
+        $this->username = '';
         $this->password = '';
         $this->passwordField = '';
     }
-
+//sek jajal tak gawe ng kene wa
     public function registerStore()
     {
 
@@ -47,6 +50,17 @@ class Login extends Component
         session()->flash('message', 'Registrasi berhasil, masuk ke halaman Login');
         $this->resetInputFields();
         $this->register();
+    }
+
+    public function LoginStore(){
+        $this->validate([
+            'username' => 'required',
+            'password' => 'required'
+        ]);
+
+        if(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){
+            return redirect()->route('user.homepage');
+        }
     }
 
    

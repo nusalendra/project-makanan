@@ -17,7 +17,7 @@ class user_controller extends Controller
         if($keranjang == '[]'){
             $tambahmakanan = tambahmakanan::all();
         } else{
-        $tambahmakanan = tambahmakanan::where('id', '!=', $keranjang)->get();
+        $tambahmakanan = tambahmakanan::whereNotIn('id', $keranjang)->get();
     }
         return view('user.homepage',compact('tambahmakanan'));
     }

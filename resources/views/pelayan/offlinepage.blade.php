@@ -101,7 +101,6 @@ tr:nth-child(even) {
   </div>
   <div class="w3-bar-block">
     <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a> 
-    <a href="orderonline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a>
     <a href="/loginpelayan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
@@ -118,6 +117,12 @@ tr:nth-child(even) {
         <form action="/addorderoffline" method="POST" >
           {{csrf_field()}}
            <div class="form-group">
+           <label for="name" class="cols-sm-2 control-label">Nama Pembeli</label>
+                                        <div class="cols-sm-10">
+                                            <div class="input-group">
+                                           <input type="text" name="harga" id="">
+                                            </div>
+                                            </div>
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
@@ -144,14 +149,13 @@ tr:nth-child(even) {
                                     <label for="name" class="cols-sm-2 control-label">Harga</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                           <input type="text" name="" id="" placeholder="{{$tambahmakanan->harga}}">
+                                           <input type="text" name="harga" id="" placeholder="{{$tambahmakanan->harga}}">
                                             </div>
                                             </div>
                                         </div>
 
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
-        
+        <button class="btn btn-primary w3-red">KERANJANG</button>
       </form>
       
     </div>
@@ -175,9 +179,6 @@ tr:nth-child(even) {
       <p>{{$tambahmakanan->komposisi}}</p>
       <p>Rp {{$tambahmakanan->harga}}</p>
       <div class="w3-row-padding w3-center">
-    <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
-        Add to Chard
-    </button>
     </div>
       </div>
     </div>

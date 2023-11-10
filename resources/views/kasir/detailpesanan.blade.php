@@ -98,16 +98,16 @@ tr:nth-child(even) {
         <th>Harga Satuan</th>
         <th>Total Harga</th>
         </tr>
-        @foreach($orderoffline as $orderoffline)
+        @foreach($tambahmakanan as $tambahmakanan)
         <tr>
-        <td>{{$orderoffline->pesanan}}</td>
-          <td>{{$orderoffline->qty}}</td>
-          <td>Rp.{{$orderoffline->harga}},00</td>
-          <td>Rp.{{$orderoffline->harga * $orderoffline->qty}},00</td>
+        <td>{{$tambahmakanan->nama_prdk}}</td>
+          <td>{{$tambahmakanan->qty}}</td>
+          <td>Rp.{{$tambahmakanan->harga}},00</td>
+          <td>Rp.{{$tambahmakanan->harga * $tambahmakanan->qty}},00</td>
         </tr>
         @endforeach
         </table>
-        <tr><h3>Total Harga <b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
+        <tr><h3>Total<b> Rp {{$total_orderan->totalorderan}},00 </b></h3>
         <a href="/downloadPDF/cetakinvoice"><button type="button" class="btn btn-default btn-lg w3-red">Cetak Invoice</button></a>
 </div>
 

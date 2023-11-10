@@ -96,8 +96,8 @@ Route::get('/loginkoki','koki_controller@loginkoki');
 Route::get('/orderselesaikoki','koki_controller@orderselesaikoki');  
 
 //PELAYAN
-route::get('/orderonline','PelayanController@indexpelayan')->name('homepelayan');
-route::get('/orderoffline','PelayanController@indexpelayanoffline');
+route::get('/orderonline','PelayanController@indexpelayan');
+route::get('/orderoffline','PelayanController@indexpelayanoffline')->name('homepelayan');
 route::get('/keranjangoffline','PelayanController@keranjangoffline');
 route::post('/addorderoffline','PelayanController@addorderoffline');
 route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');

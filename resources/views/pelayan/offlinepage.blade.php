@@ -144,8 +144,7 @@ tr:nth-child(even) {
                                     <label for="name" class="cols-sm-2 control-label">Harga</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                          
-                                            <input id="exampleInputEmail1" type="text" placeholder="" class="form-control" name="harga" required autocomplete="" autofocus />
+                                           <input type="text" name="" id="" placeholder="{{$tambahmakanan->harga}}">
                                             </div>
                                             </div>
                                         </div>
@@ -168,34 +167,21 @@ tr:nth-child(even) {
   
 <h1><b>MENU dan HARGA</b></h1>
 <!-- First Photo Grid-->
-<div class="w3-row-padding">
+
     <div class="w3-third w3-container w3-margin-bottom">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
+      <div><img class="rounded-circle mt-5" width="100px" src="{{asset('makanan/'.$tambahmakanan->images)}}" style="width:100%"></div>
       <div class="w3-container w3-white">
-        <p><b>Sushi Roll + Es Teh</b></p>
-        <p>Paket lengkap sushi roll dengan es teh</p>
-        <p>Rp 25.000,00</p>
-        
+      <p><b>{{$tambahmakanan->nama_prdk}}</b></p>
+      <p>{{$tambahmakanan->komposisi}}</p>
+      <p>Rp {{$tambahmakanan->harga}}</p>
+      <div class="w3-row-padding w3-center">
+    <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+        Add to Chard
+    </button>
+    </div>
       </div>
     </div>
-    <div class="w3-third w3-container w3-margin-bottom">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
-      <div class="w3-container w3-white">
-        <p><b>Sushi Original + Es Teh</b></p>
-        <p>Paket lengkap sushi original dengan es teh</p>
-        <p>Rp 22.000,00</p>
-       
-      </div>
-    </div>
-    <div class="w3-third w3-container">
-      <img src="asset\images\sushi_3.jpg" alt="" style="width:100%">
-      <div class="w3-container w3-white">
-        <p><b>Sushi Sashimi + Es Teh</b></p>
-        <p>Paket lengkap sushi sashimi dengan es teh</p>
-        <p>Rp 23.000,00</p>
-        
-      </div>
-    </div>
+    
    
 
 

@@ -49,17 +49,17 @@ class user_controller extends Controller
         return view('user.profil');
     }
 
-    public function menu(request $request){
-        $tambahmakanan = tambahmakanan::all();
-        return view('user.homepage', compact('tambahmakanan'));
-    }
+    // public function menu(request $request){
+    //     $tambahmakanan = tambahmakanan::all();
+    //     return view('user.homepage', compact('tambahmakanan'));
+    // }
 
     public function keranjang(request $request){
         // $orderan = orderan::all();
         // $tambahmakanan = tambahmakanan::all();
-        // $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+         $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
         $keranjang=keranjang::where('user_id', auth()->user()->id)->get();
-        return view('user.simpanmenu',compact('keranjang'));
+        return view('user.simpanmenu',compact('keranjang','total_orderan'));
     }
 
     public function editkeranjang(request $request, $id){
@@ -85,10 +85,10 @@ class user_controller extends Controller
 
 
     public function invoice(request $request){
-        $tambahmakanan = tambahmakanan::all();
+        $keranjang = keranjang::all();
         $pembayaran = Pembayaran::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('user.invoice',compact('tambahmakanan','total_orderan','pembayaran'));
+        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('user.invoice',compact('keranjang','total_orderan','pembayaran'));
     }
 
     public function selesai(){

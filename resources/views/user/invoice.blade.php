@@ -170,12 +170,11 @@ tr:hover .cut { opacity: 1; }
 			</address>
 			<table class="meta">
 				<tr>
-					<th><span contenteditable>Invoice #</span></th>
-					<td><span contenteditable>101138</span></td>
-				</tr>
-				<tr>
 					<th><span contenteditable>Date</span></th>
-					<td><span contenteditable>January 1, 2012</span></td>
+					<td>
+						<?php $mytime = Carbon\Carbon::now();
+						echo $mytime->toDateTimeString();?>
+					</td>
 				</tr>
 			</table>
 			<table class="inventory">
@@ -188,24 +187,11 @@ tr:hover .cut { opacity: 1; }
 				</thead>
 				<tbody>
 				</tr>
-				@foreach($tambahmakanan as $tambahmakanan)
-				<td>{{$tambahmakanan->nama_prdk}}</td>
+				@foreach($keranjang as $tambahmakanan)
+				<td>{{$tambahmakanan->menu}}</td>
 				<td>{{$tambahmakanan->qty}}</td>
 				<td>Rp.{{$tambahmakanan->harga}},00</td>
 				</tr>
-				@endforeach
-				</tbody>
-			</table>
-			<table class="inventory">
-				<thead>
-					<tr>
-						<th><span contenteditable>Metode Pembayaran</span></th>
-					</tr>
-				</thead>
-				<tbody>
-				</tr>
-				@foreach($pembayaran as $pembayaran)
-				<td>{{$pembayaran->metode}}</td>
 				@endforeach
 				</tbody>
 			</table>

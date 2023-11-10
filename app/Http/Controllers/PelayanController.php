@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\Orderoffline;
 use App\Models\tambahmakanan;
+use App\Models\keranjang;
 use App\Models\Pembayaran;
 use PDF;
 
@@ -19,16 +20,16 @@ class PelayanController extends Controller
 
     public function indexkasir(request $request){
         $orderoffline = Orderoffline::all();
-        $tambahmakanan = tambahmakanan::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.homekasir',compact('tambahmakanan','total_orderan','orderoffline'));
+        $keranjang = keranjang::all();
+        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('kasir.homekasir',compact('keranjang','total_orderan','orderoffline'));
     }
 
     public function indexkasironline(request $request){
-        $tambahmakanan = tambahmakanan::all();
+        $keranjang = keranjang::all();
         $pembayaran = Pembayaran::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.kasironline',compact('tambahmakanan','total_orderan','pembayaran'));
+        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
+        return view('kasir.kasironline',compact('keranjang','total_orderan','pembayaran'));
     }
 
     public function indexdetailpesanan(request $request){

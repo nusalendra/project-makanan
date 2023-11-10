@@ -71,7 +71,7 @@ tr:nth-child(even) {
     <p class="w3-text-white">Welcome to Sushi Key!</p>
   </div>
   <div class="w3-bar-block">
-    <a href="/menu" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
+    <a href="/homepage" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a> 
     <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a> 
     <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
     <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
@@ -138,7 +138,7 @@ tr:nth-child(even) {
 </div>
       </div>
       <table class="table">
-        <tr><h3>Total Harga <b> Rp ,00 </b></h3>
+        <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
         <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
       
   <!-- Modal -->

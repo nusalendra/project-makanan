@@ -114,20 +114,27 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 
   <!-- First Photo Grid-->
   @foreach($tambahmakanan as $tambahmakanan)
+  <form method="POST" action="/addtoCart" enctype="multipart/form-data">
+    @csrf
     <div class="w3-third w3-container w3-margin-bottom">
+      <input type="hidden" name="idmakanan" value="{{$tambahmakanan->id}}"/>
+      <input type="hidden" name="harga" value="{{$tambahmakanan->harga}}"/>
+      <input type="hidden" name="menu" value="{{$tambahmakanan->nama_prdk}}"/>
       <div><img class="rounded-circle mt-5" width="100px" src="{{asset('makanan/'.$tambahmakanan->images)}}" style="width:100%"></div>
       <div class="w3-container w3-white">
       <p><b>{{$tambahmakanan->nama_prdk}}</b></p>
       <p>{{$tambahmakanan->komposisi}}</p>
       <p>Rp {{$tambahmakanan->harga}}</p>
       <div class="w3-row-padding w3-center">
-    <button type="button" class="button button3" data-toggle="modal" data-target="#exampleModal">
+    <button type="submit" class="button button3">
         Add to Chard
     </button>
     </div>
       </div>
     </div>
+</form>
     @endforeach
+
     
     
     

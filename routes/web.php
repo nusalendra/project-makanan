@@ -26,6 +26,7 @@ use App\Http\Controllers\Auth\LoginController;
 
 //USER
 route::get('/homepage','user_controller@indexuser')->name('homepages');
+route::post('/addtoCart','user_controller@addtoCart');
 route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
 route::get('/','landingpage_Controller@landingpage');

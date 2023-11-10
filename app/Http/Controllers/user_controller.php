@@ -6,13 +6,33 @@ use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\tambahmakanan;
 use App\Models\Pembayaran;
+use App\Models\keranjang;
 
 
 class user_controller extends Controller
 {
     public function indexuser(){
-        $tambahmakanan = tambahmakanan::all();
+        $user = auth()->user();
+        $keranjang = keranjang::where('user_id', $user->id)->pluck('tambahmakanan_id');
+        if($keranjang == '[]'){
+            $tambahmakanan = tambahmakanan::all();
+        } else{
+        $tambahmakanan = tambahmakanan::where('id', '!=', $keranjang)->get();
+    }
         return view('user.homepage',compact('tambahmakanan'));
+    }
+
+    public function addtoCart(Request $request){
+        $data = [
+            'tambahmakanan_id' => $request->idmakanan,
+            'user_id' => auth()->user()->id,
+            'user_nama' => auth()->user()->name,
+            'menu' => $request->menu,
+            'qty' => 1,
+            'harga' => $request->harga
+        ];
+        keranjang::create($data);
+        return redirect()->back();
     }
 
     public function indexminum(){
@@ -35,14 +55,15 @@ class user_controller extends Controller
     }
 
     public function keranjang(request $request){
-        $orderan = orderan::all();
-        $tambahmakanan = tambahmakanan::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('user.simpanmenu',compact('orderan','total_orderan','tambahmakanan'));
+        // $orderan = orderan::all();
+        // $tambahmakanan = tambahmakanan::all();
+        // $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        $keranjang=keranjang::where('user_id', auth()->user()->id)->get();
+        return view('user.simpanmenu',compact('keranjang'));
     }
 
     public function editkeranjang(request $request, $id){
-        $tambahmakanan = tambahmakanan::find($id);
+        $tambahmakanan = keranjang::find($id);
         $tambahmakanan->qty = $request->input('qty');
         $tambahmakanan->save();
         return redirect('/keranjang');

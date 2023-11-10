@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tambahmakanan', function (Blueprint $table) {
+        Schema::create('keranjang', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('kategori');
-            $table->string('no_produk');
-            $table->string('nama_prdk');
-            $table->string('komposisi');
-            $table->bigInteger('harga');
-            $table->string('images');
+            $table->integer('user_id');
+            $table->string('user_nama');
+            $table->integer('tambahmakanan_id');
+            $table->string('menu');
+            $table->integer('qty');
+            $table->integer('harga');
             $table->timestamps();
         });
     }
@@ -32,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tambahmakanan');
+        //
     }
 };

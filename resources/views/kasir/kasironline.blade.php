@@ -95,15 +95,15 @@ tr:nth-child(even) {
         <tr>
         <th>Nomor Pesanan</th>
         <th>Pesanan</th>
-        <th>Harga Satuan</th>
-        <th>Jumlah Pesanan (Qty)</th>
-        <th>Harga Total per Menu</th>
+        <th>Harga per Item</th>
+        <th>Qty</th>
+        <th>Total</th>
         </tr>
         <?php $no = 0;?>
          @foreach($keranjang as $tambahmakanan)
          <?php $no++ ;?>
         <tr>
-        <td>{{$no}}</td>
+        <td>{{$tambahmakanan->id}}</td>
         <td>{{$tambahmakanan->menu}}</td>
         <td>Rp.{{$tambahmakanan->harga}},00</td>
         <td>{{$tambahmakanan->qty}}</td>

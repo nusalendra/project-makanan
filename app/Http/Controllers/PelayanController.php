@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\orderan;
+use App\Models\pemesananoffline;
 use App\Models\Orderoffline;
 use App\Models\tambahmakanan;
 use App\Models\keranjang;
@@ -14,15 +15,23 @@ use PDF;
 class PelayanController extends Controller
 {
     public function indexpelayan(request $request){
-        $tambahmakanan = tambahmakanan::all();
-        return view('pelayan.onlinepage',compact('tambahmakanan'));
+        $keranjang = keranjang::all();
+        return view('pelayan.onlinepage',compact('keranjang'));
     }
 
     public function indexkasir(request $request){
         $orderoffline = Orderoffline::all();
+        $pemesananoffline = pemesananoffline::all();
         $keranjang = keranjang::all();
-        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.homekasir',compact('keranjang','total_orderan','orderoffline'));
+        $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        return view('kasir.homekasir',compact('keranjang','total_orderan','orderoffline','pemesananoffline'));
+    }
+
+    public function invoice(request $request){
+        $keranjang = keranjang::all();
+        $pemesananoffline = pemesananoffline::all();
+        $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        return view('kasir.invoicekasir',compact('keranjang','total_orderan','pemesananoffline'));
     }
 
     public function indexkasironline(request $request){
@@ -59,18 +68,27 @@ class PelayanController extends Controller
         return $pdf->download('Invoice.pdf');
     }
 
+    public function download_kasir(){
+        $pemesananoffline = pemesananoffline::all();
+        $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        $pdf = PDF::loadView('download.cetakkasir',compact('pemesananoffline','total_orderan'));
+        return $pdf->download('Invoice.pdf');
+    }
+
     public function indexpelayanoffline(request $request){
-        $tambahmakanan = tambahmakanan::all();
-        return view('pelayan.offlinepage',compact('tambahmakanan'));
+        $keranjang = keranjang::all();
+        $pemesananoffline = pemesananoffline::all();
+        return view('pelayan.offlinepage',compact('keranjang','pemesananoffline'));
     }
 
     public function keranjangoffline(request $request){
         $orderoffline = Orderoffline::all();
-        return view('pelayan.keranjangoffline',compact('orderoffline'));
+        $pemesananoffline = pemesananoffline::all();
+        return view('pelayan.keranjangoffline',compact('orderoffline','pemesananoffline'));
     }
 
     public function addorderoffline(request $request){
-        Orderoffline::create($request->all());
+        pemesananoffline::create($request->all());
         return redirect('orderoffline')->with('sukses','Data Telah Di Tambah!');  
     }
 

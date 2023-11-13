@@ -116,20 +116,22 @@ tr:nth-child(even) {
     <div class="modal-body">
         <form action="/addorderoffline" method="POST" >
           {{csrf_field()}}
+          <div class="form-group">
+              <label for="nama_pembeli">Nama Pembeli</label>
+              <input id="nama_pembeli" type="" placeholder="" class="form-control @error('nama_pembeli') is-invalid @enderror" name="nama_pembeli" value="{{ old('nama_pembeli') }}" required autocomplete="" autofocus />
+           </div>
+
            <div class="form-group">
-           <label for="name" class="cols-sm-2 control-label">Nama Pembeli</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                           <input type="text" name="harga" id="">
-                                            </div>
-                                            </div>
+           <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>
+           <input type="text" class="nama_pembeli"> -->
+                                       
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                                <select name="pesanan"class="select2 form-control" id="exampleFormControlSelect1">
+                                                <select name="menu_offline"class="select2 form-control" id="exampleFormControlSelect1">
                                                 <option></option>
-                                                @foreach($tambahmakanan as $tambahmakanan)
-                                                <option>{{$tambahmakanan->nama_prdk}}</option>
+                                                @foreach($keranjang as $tambahmakanan)
+                                                <option>{{$tambahmakanan->menu}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
@@ -139,23 +141,21 @@ tr:nth-child(even) {
                                         <label for="email" class="cols-sm-2 control-label">Qty</label>
                                         <div class="cols-sm-10">
                                             <div class="quantity">
-                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                            <input type='text' name='qty' value='1' class='qty' />
-                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
+                                            <input type='button' value='-' class='qtyminus minus' field='qty_offline' />
+                                            <input type='text' name='qty_offline' value='1' class='qty_offline' />
+                                            <input type='button' value='+' class='qtyplus plus' field='qty_offline' />
                                             
                                             </div>
                                         </div>
                                     </div>
-                                    <label for="name" class="cols-sm-2 control-label">Harga</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                           <input type="text" name="harga" id="" placeholder="{{$tambahmakanan->harga}}">
-                                            </div>
-                                            </div>
-                                        </div>
+                                    <div class="form-group">
+                                    <label for="harga">Harga</label>
+                                    <input id="harga_offline" type="" placeholder="" class="form-control @error('harga_offline') is-invalid @enderror" name="harga_offline" value="{{ old('harga_offline') }}" required autocomplete="" autofocus />
+                                    </div>
+                                   
 
         <div class="modal-footer">
-        <button class="btn btn-primary w3-red">KERANJANG</button>
+        <button type="submit" class="btn btn-primary w3-red">KERANJANG</button>
       </form>
       
     </div>
@@ -173,11 +173,13 @@ tr:nth-child(even) {
 <!-- First Photo Grid-->
 
     <div class="w3-third w3-container w3-margin-bottom">
-      <div><img class="rounded-circle mt-5" width="100px" src="{{asset('makanan/'.$tambahmakanan->images)}}" style="width:100%"></div>
+     
       <div class="w3-container w3-white">
-      <p><b>{{$tambahmakanan->nama_prdk}}</b></p>
+        @foreach($keranjang as $tambahmakanan)
+      <p><b>{{$tambahmakanan->menu}}</b></p>
       <p>{{$tambahmakanan->komposisi}}</p>
-      <p>Rp {{$tambahmakanan->harga}}</p>
+      <p>Rp {{$tambahmakanan->harga}},00</p>
+      @endforeach
       <div class="w3-row-padding w3-center">
     </div>
       </div>

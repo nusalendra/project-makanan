@@ -93,18 +93,26 @@ tr:nth-child(even) {
     <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>ID Pesanan </th>
-        <th>Action</th>
+        <th>Nama Pembeli</th> 
+        <th>Pesanan</th>
+        <th>Qty</th>
+        <th>Harga Satuan</th>
+        <th>Total Harga</th>
         </tr>
-        @foreach($orderoffline as $orderoffline)
+        @foreach($pemesananoffline as $pesanoffline)
         <tr>
-        <td>{{$orderoffline->id}}</td>
-        <td><a href="/detailpesanan"><button type="button" class="btn btn-default btn-lg w3-red">Detail Pesanan</button> </a></td>
+        <td>{{$pesanoffline->nama_pembeli}}</td>
+        <td>{{$pesanoffline->menu_offline}}</td>
+        <td>{{$pesanoffline->qty_offline}}</td>
+        <td>{{$pesanoffline->harga_offline}}</td>
+        <td>{{($pesanoffline->qty_offline)*($pesanoffline->harga_offline)}}</td>
         </tr>
         @endforeach
         </table>
 </div>
-
+<table class="table">
+        <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
+        <a href="/invoicekasir"><button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button></a>
 
 </body>
 </html>

@@ -47,9 +47,10 @@ route::get('/kasir','PelayanController@indexkasir')->name('kasir');;
 route::get('/kasironline','PelayanController@indexkasironline');
 route::get('/detailpesanan','PelayanController@indexdetailpesanan');
 route::post('/kembalian','PelayanController@hitungkembalian');
+route::get('/invoicekasir','PelayanController@invoice');
 //Generate PDF Invoice
 route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
-
+route::get('/downloadPDF/cetakinvoicekasir',[App\Http\Controllers\PelayanController::class, 'download_kasir'])->name('downloadpdf_kasir');
 //ADMIN
 route::post('/hitungpendapatan','AdminController@hitungpemasukan');
 route::get('/homeadmin','AdminController@indexadmin')->name('homeadmin');

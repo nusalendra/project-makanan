@@ -92,6 +92,15 @@ tr:nth-child(even) {
     <td>{{$tambahmakanan->created_at}}</td>
     <td>{{$tambahmakanan->menu}}</td>
     <td>{{$tambahmakanan->qty}}</td>
+    <td><form action="{{route('editstatus',['id'=>$tambahmakanan->id])}}" method="GET">
+{{csrf_field()}}
+<div class="form-group">
+<input id="exampleInputEmail1" type="hidden" placeholder="" name="status" value="selesai" required autocomplete="" autofocus />
+</div>
+      <div class="">
+            <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
+    </div>
+</form>
   </tr>
   @endforeach
     </table>

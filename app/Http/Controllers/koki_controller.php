@@ -27,6 +27,14 @@ class koki_controller extends Controller
     }
 
     public function orderselesaikoki(request $request){
-        return view('koki.orderselesaikoki');
+        $keranjang = keranjang::where('status','selesai')->get();
+        return view('koki.orderselesaikoki',compact('keranjang'));
+    }
+    
+    public function editstatus(request $request, $id){
+        $tambahmakanan = keranjang::find($id);
+        $tambahmakanan->status = $request->input('status');
+        $tambahmakanan->save();
+        return redirect('/koki');
     }
 }

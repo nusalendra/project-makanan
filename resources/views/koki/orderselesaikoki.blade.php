@@ -81,10 +81,18 @@ tr:nth-child(even) {
     <table>
   <tr>
     <th>Id Order</th>
-    <th>Tanggalr</th>
+    <th>Tanggal</th>
     <th>Detail Order</th>
     <th>Hasil</th>
   </tr>
+  @foreach($keranjang as $tambahmakanan)
+  <tr>
+    <td>{{$tambahmakanan->id}}</td>
+    <td>{{$tambahmakanan->created_at}}</td>
+    <td>{{$tambahmakanan->menu}}</td>
+    <td>{{$tambahmakanan->status}}</td>
+  <tr>
+  @endforeach
   </header>
 
   <!-- First Photo Grid-->

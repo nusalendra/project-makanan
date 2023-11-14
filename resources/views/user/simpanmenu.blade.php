@@ -182,33 +182,7 @@ tr:nth-child(even) {
 </div>
 </div>
 </div>
-<!-- ENDMODAL -->
-<div class="modal fade" id="myModal2" role="dialog">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Tambah Jumlah</h4>
-        </div>
-        <div class="modal-body">
-        <form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="GET" enctype="multipart/form-data">
-        {{csrf_field()}}
-        <div class="form-group">
-              <label for="email" class="cols-sm-2 control-label">Qty</label>
-              <div class="cols-sm-10">
-                  <div class="quantity">
-                  <input type='button' value="-" class='qtyminus minus' field='qty'/>
-                  <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty' />
-                  <input type='button' value='+' class='qtyplus plus' field='qty' />
-                </div>
-            </div>
-        <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  </form>
+
 </div>
       </div>
  

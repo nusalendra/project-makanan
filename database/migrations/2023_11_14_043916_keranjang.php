@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('menu');
             $table->integer('qty');
             $table->integer('harga');
+            $table->string('status')->nullable();
             $table->timestamps();
         });
     }

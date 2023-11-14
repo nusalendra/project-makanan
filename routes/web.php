@@ -96,6 +96,7 @@ Route::get('/koki','koki_controller@koki')->name('homekoki');
 Route::get('/kokioffline','koki_controller@kokioffline');
 Route::get('/loginkoki','koki_controller@loginkoki');  
 Route::get('/orderselesaikoki','koki_controller@orderselesaikoki');  
+route::get('/editstatus/{id}','koki_controller@editstatus')->name('editstatus');
 
 //PELAYAN
 route::get('/orderonline','PelayanController@indexpelayan');

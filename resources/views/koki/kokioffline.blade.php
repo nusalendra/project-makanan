@@ -86,14 +86,16 @@ tr:nth-child(even) {
         <th>Nama Pelanggan</th>
         <th>Pesanan</th> 
         <th>Qty</th>
+        <th>Status Pesanan</th>
         </tr>
-        @foreach($Orderoffline as $orderoffline)
+        @foreach($pemesananoffline as $pesanoffline)
         <tr>
-        <td>{{$orderoffline->id}}</td>
-        <td>{{$orderoffline->created_at}}</td>
-          <td>{{$orderoffline->nama_pelanggan}}</td>
-          <td>{{$orderoffline->pesanan}}</td>
-          <td>{{$orderoffline->qty}}</td>         
+        <td>{{$pesanoffline->id}}</td>
+        <td>{{$pesanoffline->created_at}}</td>
+          <td>{{$pesanoffline->nama_pembeli}}</td>
+          <td>{{$pesanoffline->menu_offline}}</td>
+          <td>{{$pesanoffline->menu_offline}}</td>    
+          <td></td>     
         </tr>
         @endforeach
   </header>

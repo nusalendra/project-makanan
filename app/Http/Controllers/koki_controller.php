@@ -28,7 +28,8 @@ class koki_controller extends Controller
 
     public function orderselesaikoki(request $request){
         $keranjang = keranjang::where('status','selesai')->get();
-        return view('koki.orderselesaikoki',compact('keranjang'));
+        $pemesananoffline = pemesananoffline::where('status_offline','selesai')->get();
+        return view('koki.orderselesaikoki',compact('keranjang','pemesananoffline'));
     }
     
     public function editstatus(request $request, $id){
@@ -36,5 +37,12 @@ class koki_controller extends Controller
         $tambahmakanan->status = $request->input('status');
         $tambahmakanan->save();
         return redirect('/koki');
+    }
+
+    public function editstatusoffline(request $request, $id){
+        $pemesananoffline = pemesananoffline::find($id);
+        $pemesananoffline->status_offline = $request->input('status_offline');
+        $pemesananoffline->save();
+        return redirect('/kokioffline');
     }
 }

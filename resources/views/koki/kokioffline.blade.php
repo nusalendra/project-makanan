@@ -87,6 +87,7 @@ tr:nth-child(even) {
         <th>Pesanan</th> 
         <th>Qty</th>
         <th>Status Pesanan</th>
+        <th>Ubah Status</th>
         </tr>
         @foreach($pemesananoffline as $pesanoffline)
         <tr>
@@ -94,8 +95,17 @@ tr:nth-child(even) {
         <td>{{$pesanoffline->created_at}}</td>
           <td>{{$pesanoffline->nama_pembeli}}</td>
           <td>{{$pesanoffline->menu_offline}}</td>
-          <td>{{$pesanoffline->menu_offline}}</td>    
-          <td></td>     
+          <td>{{$pesanoffline->qty_offline}}</td>
+          <td>{{$pesanoffline->status_offline}}</td>    
+          <td><form action="{{route('editstatusoffline',['id'=>$pesanoffline->id])}}" method="GET">
+{{csrf_field()}}
+<div class="form-group">
+<input id="exampleInputEmail1" type="hidden" placeholder="" name="status_offline" value="selesai" required autocomplete="" autofocus />
+</div>
+      <div class="">
+            <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
+    </div>
+</form></td>     
         </tr>
         @endforeach
   </header>

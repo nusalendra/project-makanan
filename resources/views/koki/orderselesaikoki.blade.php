@@ -76,8 +76,7 @@ tr:nth-child(even) {
 <header id="">
 <div class="w3-row-padding">
 <div class="w3-container">
-    <h1><b>Tabel Daftar Order Selesai</b></h1>
-    <h4><input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search For Hasil" title="Type in a name"></h4>
+    <h1><b>Daftar Orderan Online Selesai</b></h1>
     <table>
   <tr>
     <th>Id Order</th>
@@ -93,8 +92,36 @@ tr:nth-child(even) {
     <td>{{$tambahmakanan->status}}</td>
   <tr>
   @endforeach
-  </header>
-
+</table>
+</div>
+<div class="w3-row-padding">
+<div class="w3-container">
+    <h1><b>Daftar Orderan Offline Selesai</b></h1>
+    <table>
+  <tr>
+    <th>Id Order</th>
+    <th>Tanggal</th>
+    <th>Nama Pelanggan</th>
+    <th>Pesanan</th> 
+    <th>Qty</th>
+    <th>Hasil</th>
+  </tr>
+  @foreach($pemesananoffline as $pesanoffline)
+  <tr>
+    <td>{{$pesanoffline->id}}</td>
+    <td>{{$pesanoffline->created_at}}</td>
+    <td>{{$pesanoffline->nama_pembeli}}</td>
+    <td>{{$pesanoffline->menu_offline}}</td>
+    <td>{{$pesanoffline->qty_offline}}</td>
+    <td>{{$pesanoffline->status_offline}}</td>
+  <tr>
+  @endforeach
+</table>
+</div>
+</div>
+</div>
+</header>
+</div>
   <!-- First Photo Grid-->
   
 

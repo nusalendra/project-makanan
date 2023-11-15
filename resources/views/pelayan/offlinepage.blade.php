@@ -141,9 +141,9 @@ tr:nth-child(even) {
                                         <label for="email" class="cols-sm-2 control-label">Qty</label>
                                         <div class="cols-sm-10">
                                             <div class="quantity">
-                                            <input type='button' value='-' class='qtyminus minus' field='qty_offline' />
-                                            <input type='text' name='qty_offline' value='1' class='qty_offline' />
-                                            <input type='button' value='+' class='qtyplus plus' field='qty_offline' />
+                                            <input type='button' value='-' class='qtyminus minus' field='qty' />
+                                            <input type='text' name='qty_offline' value='1' class='qty' />
+                                            <input type='button' value='+' class='qtyplus plus' field='qty' />
                                             
                                             </div>
                                         </div>

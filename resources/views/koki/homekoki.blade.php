@@ -85,6 +85,7 @@ tr:nth-child(even) {
     <th>Pesanan</th>
     <th>Qty</th>
     <th>Status Pesanan</th>
+    <th>Ubah Status</th>
   </tr>
   @foreach($keranjang as $tambahmakanan)
   <tr>
@@ -92,6 +93,7 @@ tr:nth-child(even) {
     <td>{{$tambahmakanan->created_at}}</td>
     <td>{{$tambahmakanan->menu}}</td>
     <td>{{$tambahmakanan->qty}}</td>
+    <td>{{$tambahmakanan->status}}</td>
     <td><form action="{{route('editstatus',['id'=>$tambahmakanan->id])}}" method="GET">
 {{csrf_field()}}
 <div class="form-group">

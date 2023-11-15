@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('menu_offline');
             $table->integer('qty_offline');
             $table->integer('harga_offline');
+            $table->string('status_offline')->nullable();
             $table->timestamps();
         });
     }

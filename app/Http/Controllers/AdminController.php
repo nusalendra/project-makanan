@@ -8,6 +8,8 @@ use App\Models\Admin;
 use App\Models\Pegawai;
 use App\Models\Lokasi;
 use App\Models\tambahmakanan;
+use App\Models\keranjang;
+use App\Models\pemesananoffline;
 use App\Models\Pembayaran;
 
 class AdminController extends Controller
@@ -156,8 +158,9 @@ class AdminController extends Controller
 
     public function riwayatdt(request $request){
         $pembayaran = Pembayaran::all();
-        $tambahmakanan = tambahmakanan::all();
-        return view('admin.riwayatdt',compact('pembayaran','tambahmakanan'));
+        $keranjang = keranjang::all();
+        $pemesananoffline = pemesananoffline::all();
+        return view('admin.riwayatdt',compact('keranjang','pembayaran','pemesananoffline'));
     }
 
     public function hitungpemasukan(request $request){

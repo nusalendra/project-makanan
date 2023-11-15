@@ -107,7 +107,7 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h3><b>Data Report</b></h3>
+    <h3><b>Data Report Order Online</b></h3>
     <div class="w3-section w3-bottombar w3-padding-13">
 </div> 
 
@@ -119,46 +119,51 @@ tr:nth-child(even) {
         <th>Pesanan</th>
         <th>Harga satuan</th>
         <th>Qty</th>
+        <th>Status Pesanan</th>
         </tr>
         <?php $no = 0;?>
-        @foreach($tambahmakanan as $tambahmakanan)
+        @foreach($keranjang as $tambahmakanan)
         <?php $no++ ;?>
         <tr>
-        <td>{{$no}}</td>
-        <td>{{$tambahmakanan->nama_prdk}}</td>
+        <td>{{$tambahmakanan->id}}</td>
+        <td>{{$tambahmakanan->menu}}</td>
         <td>{{$tambahmakanan->harga}}</td>
         <td>{{$tambahmakanan->qty}}</td>
-        
-     
+        <td>{{$tambahmakanan->status}}</td>
         </tr> 
-
         @endforeach
-      
-  
-
       </table>
       </div>
 
+      <h3><b>Data Report Order Offline</b></h3>
+    <div class="w3-section w3-bottombar w3-padding-13">
+</div> 
       <div class="w3-row-padding">
     <table class="table">
         <tr>
-        <th>Nomor Pesanan</th>
-        <th>Metode Pembayaran</th>
+          <th>Id Order</th>
+          <th>Tanggal</th>
+          <th>Nama Pelanggan</th>
+          <th>Pesanan</th> 
+          <th>Qty</th>
+          <th>Status Pesanan</th>
         </tr>
         <?php $no = 0;?>
-        @foreach($pembayaran as $pembayaran)
+        @foreach($pemesananoffline as $pesanoffline)
         <?php $no++ ;?>
         <tr>
-        <td>{{$no}}</td>
-        <td>{{$pembayaran->metode}}</td>
+        <td>{{$pesanoffline->id}}</td>
+        <td>{{$pesanoffline->created_at}}</td>
+        <td>{{$pesanoffline->menu_offline}}</td>
+        <td>{{$pesanoffline->harga_offline}}</td>
+        <td>{{$pesanoffline->qty_offline}}</td>
+        <td>{{$pesanoffline->status_offline}}</td>
         </tr> 
-
         @endforeach
-      
-  
-
       </table>
       </div>
+
+    
 
 
 </body>

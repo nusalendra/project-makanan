@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Auth\Events\PasswordReset;
 use App\Http\Controllers\orderan_controller;
+use App\Http\Controllers\user_controller;
 use App\Http\Controllers\Auth\LoginController;
 
 /*
@@ -27,13 +28,16 @@ use App\Http\Controllers\Auth\LoginController;
 //USER
 route::get('/homepage','user_controller@indexuser')->name('homepages');
 route::post('/addtoCart','user_controller@addtoCart');
+route::post('/addpembeli','user_controller@addpembeli');
 route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
 route::get('/','landingpage_Controller@landingpage');
 route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');
+route::get('/simpanoffline','user_controller@keranjangoffline');
 route::get('/editkeranjang/{id}','user_controller@editkeranjang')->name('editkeranjang');
+route::get('/editkeranjangoffline/{id}','user_controller@editkeranjangoffline')->name('editkeranjangoffline');
 route::get('/prosesviewdatakeranjang/{id}','user_controller@findidkeranjang');
 route::get('/invoice','user_controller@invoice');
 route::get('/selesai','user_controller@selesai');
@@ -48,6 +52,7 @@ route::get('/kasironline','PelayanController@indexkasironline');
 route::get('/detailpesanan','PelayanController@indexdetailpesanan');
 route::post('/kembalian','PelayanController@hitungkembalian');
 route::get('/invoicekasir','PelayanController@invoice');
+route::get('/harga/{id}','PelayanController@getHarga');
 //Generate PDF Invoice
 route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
 route::get('/downloadPDF/cetakinvoicekasir',[App\Http\Controllers\PelayanController::class, 'download_kasir'])->name('downloadpdf_kasir');

@@ -88,8 +88,12 @@ class PelayanController extends Controller
     }
 
     public function addorderoffline(request $request){
-        pemesananoffline::create($request->all());
-        return redirect('orderoffline')->with('sukses','Data Telah Di Tambah!');  
+        pemesananoffline::create([
+            'menu_offline'=>$request->namaproduk,
+            'qty_offline' => $request->qty_offline,
+            'harga_offline' => $request->hargaproduk
+        ]);
+        return redirect()->to('/simpanoffline');  
     }
 
     public function editorderoffline(request $request, $id){
@@ -119,6 +123,13 @@ class PelayanController extends Controller
 
     public function selesaiorderall(request $request){
         return view('pelayan.selesaiorderall');
+    }
+
+    public function getHarga($id){
+        $makanan=tambahmakanan::where('id', $id)->first();
+        return response()->json([
+            'makanan' => $makanan
+        ]);
     }
     
 }

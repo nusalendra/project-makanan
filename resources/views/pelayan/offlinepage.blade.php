@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.6.3/css/bootstrap-select.min.css" />
 <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
@@ -116,11 +116,6 @@ tr:nth-child(even) {
     <div class="modal-body">
         <form action="/addorderoffline" method="POST" >
           {{csrf_field()}}
-          <div class="form-group">
-              <label for="nama_pembeli">Nama Pembeli</label>
-              <input id="nama_pembeli" type="" placeholder="" class="form-control @error('nama_pembeli') is-invalid @enderror" name="nama_pembeli" value="{{ old('nama_pembeli') }}" required autocomplete="" autofocus />
-           </div>
-
            <div class="form-group">
            <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>
            <input type="text" class="nama_pembeli"> -->
@@ -128,10 +123,10 @@ tr:nth-child(even) {
                                     <label for="name" class="cols-sm-2 control-label">Pesanan</label>
                                         <div class="cols-sm-10">
                                             <div class="input-group">
-                                                <select name="menu_offline"class="select2 form-control" id="exampleFormControlSelect1">
+                                                <select name="menu_offline" class="harga select2 form-control" id="exampleFormControlSelect1">
                                                 <option></option>
                                                 @foreach($keranjang as $tambahmakanan)
-                                                <option>{{$tambahmakanan->menu}}</option>
+                                                <option value="{{$tambahmakanan->id}}">{{$tambahmakanan->menu}}</option>
                                                 @endforeach
                                                 </select>
                                             </div>
@@ -142,7 +137,7 @@ tr:nth-child(even) {
                                         <div class="cols-sm-10">
                                             <div class="quantity">
                                             <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                            <input type='text' name='qty_offline' value='1' class='qty' />
+                                            <input type='text' name='qty_offline' min="0" class='qty' />
                                             <input type='button' value='+' class='qtyplus plus' field='qty' />
                                             
                                             </div>
@@ -150,7 +145,9 @@ tr:nth-child(even) {
                                     </div>
                                     <div class="form-group">
                                     <label for="harga">Harga</label>
-                                    <input id="harga_offline" type="" placeholder="" class="form-control @error('harga_offline') is-invalid @enderror" name="harga_offline" value="{{ old('harga_offline') }}" required autocomplete="" autofocus />
+                                    <input id="harga_offline" type="" readonly placeholder="" class="hargafinal form-control @error('harga_offline') is-invalid @enderror" name="harga_offline" value="" required autocomplete="" autofocus />
+                                    <input type="hidden" class="harganow" name="hargaproduk">
+                                    <input type="hidden" class="namaproduk" name="namaproduk">
                                     </div>
                                    
 
@@ -201,10 +198,16 @@ tr:nth-child(even) {
 <!-- Your custom script here -->
 <script type="text/babel">
 jQuery(document).ready(($) => {
+  var qty = $(".qty").val("1")
         $('.quantity').on('click', '.plus', function(e) {
             let $input = $(this).prev('input.qty');
             let val = parseInt($input.val());
             $input.val( val+1 ).change();
+            var qty = $(".qty").val()
+            var id = $(".harganow").val()
+            var jumlah = $(".qty").val()
+            var total = id * jumlah
+            $(".hargafinal").val(total)
         });
  
         $('.quantity').on('click', '.minus', 
@@ -214,6 +217,10 @@ jQuery(document).ready(($) => {
             if (val > 0) {
                 $input.val( val-1 ).change();
             } 
+            var id = $(".harganow").val()
+            var jumlah = $(".qty").val()
+            var total = id * jumlah
+            $(".hargafinal").val(total)
         });
     });
 </script>
@@ -227,6 +234,26 @@ jQuery(document).ready(($) => {
 
 <script>
     $('.select2').select2();
+</script>
+
+<script>
+$(document).ready(function(){
+  $(".harga").change(function(){
+    var id = $(".harga").val()
+    
+
+    $.ajax({
+    type: 'get',
+    url: '/harga/'+id,
+    success: function(response) {
+      $(".hargafinal").val(response.makanan.harga)
+      $(".harganow").val(response.makanan.harga)
+      $(".namaproduk").val(response.makanan.nama_prdk)
+    }
+});
+
+  });
+});
 </script>
 
 </body>

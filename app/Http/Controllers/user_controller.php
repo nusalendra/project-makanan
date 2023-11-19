@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\orderan;
 use App\Models\tambahmakanan;
 use App\Models\Pembayaran;
+use App\Models\Pemesananoffline;
 use App\Models\keranjang;
 
 
@@ -35,6 +36,8 @@ class user_controller extends Controller
         return redirect()->back();
     }
 
+    
+
     public function indexminum(){
         $orderan = orderan::all();
         return view('user.minumanpage', compact('orderan'));
@@ -62,11 +65,27 @@ class user_controller extends Controller
         return view('user.simpanmenu',compact('keranjang','total_orderan'));
     }
 
+    public function keranjangoffline(request $request){
+        // $orderan = orderan::all();
+        // $tambahmakanan = tambahmakanan::all();
+        $pemesananoffline = pemesananoffline::all();
+        $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        //$keranjang=keranjang::where('user_id', auth()->user()->id)->get();
+        return view('user.simpanoffline',compact('pemesananoffline','total_orderan'));
+    }
+
     public function editkeranjang(request $request, $id){
         $tambahmakanan = keranjang::find($id);
         $tambahmakanan->qty = $request->input('qty');
         $tambahmakanan->save();
         return redirect('/keranjang');
+    }
+
+    public function editkeranjangoffline(request $request, $id){
+        $pemesananoffline = pesanoffline::find($id);
+        $pemesananoffline->qty_offline = $request->input('qty_offline');
+        $pemesananoffline->save();
+        return redirect('/simpanoffline');
     }
 
     public function findidkeranjang($id){
@@ -102,6 +121,11 @@ class user_controller extends Controller
     public function addpembayaran(request $request){
         Pembayaran::create($request->all());
         return redirect('invoice')->with('sukses','penambahan telah berhasil!');
+    }
+
+    public function addpembeli(request $request){
+        Pemesananoffline::create($request->all());
+        return redirect('simpanoffline')->with('sukses','penambahan telah berhasil!');
     }
 
 }

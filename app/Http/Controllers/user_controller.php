@@ -82,7 +82,7 @@ class user_controller extends Controller
     }
 
     public function editkeranjangoffline(request $request, $id){
-        $pemesananoffline = pesanoffline::find($id);
+        $pemesananoffline = pemesananoffline::find($id);
         $pemesananoffline->qty_offline = $request->input('qty_offline');
         $pemesananoffline->save();
         return redirect('/simpanoffline');

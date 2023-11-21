@@ -99,7 +99,7 @@ class PelayanController extends Controller
 
     public function editorderoffline(request $request, $id){
         $orderoffline = Orderoffline::find($id);
-        $orderoffline->qty = $request->input('qty'); 
+        $orderoffline->qty_offline = $request->input('qty_offline'); 
         $orderoffline->save();
         return redirect('keranjangoffline');
     }

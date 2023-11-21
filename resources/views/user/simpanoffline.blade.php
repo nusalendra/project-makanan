@@ -110,8 +110,8 @@ tr:nth-child(even) {
         <tr>
         <td>{{$pesanoffline->menu_offline}}</td>
         <td>{{$pesanoffline->qty_offline}}</td>
-        <td>{{$pesanoffline->harga_offline}}</td>
-        <td>{{($pesanoffline->qty_offline)*($pesanoffline->harga_offline)}}</td>
+        <td>Rp.{{$pesanoffline->harga_offline}},00</td>
+        <td>Rp.{{($pesanoffline->qty_offline)*($pesanoffline->harga_offline)}},00</td>
         <td><form action="{{route('editkeranjangoffline',['id'=>$pesanoffline->id])}}" method="GET">
 {{csrf_field()}}
 <div class="form-group">
@@ -123,15 +123,18 @@ tr:nth-child(even) {
         </div>
     </div>
 </div></td>
-<td> <div class="">
+<td> 
+  <div class="">
             <button type="submit" class="btn btn-primary w3-blue">SIMPAN</button>
-    </div></td></tr>
+    </div>
+  </form>
+  </td>
+</tr>
         @endforeach
     </table>
-      
-    <form action="/addorderoffline" method="POST" >
-      
-    </form>
+    <table class="table">
+        <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
+
 
     <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
       

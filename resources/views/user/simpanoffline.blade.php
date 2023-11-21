@@ -133,8 +133,30 @@ tr:nth-child(even) {
       
     </form>
 
+    <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
       
-  
+  <!-- Modal -->
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Silahkan isi nama pembeli untuk menyelesaikan pesanan</h4>
+        </div>
+        <div class="modal-body">
+         <form action="/addorderoffline" method="POST">
+        {{csrf_field()}}
+        <div class="form-group">
+                                    <label for="harga">Nama Pembeli</label>
+                                    <input id="nama_pembeli" type=""  placeholder="" class="form-control @error('nama_pembeli') is-invalid @enderror" name="nama_pembeli" value="" required autocomplete="" autofocus />
+                                    </div>
+      </div>
+      <div class="modal-footer">
+      <button type="submit" class="btn btn-primary w3-red">ADD</button>
+      </form>
+    </div>
+  </div>
+</div>
  
  
 

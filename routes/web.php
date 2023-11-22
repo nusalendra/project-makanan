@@ -108,7 +108,7 @@ route::get('/editstatusoffline/{id}','koki_controller@editstatusoffline')->name(
 route::get('/orderonline','PelayanController@indexpelayan');
 route::get('/orderoffline','PelayanController@indexpelayanoffline')->name('homepelayan');
 route::get('/keranjangoffline','PelayanController@keranjangoffline');
-route::post('/addorderoffline','PelayanController@addorderoffline');
+route::put('/addorderoffline','PelayanController@addorderoffline');
 route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');
 route::get('/editorderoffline/{id}','PelayanController@editorderoffline')->name('editorderoffline');
 route::get('/prosesviewdataorderoffline/{id}','PelayanController@findidorderoffline');

@@ -88,13 +88,30 @@ class PelayanController extends Controller
     }
 
     public function addorderoffline(request $request){
-        pemesananoffline::create([
-            'nama_pembeli'=>$request->nama_pembeli,
-            'menu_offline'=>$request->namaproduk,
-            'qty_offline' => $request->qty_offline,
-            'harga_offline' => $request->hargaproduk
-        ]);
-        return redirect()->to('/simpanoffline');  
+        // pemesananoffline::create([
+        //     'nama_pembeli'=>$request->nama_pembeli,
+        //     'menu_offline'=>$request->namaproduk,
+        //     'qty_offline' => $request->qty_offline,
+        //     'harga_offline' => $request->hargaproduk
+        // ]);
+        $namapembeli=$request->nama_pembeli;
+        $orderOffline=pemesananoffline::where('status_offline', null)
+        ->pluck('id')->toArray();
+        foreach($orderOffline as $id){
+            pemesananoffline::where('id', $id)
+            ->update([
+                'nama_pembeli'=>$namapembeli,
+                'status_offline'=>'bayar'
+            ]);
+        }
+        return redirect()->to('/kasir');  
+    }
+
+    public function editnamapembeli(request $request, $id){
+        $pemesananoffline = Pemesananoffline::find($id);
+        $pemesananoffline->nama_pembeli = $request->input('nama_pembeli');
+        $pemesananoffline->save();
+        return redirect('keranjangoffline');
     }
 
     public function editorderoffline(request $request, $id){

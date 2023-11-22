@@ -181,6 +181,7 @@ tr:hover .cut { opacity: 1; }
 			<table class="inventory">
 				<thead>
 					<tr>
+						<th><span contenteditable>Nama Pembeli</span></th>
 						<th><span contenteditable>Pesanan</span></th>
 						<th><span contenteditable>Qty</span></th>
 						<th><span contenteditable>Harga Satuan</span></th>
@@ -189,6 +190,7 @@ tr:hover .cut { opacity: 1; }
 				<tbody>
 				</tr>
 				@foreach($pemesananoffline as $pesanoffline)
+				<td>{{$pesanoffline->nama_pembeli}}</td>
 				<td>{{$pesanoffline->menu_offline}}</td>
 				<td>{{$pesanoffline->qty_offline}}</td>
 				<td>Rp.{{$pesanoffline->harga_offline}},00</td>

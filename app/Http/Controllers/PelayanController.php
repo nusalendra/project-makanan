@@ -44,21 +44,22 @@ class PelayanController extends Controller
     public function indexdetailpesanan(request $request){
         $tambahmakanan = tambahmakanan::all();
         $orderoffline = Orderoffline::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.detailpesanan',compact('tambahmakanan','total_orderan','orderoffline'));
+        $pemesananoffline = pemesananoffline::all();
+        $total_orderan = tambahmakanan::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        return view('kasir.detailpesanan',compact('pemesananoffline','total_orderan','orderoffline'));
     }
 
     public function hitungkembalian(request $request){
         $operasi = $request->input('operasi');
         $bil_pertama = $request->input('bil_1');
         $bil_kedua = $request->input('bil_2');
-        $result = 0;
+        $result = $bil_pertama - $bil_kedua;
 
-        if($operasi == "kurang"){
-            $result = $bil_pertama - $bil_kedua;
-        }
+        // if($operasi == "kurang"){
+        //     $result = $bil_pertama - $bil_kedua;
+        // }
 
-        return redirect('detailpesanan')->with('info','kembaliannya : '.$result);
+        return redirect('kasir')->with('info','kembaliannya : '.$result);
     }
 
     public function download_invoice(){
@@ -107,12 +108,6 @@ class PelayanController extends Controller
         return redirect()->to('/kasir');  
     }
 
-    public function editnamapembeli(request $request, $id){
-        $pemesananoffline = Pemesananoffline::find($id);
-        $pemesananoffline->nama_pembeli = $request->input('nama_pembeli');
-        $pemesananoffline->save();
-        return redirect('keranjangoffline');
-    }
 
     public function editorderoffline(request $request, $id){
         $orderoffline = Orderoffline::find($id);

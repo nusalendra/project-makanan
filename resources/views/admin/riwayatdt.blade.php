@@ -145,6 +145,7 @@ tr:nth-child(even) {
           <th>Tanggal</th>
           <th>Nama Pelanggan</th>
           <th>Pesanan</th> 
+          <th>Harga</th>
           <th>Qty</th>
           <th>Status Pesanan</th>
         </tr>
@@ -154,6 +155,7 @@ tr:nth-child(even) {
         <tr>
         <td>{{$pesanoffline->id}}</td>
         <td>{{$pesanoffline->created_at}}</td>
+        <td>{{$pesanoffline->nama_pembeli}}</td>
         <td>{{$pesanoffline->menu_offline}}</td>
         <td>{{$pesanoffline->harga_offline}}</td>
         <td>{{$pesanoffline->qty_offline}}</td>

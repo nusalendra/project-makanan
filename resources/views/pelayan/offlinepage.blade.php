@@ -115,6 +115,7 @@ tr:nth-child(even) {
   <div class="w3-section w3-bottombar w3-padding-6">
     <div class="modal-body">
         <form action="/addorderoffline" method="POST" >
+          @method('put')
           {{csrf_field()}}
            <div class="form-group">
            <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>

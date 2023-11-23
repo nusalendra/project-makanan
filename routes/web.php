@@ -57,7 +57,8 @@ route::get('/harga/{id}','PelayanController@getHarga');
 route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
 route::get('/downloadPDF/cetakinvoicekasir',[App\Http\Controllers\PelayanController::class, 'download_kasir'])->name('downloadpdf_kasir');
 //ADMIN
-route::post('/hitungpendapatan','AdminController@hitungpemasukan');
+route::post('/hitungpendapatan','AdminController@hitungpemasukanonline');
+route::post('/hitungpendapatanoffline','AdminController@hitungpemasukanoffline');
 route::get('/homeadmin','AdminController@indexadmin')->name('homeadmin');
 route::get('/loginadmin','AdminController@loginadmin');
 route::get('/datacust','AdminController@datacust');
@@ -109,6 +110,7 @@ route::get('/orderonline','PelayanController@indexpelayan');
 route::get('/orderoffline','PelayanController@indexpelayanoffline')->name('homepelayan');
 route::get('/keranjangoffline','PelayanController@keranjangoffline');
 route::put('/addorderoffline','PelayanController@addorderoffline');
+route::put('/addpesananoffline','PelayanController@addpesananoffline');
 route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');
 route::get('/editorderoffline/{id}','PelayanController@editorderoffline')->name('editorderoffline');
 route::get('/prosesviewdataorderoffline/{id}','PelayanController@findidorderoffline');

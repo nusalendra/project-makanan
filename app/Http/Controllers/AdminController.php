@@ -151,9 +151,11 @@ class AdminController extends Controller
     }
 
     public function dashboard(request $request){
-        $tambahmakanan = tambahmakanan::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('admin.dashboard',compact('tambahmakanan'));
+        $keranjang = keranjang::all();
+        $pemesananoffline = pemesananoffline::all();
+        $total_orderan_online = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
+        $total_orderan_offline = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
+        return view('admin.dashboard',compact('pemesananoffline','keranjang','total_orderan_online','total_orderan_offline'));
     }
 
     public function riwayatdt(request $request){
@@ -163,17 +165,26 @@ class AdminController extends Controller
         return view('admin.riwayatdt',compact('keranjang','pembayaran','pemesananoffline'));
     }
 
-    public function hitungpemasukan(request $request){
+    public function hitungpemasukanonline(request $request){
         $operasi = $request->input('operasi');
         $bil_pertama = $request->input('bil_1');
         $bil_kedua = $request->input('bil_2');
-        $result = 0;
+        $result = $bil_pertama + $bil_kedua;
 
-        if($operasi == "tambah"){
-            $result = $bil_pertama + $bil_kedua;
-        }
+        // if($operasi == "tambah"){
+        //     $result = $bil_pertama + $bil_kedua;
+        // }
 
-        return redirect('dashboard')->with('info','pemasukkan anda : '.$result);
+        return redirect('dashboard')->with('info','pemasukkan online anda : '.$result);
+    }
+
+    public function hitungpemasukanoffline(request $request){
+        $operasi = $request->input('operasi');
+        $bil_pertama = $request->input('bil_1');
+        $bil_kedua = $request->input('bil_2');
+        $result = $bil_pertama + $bil_kedua;
+
+        return redirect('dashboard')->with('info','pemasukkan offline anda : '.$result);
     }
 
 }

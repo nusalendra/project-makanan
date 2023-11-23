@@ -114,7 +114,7 @@ tr:nth-child(even) {
   <header class="w3-container">
   <div class="w3-section w3-bottombar w3-padding-6">
     <div class="modal-body">
-        <form action="/addorderoffline" method="POST" >
+        <form action="/addpesananoffline" method="POST" >
           @method('put')
           {{csrf_field()}}
            <div class="form-group">

@@ -107,56 +107,53 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h3><b>Dashboard</b></h3>
+    <h3><b>DASHBOARD</b></h3>
     <div class="w3-section w3-bottombar w3-padding-13">
 </div> 
 
-<div class="dropdown">
-  <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown">Cek Pendapatan dan Penjualan
-  <span class="caret"></span></button>
-  <ul class="dropdown-menu">
-    <li><a href="#">1 hari</a></li>
-    <li><a href="#">2 hari</a></li>
-    <li><a href="#">3 hari</a></li>
-  </ul>
-</div>
+
 
 <br>
 <div class="row">
   <div class="column" style="background-color:white;">
-    <h3 class="w3-center">Pendapatan</h3>
+    <h3 class="w3-center">Total Pendapatan Online</h3>
     <div class="w3-row-padding">
     <table class="table">
         <tr>
         <th>Nomor Pesanan</th>
         <th>Pemasukkan</th>
         </tr>
-        <?php $no = 0;?>
-        @foreach($tambahmakanan as $tambahmakanan)
-        <?php $no++ ;?>
+        @foreach($keranjang as $tambahmakanan)
         <tr>
-        <td>{{$no}}</td>
+        <td>{{$tambahmakanan->id}}</td>
         <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
         </tr> 
         @endforeach
       </table>
   </div>
 </div>
-<form method="post" action="/hitungpendapatan">		
-{{csrf_field()}}	
-			<input type="text" name="bil_1" class="bil" autocomplete="off" >
-			<input type="text" name="bil_2" class="bil" autocomplete="off" >
-			<select class="opt" name="operasi">
-				<option value="tambah">+</option>
-			</select>
-			<button type="submit" class="btn btn-info">Hasil</button>								
-		</form>
-    <div class="w3-container">
-      @if(session('info'))
-      <div class="alert alert-info">
-        {{session('info')}}
-      </div>
-      @endif
-    </div>
+
+</div>
+<div class="row">
+  <div class="column" style="background-color:white;">
+    <h3 class="w3-center">Total Pendapatan Offline</h3>
+    <div class="w3-row-padding">
+    <table class="table">
+        <tr>
+        <th>Nomor Pesanan</th>
+        <th>Nama Pembeli</th>
+        <th>Pemasukkan</th>
+        </tr>
+        @foreach($pemesananoffline as $pesanoffline)
+        <tr>
+        <td>{{$pesanoffline->id}}</td>
+        <td>{{$pesanoffline->nama_pembeli}}</td>
+        <td>Rp.{{$pesanoffline->qty_offline * $pesanoffline->harga_offline}},00</td>
+        </tr> 
+        @endforeach
+      </table>
+  </div>
+</div>
+
 </body>
 </html>

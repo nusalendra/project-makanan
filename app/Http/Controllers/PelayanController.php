@@ -90,7 +90,6 @@ class PelayanController extends Controller
 
     public function addorderoffline(request $request){
         // pemesananoffline::create([
-        //     'nama_pembeli'=>$request->nama_pembeli,
         //     'menu_offline'=>$request->namaproduk,
         //     'qty_offline' => $request->qty_offline,
         //     'harga_offline' => $request->hargaproduk
@@ -106,6 +105,15 @@ class PelayanController extends Controller
             ]);
         }
         return redirect()->to('/kasir');  
+    }
+
+    public function addpesananoffline(request $request){
+        pemesananoffline::create([
+            'menu_offline'=>$request->namaproduk,
+            'qty_offline' => $request->qty_offline,
+            'harga_offline' => $request->hargaproduk
+        ]);
+        return redirect()->to('/simpanoffline');
     }
 
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Admin;
+use App\Models\User;
 use App\Models\Pegawai;
 use App\Models\Lokasi;
 use App\Models\tambahmakanan;
@@ -35,7 +36,7 @@ class AdminController extends Controller
 
     
     public function tambahpegawai(request $request){
-        $data_pegawai = pegawai::all();
+        $data_pegawai = user::all();
         return view('admin.tambahpegawai',compact('data_pegawai'));
     }
 
@@ -147,7 +148,8 @@ class AdminController extends Controller
     }
 
     public function datacust(){
-        return view('admin.datacust');
+        $data_cust = user::all();
+        return view('admin.datacust',compact('data_cust'));
     }
 
     public function dashboard(request $request){

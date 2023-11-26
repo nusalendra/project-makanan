@@ -95,7 +95,6 @@ tr:nth-child(even) {
   <div class="w3-bar-block">
     <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cube fa-fw w3-margin-right"></i>DASHBOARD</a>
     <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 
-    <a href="tambahlokasi" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-map-marker fa-fw w3-margin-right"></i>DATA LOKASI</a> 
     <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>DATA PEGAWAI</a>
     <a href="/datacust" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>DATA CUSTOMER</a>
     <a href="/riwayatdt" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-folder fa-fw w3-margin-right"></i>REPORT</a>
@@ -108,45 +107,8 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>Halaman Tambah Data Pegawai</b></h1>
-  <header class="w3-container">
-    <div class="modal-body">
-        <form action="/addpegawai" method="POST">
-          {{csrf_field()}}
-          <div class="form-group">
-              <label for="exampleInputEmail1">NIP</label>
-              <input name="nip"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">Nama Pegawai</label>
-              <input name="nama_pegawai"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">Username</label>
-              <input name="username"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
-           <div class="form-group">
-              <label for="exampleInputEmail1">Password</label>
-              <input name="password"type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"  >
-           </div>
-           <label for="name" class="cols-sm-2 control-label">Lokasi Penempatan</label>
-                                        <div class="cols-sm-10">
-                                            <div class="input-group">
-                                              
-                                                <select name="lokasi_penempatan"class="form-control" id="exampleFormControlSelect1">
-                                                    <option value="Outlet Cabang Canggu">Outlet Cabang Canggu</option>
-                                                    <option value="Outlet Cabang Ubud">Outlet Cabang Ubud</option>
-                                                </select>
-                                            </div>
-                                        </div>
-          
-          
-
-         </div>
-
-        <div class="modal-footer">
-        <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
-      </form>
+ 
+        
     </div>
   </header>
 </div>    
@@ -156,21 +118,24 @@ tr:nth-child(even) {
     <h1><b>Data Pegawai Sushi Key</b></h1>
     <table class="table">
         <tr>
-        <th>NIP</th>
-        <th>Nama Pegawai</th> 
+        <th>ID</th>
         <th>Username</th>
         <th>Password</th>
-        <th>Lokasi Penempatan</th>
-        <th>Action</th>
+        <th>Email</th>
+        <th>Tanggal Pembuatan Akun</th>
+        <th>Jam Pembuatan Akun</th>
         </tr>
         @foreach($data_pegawai as $pegawai)
+        <?php 
+                  $temp = explode(' ',$pegawai->created_at);
+         ?>
         <tr>
-        <td>{{$pegawai->nip}}</td>   
-        <td>{{$pegawai->nama_pegawai}}</td> 
-        <td>{{$pegawai->username}}</td> 
+        <td>{{$pegawai->id}}</td>   
+        <td>{{$pegawai->name}}</td> 
         <td>{{$pegawai->password}}</td> 
-        <td>{{$pegawai->lokasi_penempatan}}</td> 
-        <td><a href="/prosesviewdata/{{$pegawai->id}}" class="btn fa fa-edit w3-blue"></a><a> </a><a href="/deletepegawai/{{$pegawai->id}}}" class="btn fa fa-trash w3-red"></a></td>
+        <td>{{$pegawai->email}}</td> 
+        <td>{{$temp[0]}}</td>
+        <td>{{$temp[1]}}</td>
         </tr>
         @endforeach
         </tr>

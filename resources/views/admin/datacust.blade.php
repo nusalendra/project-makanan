@@ -14,9 +14,9 @@
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
-  background-color: #FFFFFF; /* Green */
-  border: 0.5 px;
-  color: black;
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
   padding: 10px 22px;
   text-align: center;
   text-decoration: none;
@@ -98,7 +98,7 @@ tr:nth-child(even) {
     <a href="tambahpegawai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-male fa-fw w3-margin-right"></i>DATA PEGAWAI</a>
     <a href="/datacust" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-group fa-fw w3-margin-right"></i>DATA CUSTOMER</a>
     <a href="/riwayatdt" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-folder fa-fw w3-margin-right"></i>REPORT</a>
-    <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
+    <a href="/loginadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -107,14 +107,48 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h3><b>Data Customer</b></h3>
-    <div class="w3-section w3-bottombar w3-padding-13">
-
-</div> 
-
-    <div>
-        <button class="button">Tambah Data</button>
+ 
+        
     </div>
+  </header>
+</div>    
+</div>
+
+<div class="w3-row" style="margin-left:320px">
+    <h1><b>Data Customer Sushi Key</b></h1>
+    <table class="table">
+        <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Tanggal Pembuatan Akun</th>
+        <th>Jam Pembuatan Akun</th>
+        </tr>
+        @foreach($data_cust as $cust)
+        <?php 
+                  $temp = explode(' ',$cust->created_at);
+         ?>
+        <tr>
+        <td>{{$cust->id}}</td>   
+        <td>{{$cust->name}}</td> 
+        <td>{{$cust->email}}</td> 
+        <td>{{$temp[0]}}</td>
+        <td>{{$temp[1]}}</td>
+        </tr>
+        @endforeach
+        </tr>
+
+      </div>
+
+     
+ 
+
+
+
+
+ <!-- First Photo Grid-->
+ 
+</div> 
 
 </body>
 </html>

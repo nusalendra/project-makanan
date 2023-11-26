@@ -107,53 +107,59 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h3><b>DASHBOARD</b></h3>
-    <div class="w3-section w3-bottombar w3-padding-13">
-</div> 
-
-
-
-<br>
-<div class="row">
-  <div class="column" style="background-color:white;">
-    <h3 class="w3-center">Total Pendapatan Online</h3>
+    <h1><b>DATA PEMASUKKAN ONLINE</b></h1>
+    <div class="w3-section w3-bottombar ">
+    </div>
     <div class="w3-row-padding">
     <table class="table">
-        <tr>
+       <tr>
         <th>Nomor Pesanan</th>
+        <th>Tanggal Pembelian</th>
+        <th>Jam Pembelian</th>
         <th>Pemasukkan</th>
         </tr>
         @foreach($keranjang as $tambahmakanan)
+        <?php 
+                  $temp = explode(' ',$tambahmakanan->created_at);
+         ?>
         <tr>
         <td>{{$tambahmakanan->id}}</td>
+        <td>{{$temp[0]}}</td>
+        <td>{{$temp[1]}}</td>
         <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
-        </tr> 
+	</tr>
         @endforeach
-      </table>
-  </div>
+    </table>
 </div>
 
-</div>
-<div class="row">
-  <div class="column" style="background-color:white;">
-    <h3 class="w3-center">Total Pendapatan Offline</h3>
-    <div class="w3-row-padding">
+
+
+
+<h1><b>DATA PEMASUKKAN OFFLINE</b></h1>
+    <div class="w3-section w3-bottombar w3-padding-13">
+</div> 
+      <div class="w3-row-padding">
     <table class="table">
         <tr>
         <th>Nomor Pesanan</th>
         <th>Nama Pembeli</th>
+        <th>Tanggal Pembelian</th>
+        <th>Jam pembelian</th>
         <th>Pemasukkan</th>
         </tr>
+        <?php $no = 0;?>
         @foreach($pemesananoffline as $pesanoffline)
+        <?php $no++ ;?>
         <tr>
         <td>{{$pesanoffline->id}}</td>
         <td>{{$pesanoffline->nama_pembeli}}</td>
+        <td>{{$temp[0]}}</td>
+        <td>{{$temp[1]}}</td>
         <td>Rp.{{$pesanoffline->qty_offline * $pesanoffline->harga_offline}},00</td>
         </tr> 
         @endforeach
       </table>
-  </div>
-</div>
-
+      </div>
+      </div>
 </body>
 </html>

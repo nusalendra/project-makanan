@@ -41,6 +41,7 @@ class PelayanController extends Controller
         return view('kasir.kasironline',compact('keranjang','total_orderan','pembayaran'));
     }
 
+    
     public function indexdetailpesanan(request $request){
         $tambahmakanan = tambahmakanan::all();
         $orderoffline = Orderoffline::all();

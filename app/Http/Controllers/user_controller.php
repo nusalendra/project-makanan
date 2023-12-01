@@ -112,8 +112,14 @@ class user_controller extends Controller
         return view('user.invoice',compact('keranjang','total_orderan','pembayaran'));
     }
 
-    public function selesai(){
-        return view('user.selesai');
+    public function selesai(request $request){
+        $pemesananoffline = pemesananoffline::all();
+        $data = validasibayar::where('status','selesai')->get();
+        $data = DB::table('keranjang')
+        ->join('pembayaran', 'pembayaran.id', '=', 'keranjang.id')
+        ->join('validasibayar','validasibayar.id','=','pembayaran.id')
+        ->get();
+        return view('user.selesai',compact('pemesananoffline'))->with('data', $data);
     }
 
     public function loginuser(request $request){

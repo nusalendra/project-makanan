@@ -122,6 +122,8 @@ tr:nth-child(even) {
         <th>Qty</th>
         <th>ID Pembayaran</th>
         <th>Metode Pembayaran</th>
+        <th>Status</th>
+        <th>Aksi</th>
         </tr>
         @foreach ($data as $k => $item)
         <tr>
@@ -132,14 +134,21 @@ tr:nth-child(even) {
         <td>{{$item->qty}}</td>
         <td>{{$item->id_pembayaran}}</td>
         <td>{{$item->metode}}</td>
+        <td>{{$item->status}}</td>
+        <td><form action="{{route('editstatusadmin',['id'=>$item->id])}}" method="GET">
+        {{csrf_field()}}
+        <div class="form-group">
+        <input id="exampleInputEmail1" type="hidden" placeholder="" name="status" value="selesai" required autocomplete="" autofocus />
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
+        </div>
+        </form>
+        </td>
         </tr>
         @endforeach
       </table>
       </div>
-
-     
-    
-
 
 </body>
 </html>

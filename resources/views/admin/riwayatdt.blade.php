@@ -132,7 +132,7 @@ tr:nth-child(even) {
         @endforeach
       </table>
       </div>
-
+      
       <h3><b>Data Report Order Offline</b></h3>
     <div class="w3-section w3-bottombar w3-padding-13">
 </div> 

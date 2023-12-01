@@ -12,6 +12,7 @@ use App\Models\tambahmakanan;
 use App\Models\keranjang;
 use App\Models\pemesananoffline;
 use App\Models\Pembayaran;
+use App\Models\validasibayar;
 use DB;
 
 class AdminController extends Controller
@@ -168,6 +169,13 @@ class AdminController extends Controller
         ->join('validasibayar','validasibayar.id','=','pembayaran.id')
         ->get();
         return view('admin.riwayatdt',compact('pemesananoffline'))->with('data', $data);
+    }
+
+    public function editstatusadmin(request $request, $id){
+        $item = validasibayar::find($id);
+        $item->status = $request->input('status');
+        $item->save();
+        return redirect('/validasibayar');
     }
 
     public function indexvalidasi(request $request){

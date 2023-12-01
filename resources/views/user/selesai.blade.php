@@ -94,16 +94,32 @@ tr:nth-child(even) {
     <h1><b>ORDERAN SELESAI</b></h1>
     <div class="w3-section w3-bottombar ">
     </div>
-    <table>
-  <tr>
+    <div class="w3-row-padding">
+    <table class="table">
+    <tr>
         <th>Nomor Pesanan</th>
-        <th>Detail Pesanan</th>
+        <th>Nama Pemesan</th>
+        <th>Pesanan</th>
+        <th>Harga per Item</th>
+        <th>Qty</th>
+        <th>ID Pembayaran</th>
+        <th>Metode Pembayaran</th>
         <th>Status</th>
-  </tr>
-  <tr>
-    
-  </tr>
-</table>
+        </tr>
+        @foreach ($data as $k => $item)
+        <tr>
+        <td>{{$k+1}}</td>
+        <td>{{$item->user_nama}}</td>
+        <td>{{$item->menu}}</td>
+        <td>Rp.{{$item->harga}},00</td>
+        <td>{{$item->qty}}</td>
+        <td>{{$item->id_pembayaran}}</td>
+        <td>{{$item->metode}}</td>
+        <td>{{$item->status}}</td>
+        </tr>
+        @endforeach
+      </table>
+      </div>
 
 </body>
 </html>

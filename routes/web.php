@@ -66,6 +66,7 @@ route::get('/datacust','AdminController@datacust');
 route::get('/dashboard','AdminController@dashboard');
 route::get('/riwayatdt','AdminController@riwayatdt');
 route::get('/validasibayar','AdminController@indexvalidasi');
+route::get('/editstatusadmin/{id}','AdminController@editstatusadmin')->name('editstatusadmin');
 
 //FUNCTION DATA MAKANAN
 route::get('/tambahmakanan','AdminController@tambahmakanan');

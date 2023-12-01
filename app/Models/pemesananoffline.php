@@ -10,5 +10,5 @@ class pemesananoffline extends Model
     use HasFactory;
     protected $table = 'pemesananoffline';
     protected $primarykey = 'id';
-    protected $fillable = ['nama_pembeli','menu_offline','qty_offline','harga_offline','statusoffline'];
+    protected $fillable = ['nama_pembeli','menu_offline','qty_offline','harga_offline','statusoffline','status_pesanan'];
 }

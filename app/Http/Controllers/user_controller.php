@@ -8,6 +8,8 @@ use App\Models\tambahmakanan;
 use App\Models\Pembayaran;
 use App\Models\Pemesananoffline;
 use App\Models\keranjang;
+use App\Models\validasibayar;
+use DB;
 
 
 class user_controller extends Controller
@@ -120,7 +122,12 @@ class user_controller extends Controller
 
     public function addpembayaran(request $request){
         Pembayaran::create($request->all());
-        return redirect('invoice')->with('sukses','penambahan telah berhasil!');
+        return redirect('keranjang')->with('sukses','penambahan telah berhasil!');
+    }
+
+    public function addvalidasibayar(request $request){
+        validasibayar::create($request->all());
+        return redirect('keranjang')->with('sukses','penambahan telah berhasil!');
     }
 
     public function addpembeli(request $request){

@@ -114,23 +114,21 @@ tr:nth-child(even) {
 
 <div class="w3-row-padding">
     <table class="table">
-        <tr>
+    <tr>
         <th>Nomor Pesanan</th>
         <th>Pesanan</th>
-        <th>Harga satuan</th>
+        <th>Harga per Item</th>
         <th>Qty</th>
-        <th>Status Pesanan</th>
+        <th>Metode Pembayaran</th>
         </tr>
-        <?php $no = 0;?>
-        @foreach($keranjang as $tambahmakanan)
-        <?php $no++ ;?>
+        @foreach ($data as $k => $item)
         <tr>
-        <td>{{$tambahmakanan->id}}</td>
-        <td>{{$tambahmakanan->menu}}</td>
-        <td>{{$tambahmakanan->harga}}</td>
-        <td>{{$tambahmakanan->qty}}</td>
-        <td>{{$tambahmakanan->status}}</td>
-        </tr> 
+        <td>{{$k+1}}</td>
+        <td>{{$item->menu}}</td>
+        <td>Rp.{{$item->harga}},00</td>
+        <td>{{$item->qty}}</td>
+        <td>{{$item->metode}}</td>
+        </tr>
         @endforeach
       </table>
       </div>

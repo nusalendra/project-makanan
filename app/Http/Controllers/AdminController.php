@@ -12,6 +12,7 @@ use App\Models\tambahmakanan;
 use App\Models\keranjang;
 use App\Models\pemesananoffline;
 use App\Models\Pembayaran;
+use DB;
 
 class AdminController extends Controller
 {
@@ -161,10 +162,18 @@ class AdminController extends Controller
     }
 
     public function riwayatdt(request $request){
-        $pembayaran = Pembayaran::all();
-        $keranjang = keranjang::all();
         $pemesananoffline = pemesananoffline::all();
-        return view('admin.riwayatdt',compact('keranjang','pembayaran','pemesananoffline'));
+        $data = DB::table('keranjang')
+        ->join('pembayaran', 'pembayaran.id', '=', 'keranjang.id')
+        ->get();
+        return view('admin.riwayatdt',compact('pemesananoffline'))->with('data', $data);
+    }
+
+    public function indexvalidasi(request $request){
+        $data = DB::table('keranjang')
+        ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
+        ->get();
+        return view('admin.validasibayar')->with('data', $data);
     }
 
     public function hitungpemasukanonline(request $request){

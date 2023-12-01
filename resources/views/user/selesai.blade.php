@@ -96,18 +96,12 @@ tr:nth-child(even) {
     </div>
     <table>
   <tr>
-    <th>Tanggal</th>
-    <th>ID order</th>
-    <th>Pesanan</th>
-    <th>Lokasi</th>
-    <th>Keterangan</th>
+        <th>Nomor Pesanan</th>
+        <th>Detail Pesanan</th>
+        <th>Status</th>
   </tr>
   <tr>
-    <td>12 July 2023</td>
-    <td>KO001</td>
-    <td>Sushi Chicken + Es Teh</th>
-    <td>Ubud or Canggu</td>
-    <td>Proses or Selesai</td>
+    
   </tr>
 </table>
 

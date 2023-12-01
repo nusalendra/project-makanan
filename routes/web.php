@@ -44,6 +44,7 @@ route::get('/selesai','user_controller@selesai');
 // route::get('/loginuser','user_controller@loginuser');
 route::view('/loginuser','user.loginuser');
 route::post('/addpembayaran','user_Controller@addpembayaran');
+route::post('/addvalidasibayar','user_Controller@addvalidasibayar');
 route::get('/hapusmakanan','user_controller@hapusmakanan');
 
 //KASIR
@@ -64,6 +65,7 @@ route::get('/loginadmin','AdminController@loginadmin');
 route::get('/datacust','AdminController@datacust');
 route::get('/dashboard','AdminController@dashboard');
 route::get('/riwayatdt','AdminController@riwayatdt');
+route::get('/validasibayar','AdminController@indexvalidasi');
 
 //FUNCTION DATA MAKANAN
 route::get('/tambahmakanan','AdminController@tambahmakanan');

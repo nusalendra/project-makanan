@@ -11,6 +11,7 @@ use App\Models\tambahmakanan;
 use App\Models\keranjang;
 use App\Models\Pembayaran;
 use PDF;
+use DB;
 
 class PelayanController extends Controller
 {
@@ -35,10 +36,10 @@ class PelayanController extends Controller
     }
 
     public function indexkasironline(request $request){
-        $keranjang = keranjang::all();
-        $pembayaran = Pembayaran::all();
-        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('kasir.kasironline',compact('keranjang','total_orderan','pembayaran'));
+        $data = DB::table('keranjang')
+                    ->join('pembayaran', 'pembayaran.id', '=', 'pembayaran.id')
+                    ->get();
+        return view('kasir.kasironline')->with('data', $data);
     }
 
     
@@ -65,7 +66,7 @@ class PelayanController extends Controller
 
     public function download_invoice(){
         $tambahmakanan = tambahmakanan::all();
-        $total_orderan = tambahmakanan::selectraw("sum(harga*qty) as totalorderan")->first();
+        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
         $pdf = PDF::loadView('download.cetakinvoice',compact('tambahmakanan','total_orderan'));
         return $pdf->download('Invoice.pdf');
     }
@@ -85,7 +86,8 @@ class PelayanController extends Controller
 
     public function keranjangoffline(request $request){
         $orderoffline = Orderoffline::all();
-        $pemesananoffline = pemesananoffline::all();
+        $pemesananoffline = pemesananoffline::where('user_id',auth()->user()->id)
+        ->where('status_pesanan',0)->get();
         return view('pelayan.keranjangoffline',compact('orderoffline','pemesananoffline'));
     }
 

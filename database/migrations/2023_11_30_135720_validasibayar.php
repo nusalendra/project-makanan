@@ -13,15 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('keranjang', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->string('user_nama');
-            $table->integer('tambahmakanan_id');
-            $table->string('menu');
-            $table->integer('qty');
-            $table->integer('harga');
-            $table->string('status')->nullable();
+        Schema::create('validasibayar', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('id_pembayaran');
+            $table->string('status');
             $table->timestamps();
         });
     }

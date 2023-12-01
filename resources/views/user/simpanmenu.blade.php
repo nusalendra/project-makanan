@@ -99,7 +99,7 @@ tr:nth-child(even) {
     <table class="table">
         <tr>
         <th>Pesanan</th>
-        <th>Harga satuan</th>
+        <th>Detail Pesanan</th>
         <th>Qty</th>
         <th>Total Harga per Menu</th>
         <th>Edit QTY</th>
@@ -140,7 +140,7 @@ tr:nth-child(even) {
       <table class="table">
         <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
         <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
-      
+        <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal2">Validasi Pembayaran</button>
   <!-- Modal -->
   <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -157,7 +157,6 @@ tr:nth-child(even) {
           <label for="">Pilih Pembayaran</label>        
                  <select name="metode" class="form-control select2 @error('metode') is-invalid @enderror" name="metode" value="{{ old('metode')}}" required autocomplete=""  autofocus />>
                  <option></option>
-                 <option value="QRIS">QRIS</option> 
                  <option value="OVO">OVO</option>
                  <option value="GOPAY">GOPAY</option>
                  </select>                 
@@ -169,7 +168,7 @@ tr:nth-child(even) {
           </div>
          
         <div class="modal-footer">
-        <button type="submit" class="btn btn-primary">Bayar</button>
+        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal1">Proses</button>
         </div>
         </form>
       </div>
@@ -182,6 +181,36 @@ tr:nth-child(even) {
 </div>
 </div>
 </div>
+<div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Silahkan Isi ID Pembayaran Dari E-Wallet Anda!</h4>
+        </div>
+        <div class="modal-body">
+         <form action="/addvalidasibayar" method="POST">
+         {{csrf_field()}}
+          <div class="form-group">
+          <label for="exampleInputEmail1">ID Pembayaran</label>
+              <input id="id_pembayaran" type="" placeholder="" class="form-control @error('id_pembayaran') is-invalid @enderror" name="id_pembayaran" required autocomplete="" autofocus />
+			      @error('')
+                <span class="invalid-feedback" role="alert" >
+                	<strong>{{ $message }}</strong>
+                </span>
+            @enderror
+          </div>
+         
+        <div class="modal-footer">
+        <button type="submit" class="btn btn-default btn-lg w3-red">Kirim</button>
+        </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 </div>
       </div>

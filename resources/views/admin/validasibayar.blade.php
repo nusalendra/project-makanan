@@ -121,6 +121,7 @@ tr:nth-child(even) {
         <th>Harga per Item</th>
         <th>Qty</th>
         <th>ID Pembayaran</th>
+        <th>Metode Pembayaran</th>
         </tr>
         @foreach ($data as $k => $item)
         <tr>
@@ -130,6 +131,7 @@ tr:nth-child(even) {
         <td>Rp.{{$item->harga}},00</td>
         <td>{{$item->qty}}</td>
         <td>{{$item->id_pembayaran}}</td>
+        <td>{{$item->metode}}</td>
         </tr>
         @endforeach
       </table>

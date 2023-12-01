@@ -165,6 +165,7 @@ class AdminController extends Controller
         $pemesananoffline = pemesananoffline::all();
         $data = DB::table('keranjang')
         ->join('pembayaran', 'pembayaran.id', '=', 'keranjang.id')
+        ->join('validasibayar','validasibayar.id','=','pembayaran.id')
         ->get();
         return view('admin.riwayatdt',compact('pemesananoffline'))->with('data', $data);
     }
@@ -172,6 +173,7 @@ class AdminController extends Controller
     public function indexvalidasi(request $request){
         $data = DB::table('keranjang')
         ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
+        ->join('pembayaran','pembayaran.id','=','validasibayar.id')
         ->get();
         return view('admin.validasibayar')->with('data', $data);
     }

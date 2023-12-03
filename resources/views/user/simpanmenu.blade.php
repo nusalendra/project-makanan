@@ -11,6 +11,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="jquery-1.7.min.js"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
@@ -102,22 +103,24 @@ tr:nth-child(even) {
         <th>Detail Pesanan</th>
         <th>Qty</th>
         <th>Total Harga per Menu</th>
+        <th>Status</th>
         <th>Edit QTY</th>
         <th>Simpan</th>
-        <th style="display:none">Hapus</th>
+       
         </tr>
-        @foreach($keranjang as $tambahmakanan)
-        <td>{{$tambahmakanan->menu}}</td>
-        <td>Rp.{{$tambahmakanan->harga}},00</td>
-        <td>{{$tambahmakanan->qty}}</td>
-        <td>Rp.{{$tambahmakanan->qty * $tambahmakanan->harga}},00</td>
-        <td><form action="{{route('editkeranjang',['id'=>$tambahmakanan->id])}}" method="GET">
+        @foreach($data as $k => $item)
+        <td>{{$item->menu}}</td>
+        <td>Rp.{{$item->harga}},00</td>
+        <td>{{$item->qty}}</td>
+        <td>Rp.{{$item->qty * $item->harga}},00</td>
+        <td>{{$item->status}}</td>
+        <td><form action="{{route('editkeranjang',['id'=>$item->id])}}" method="GET">
 {{csrf_field()}}
 <div class="form-group">
     <div class="cols-sm-10">
         <div class="quantity">
         <input type='button' value='-' class='qtyminus minus' field='qty' />
-        <input type='text' name='qty' value="{{$tambahmakanan->qty}}" class='qty'  />
+        <input type='text' name='qty' value="{{$item->qty}}" class='qty'  />
         <input type='button' value='+' class='qtyplus plus' field='qty' />
         </div>
     </div>
@@ -129,18 +132,24 @@ tr:nth-child(even) {
 </td>
 </form>
   </td>
-  <td style="display:none"><a href="/hapusmakanan/{{$tambahmakanan->id}}" class="btn fa fa-trash w3-red"></a></td>
         </tr>
         @endforeach
+        </table>
       </div>
-</div>
-</div>
-</div>
-      </div>
-      <table class="table">
-        <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
+      <div class="table">
+      <tr><h3>Total Harga <b> Rp{{$total_orderan->totalorderan}} ,00 </b></h3>
+      <h3>Jika Status Sudah Selesai Silahkan Klik Button Pembayaran Selesai Untuk Menyelesaikan Tahap Akhir Pembelian</h3>
         <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal1">Checkout</button>
-        <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal" data-target="#myModal2">Validasi Pembayaran</button>
+        <button type="button" class="btn btn-default btn-lg w3-red " data-toggle="modal" data-target="#myModal2">Validasi Pembayaran</button>
+        <button type="button" class="btn btn-default btn-lg w3-red sembunyi" value="Sembunyi">Pembayaran Selesai</button>
+      </div>
+      
+</div>
+</div>
+</div>
+      </div>
+     
+      
   <!-- Modal -->
   <div class="modal fade" id="myModal1" role="dialog">
     <div class="modal-dialog modal-sm">
@@ -219,6 +228,16 @@ tr:nth-child(even) {
 
 <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 <!-- Your custom script here -->
+<script>
+   $(document).ready(function(){
+  
+  //Ketika elemen class sembunyi di klik maka elemen class gambar sembunyi
+        $('.sembunyi').click(function(){
+   //Sembunyikan elemen class gambar
+   $('.table').hide();        
+        });
+ });
+</script>
 <script type="text/babel">
 jQuery(document).ready(($) => {
         $('.quantity').on('click', '.plus', function(e) {

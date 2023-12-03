@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('validasibayar', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('id_pembayaran');
             $table->string('status');
             $table->timestamps();
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('validasibayar');
     }
 };

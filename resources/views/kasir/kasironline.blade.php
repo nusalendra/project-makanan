@@ -8,15 +8,15 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
 <style>
 body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
 .button {
-  background-color: #4CAF50; /* Green */
-  border: none;
-  color: white;
+  background-color: #FFFFFF; /* Green */
+  border: 0.5 px;
+  color: black;
   padding: 10px 22px;
   text-align: center;
   text-decoration: none;
@@ -25,10 +25,6 @@ body,h1,h2,h3,h4,h5,h6 {font-family: "Raleway", sans-serif}
   margin: 6px 2px;
   transition-duration: 0.4s;
   cursor: pointer;
-}
-.buttonbtm {
-  position:absolute;
-  bottom:10%;
 }
 .button3 {
   background-color: white; 
@@ -48,17 +44,34 @@ table {
 
 td, th {
   border: 1px solid #dddddd;
-  text-align: left;
-  padding: 6px;
+  text-align: center;
+  padding: 8px;
 }
 
 tr:nth-child(even) {
   background-color: #dddddd;
 }
+* {
+  box-sizing: border-box;
+}
 
+/* Create two equal columns that floats next to each other */
+.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
 
 </style>
-    <title>KASIR</title>
+    <title>ADMIN PAGE</title>
 </head>
 <body class="w3-light-grey w3-content" style="max-width:1600px">
     <!-- Sidebar/menu -->
@@ -67,17 +80,22 @@ tr:nth-child(even) {
     <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
       <i class="fa fa-remove"></i>
     </a>
-    <h4><b>SUSHI UBUD CANGGU</b></h4>
-    <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
+    <h4><b>ADMIN PAGE</b></h4>
+    <p class="w3-text-white">Welcome to admin page!</p>
+  </div>
+</nav>
+<nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+  <div class="w3-container">
+    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
+      <i class="fa fa-remove"></i>
+    </a>
+    <h4><b>ADMIN PAGE</b></h4>
+    <p class="w3-text-white">Welcome to admin page!</p>
   </div>
   <div class="w3-bar-block">
     <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a> 
     <a href="/kasironline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a> 
     <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
-  </div>
-  <div class="w3-panel w3-large">
-    <i class="fa fa-facebook-official w3-hover-opacity"></i>
-    <a href="https://www.instagram.com/sushikey.bali/" class="fa fa-instagram w3-hover-opacity"></a>
   </div>
 </nav>
 <!-- Overlay effect when opening sidebar on small screens -->
@@ -86,34 +104,48 @@ tr:nth-child(even) {
 <!-- !PAGE CONTENT! -->
 <div class="w3-main" style="margin-left:300px">
 <div class="w3-container">
-    <h1><b>HALAMAN KASIR</b></h1>
-    <div class="w3-section w3-bottombar ">
-    </div>
-    <h1><b>TABEL ORDERAN ONLINE</b></h1>
-    <div class="w3-row-padding">
+    <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
+    <div class="w3-section w3-bottombar w3-padding-13">
+</div> 
+
+
+<div class="w3-row-padding">
     <table class="table">
-        <tr>
+    <tr>
         <th>Nomor Pesanan</th>
+        <th>Nama Pemesan</th>
         <th>Pesanan</th>
         <th>Harga per Item</th>
         <th>Qty</th>
+        <th>ID Pembayaran</th>
         <th>Metode Pembayaran</th>
+        <th>Status</th>
+        <th>Aksi</th>
         </tr>
         @foreach ($data as $k => $item)
         <tr>
         <td>{{$k+1}}</td>
+        <td>{{$item->user_nama}}</td>
         <td>{{$item->menu}}</td>
         <td>Rp.{{$item->harga}},00</td>
         <td>{{$item->qty}}</td>
+        <td>{{$item->id_pembayaran}}</td>
         <td>{{$item->metode}}</td>
+        <td>{{$item->status}}</td>
+        <td><form action="{{route('editstatusadmin',['id'=>$item->id])}}" method="GET">
+        {{csrf_field()}}
+        <div class="form-group">
+        <input id="exampleInputEmail1" type="hidden" placeholder="" name="status" value="selesai" required autocomplete="" autofocus />
+        </div>
+        <div class="">
+            <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
+        </div>
+        </form>
+        </td>
         </tr>
         @endforeach
-        </table>
-</div>
-
-
-
-
+      </table>
+      </div>
 
 </body>
 </html>

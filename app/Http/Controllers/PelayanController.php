@@ -37,8 +37,9 @@ class PelayanController extends Controller
 
     public function indexkasironline(request $request){
         $data = DB::table('keranjang')
-                    ->join('pembayaran', 'pembayaran.id', '=', 'pembayaran.id')
-                    ->get();
+        ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
+        ->join('pembayaran','pembayaran.id','=','validasibayar.id')
+        ->get();
         return view('kasir.kasironline')->with('data', $data);
     }
 

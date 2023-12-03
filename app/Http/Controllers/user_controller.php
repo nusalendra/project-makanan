@@ -62,9 +62,12 @@ class user_controller extends Controller
     public function keranjang(request $request){
         // $orderan = orderan::all();
         // $tambahmakanan = tambahmakanan::all();
+        $data = DB::table('keranjang')
+        ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
+        ->get();
          $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
         $keranjang=keranjang::where('user_id', auth()->user()->id)->get();
-        return view('user.simpanmenu',compact('keranjang','total_orderan'));
+        return view('user.simpanmenu',compact('keranjang','total_orderan'))->with('data', $data);
     }
 
     public function keranjangoffline(request $request){

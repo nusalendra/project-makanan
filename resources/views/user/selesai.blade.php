@@ -100,6 +100,7 @@ tr:nth-child(even) {
         <th>Nomor Pesanan</th>
         <th>Nama Pemesan</th>
         <th>Pesanan</th>
+        <th>Tanggal dan Jam Pesanan</th>
         <th>Harga per Item</th>
         <th>Qty</th>
         <th>ID Pembayaran</th>
@@ -111,6 +112,7 @@ tr:nth-child(even) {
         <td>{{$k+1}}</td>
         <td>{{$item->user_nama}}</td>
         <td>{{$item->menu}}</td>
+        <td>{{$item->created_at}}</td>
         <td>Rp.{{$item->harga}},00</td>
         <td>{{$item->qty}}</td>
         <td>{{$item->id_pembayaran}}</td>

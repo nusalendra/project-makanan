@@ -15,13 +15,13 @@ return new class extends Migration
     {
         Schema::create('pemesananoffline', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('nama_pembeli');
+            $table->integer('user_id')->nullable();
+            $table->string('nama_pembeli')->nullable();
             $table->string('menu_offline');
             $table->integer('qty_offline');
             $table->integer('harga_offline');
             $table->string('status_offline')->nullable();
-            $table->integer('status_pesanan');
+            $table->integer('status_pesanan')->nullable();
             $table->timestamps();
         });
     }

@@ -26,12 +26,13 @@ use App\Http\Controllers\Auth\LoginController;
 
 
 //USER
+route::get('/','user_controller@indexhalamanutama');
 route::get('/homepage','user_controller@indexuser')->name('homepages');
 route::post('/addtoCart','user_controller@addtoCart');
 route::post('/addpembeli','user_controller@addpembeli');
 route::get('/pageminuman','user_controller@indexminum');
 route::get('/pagealacarte','user_controller@indexalacarte');
-route::get('/','landingpage_Controller@landingpage');
+//route::get('/','landingpage_Controller@landingpage');
 route::get('/profil','user_controller@profil');
 route::get('/menu','user_controller@menu');
 route::get('/keranjang','user_controller@keranjang');

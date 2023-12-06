@@ -25,6 +25,11 @@ class user_controller extends Controller
         return view('user.homepage',compact('tambahmakanan'));
     }
 
+    public function indexhalamanutama(){
+       $tambahmakanan = tambahmakanan::all();
+        return view('user.halamanutama',compact('tambahmakanan'));
+    }
+
     public function addtoCart(Request $request){
         $data = [
             'tambahmakanan_id' => $request->idmakanan,

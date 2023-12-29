@@ -15,44 +15,48 @@ use DB;
 
 class PelayanController extends Controller
 {
-    public function indexpelayan(request $request){
+    public function indexpelayan(request $request)
+    {
         $keranjang = keranjang::all();
-        return view('pelayan.onlinepage',compact('keranjang'));
+        return view('pelayan.onlinepage', compact('keranjang'));
     }
 
-    public function indexkasir(request $request){
+    public function indexkasir(request $request)
+    {
         $orderoffline = Orderoffline::all();
         $pemesananoffline = pemesananoffline::all();
         $keranjang = keranjang::all();
         $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('kasir.homekasir',compact('keranjang','total_orderan','orderoffline','pemesananoffline'));
+        return view('kasir.homekasir', compact('keranjang', 'total_orderan', 'orderoffline', 'pemesananoffline'));
     }
 
-    public function invoice(request $request){
+    public function invoice(request $request)
+    {
         $keranjang = keranjang::all();
         $pemesananoffline = pemesananoffline::all();
         $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('kasir.invoicekasir',compact('keranjang','total_orderan','pemesananoffline'));
+        return view('kasir.invoicekasir', compact('keranjang', 'total_orderan', 'pemesananoffline'));
     }
 
-    public function indexkasironline(request $request){
-        $data = DB::table('keranjang')
-        ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
-        ->join('pembayaran','pembayaran.id','=','validasibayar.id')
-        ->get();
+    public function indexkasironline(request $request)
+    {
+        $data = keranjang::join('pembayaran', 'pembayaran.keranjang_id', '=', 'keranjang.id')
+            ->get();
         return view('kasir.kasironline')->with('data', $data);
     }
 
-    
-    public function indexdetailpesanan(request $request){
+
+    public function indexdetailpesanan(request $request)
+    {
         $tambahmakanan = tambahmakanan::all();
         $orderoffline = Orderoffline::all();
         $pemesananoffline = pemesananoffline::all();
         $total_orderan = tambahmakanan::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('kasir.detailpesanan',compact('pemesananoffline','total_orderan','orderoffline'));
+        return view('kasir.detailpesanan', compact('pemesananoffline', 'total_orderan', 'orderoffline'));
     }
 
-    public function hitungkembalian(request $request){
+    public function hitungkembalian(request $request)
+    {
         $operasi = $request->input('operasi');
         $bil_pertama = $request->input('bil_1');
         $bil_kedua = $request->input('bil_2');
@@ -62,58 +66,64 @@ class PelayanController extends Controller
         //     $result = $bil_pertama - $bil_kedua;
         // }
 
-        return redirect('kasir')->with('info','kembaliannya : '.$result);
+        return redirect('kasir')->with('info', 'kembaliannya : ' . $result);
     }
 
-    public function download_invoice(){
+    public function download_invoice()
+    {
         $tambahmakanan = tambahmakanan::all();
         $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        $pdf = PDF::loadView('download.cetakinvoice',compact('tambahmakanan','total_orderan'));
+        $pdf = PDF::loadView('download.cetakinvoice', compact('tambahmakanan', 'total_orderan'));
         return $pdf->download('Invoice.pdf');
     }
 
-    public function download_kasir(){
+    public function download_kasir()
+    {
         $pemesananoffline = pemesananoffline::all();
         $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        $pdf = PDF::loadView('download.cetakkasir',compact('pemesananoffline','total_orderan'));
+        $pdf = PDF::loadView('download.cetakkasir', compact('pemesananoffline', 'total_orderan'));
         return $pdf->download('Invoice.pdf');
     }
 
-    public function indexpelayanoffline(request $request){
+    public function indexpelayanoffline(request $request)
+    {
         $keranjang = keranjang::all();
         $pemesananoffline = pemesananoffline::all();
-        return view('pelayan.offlinepage',compact('keranjang','pemesananoffline'));
+        return view('pelayan.offlinepage', compact('keranjang', 'pemesananoffline'));
     }
 
-    public function keranjangoffline(request $request){
+    public function keranjangoffline(request $request)
+    {
         $orderoffline = Orderoffline::all();
-        $pemesananoffline = pemesananoffline::where('user_id',auth()->user()->id)
-        ->where('status_pesanan',0)->get();
-        return view('pelayan.keranjangoffline',compact('orderoffline','pemesananoffline'));
+        $pemesananoffline = pemesananoffline::where('user_id', auth()->user()->id)
+            ->where('status_pesanan', 0)->get();
+        return view('pelayan.keranjangoffline', compact('orderoffline', 'pemesananoffline'));
     }
 
-    public function addorderoffline(request $request){
+    public function addorderoffline(request $request)
+    {
         // pemesananoffline::create([
         //     'menu_offline'=>$request->namaproduk,
         //     'qty_offline' => $request->qty_offline,
         //     'harga_offline' => $request->hargaproduk
         // ]);
-        $namapembeli=$request->nama_pembeli;
-        $orderOffline=pemesananoffline::where('status_offline', null)
-        ->pluck('id')->toArray();
-        foreach($orderOffline as $id){
+        $namapembeli = $request->nama_pembeli;
+        $orderOffline = pemesananoffline::where('status_offline', null)
+            ->pluck('id')->toArray();
+        foreach ($orderOffline as $id) {
             pemesananoffline::where('id', $id)
-            ->update([
-                'nama_pembeli'=>$namapembeli,
-                'status_offline'=>'bayar'
-            ]);
+                ->update([
+                    'nama_pembeli' => $namapembeli,
+                    'status_offline' => 'bayar'
+                ]);
         }
-        return redirect()->to('/kasir');  
+        return redirect()->to('/kasir');
     }
 
-    public function addpesananoffline(request $request){
+    public function addpesananoffline(request $request)
+    {
         pemesananoffline::create([
-            'menu_offline'=>$request->namaproduk,
+            'menu_offline' => $request->namaproduk,
             'qty_offline' => $request->qty_offline,
             'harga_offline' => $request->hargaproduk
         ]);
@@ -121,41 +131,45 @@ class PelayanController extends Controller
     }
 
 
-    public function editorderoffline(request $request, $id){
+    public function editorderoffline(request $request, $id)
+    {
         $orderoffline = Orderoffline::find($id);
-        $orderoffline->qty_offline = $request->input('qty_offline'); 
+        $orderoffline->qty_offline = $request->input('qty_offline');
         $orderoffline->save();
         return redirect('keranjangoffline');
     }
 
-    public function hapusorderoffline($id){
-        Orderoffline::where('id',$id)->delete();
+    public function hapusorderoffline($id)
+    {
+        Orderoffline::where('id', $id)->delete();
         return redirect()->back();
     }
 
-    public function findidorderoffline($id){
-        $orderoffline = Orderoffline::where('id',$id)->first();
+    public function findidorderoffline($id)
+    {
+        $orderoffline = Orderoffline::where('id', $id)->first();
         $data = [
             'title' => 'orderoffline',
             'orderoffline' => $orderoffline
         ];
-        return view('pelayan.editorderanoffline',$data);
+        return view('pelayan.editorderanoffline', $data);
     }
 
-    public function loginpelayan(request $request){
+    public function loginpelayan(request $request)
+    {
         return view('pelayan.loginpelayan');
     }
 
-    public function selesaiorderall(request $request){
+    public function selesaiorderall(request $request)
+    {
         return view('pelayan.selesaiorderall');
     }
 
-    public function getHarga($id){
-        $makanan=tambahmakanan::where('id', $id)->first();
+    public function getHarga($id)
+    {
+        $makanan = tambahmakanan::where('id', $id)->first();
         return response()->json([
             'makanan' => $makanan
         ]);
     }
-    
 }
-

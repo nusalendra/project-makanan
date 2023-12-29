@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('keranjang_id')->constrained('keranjang')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('metode');
             $table->string('id_pembayaran');
             $table->string('status');

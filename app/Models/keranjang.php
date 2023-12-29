@@ -19,4 +19,8 @@ class keranjang extends Model
     public function tambahmakanan() {
         return $this->belongsToMany(tambahmakanan::class);
     }
+
+    public function pembayaran() {
+        return $this->belongsToMany(Pembayaran::class);
+    }
 }

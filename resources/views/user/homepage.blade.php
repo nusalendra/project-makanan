@@ -147,7 +147,7 @@
                     <input type="hidden" name="menu" value="{{ $tambahmakanan->nama_prdk }}" />
                     <div><img class="rounded-circle mt-5" width="100px"
                             src="{{ asset('makanan/' . $tambahmakanan->images) }}" style="width:100%"></div>
-                    <div class="w3-container w3-white">
+                    <div class="w3-container w3-white" style="padding: 20px;">
                         <p><b>{{ $tambahmakanan->nama_prdk }}</b></p>
                         <p>{{ $tambahmakanan->komposisi }}</p>
                         <p>Rp {{ $tambahmakanan->harga }}</p>
@@ -161,7 +161,7 @@
                             @endphp
 
                             @if ($keranjang && $keranjang->status == 'Dalam Keranjang')
-                                <button type="button" class="button button1" style="font-weight: bold;" disabled>
+                                <button type="button" style="font-weight: bold;" disabled>
                                     Dalam Keranjang
                                 </button>
                             @else

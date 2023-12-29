@@ -12,9 +12,9 @@ use App\Models\tambahmakanan;
 class koki_controller extends Controller
 {
     public function koki(request $request){
-        $pemesanan = pemesanan::paginate(100);
+        // $pemesanan = pemesanan::paginate(100);
         $keranjang = keranjang::all();
-        return view('koki.homekoki',compact('pemesanan','keranjang'));
+        return view('koki.homekoki',compact('keranjang'));
     }
 
     public function kokioffline(request $request){

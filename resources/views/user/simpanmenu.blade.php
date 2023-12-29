@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
@@ -111,127 +112,140 @@
     <div class="w3-main" style="margin-left:300px">
 
         <header id="portfolio">
-            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
-                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
-                    class="fa fa-bars"></i></span>
-            <div class="w3-container">
-                <h1><b>KERANJANG</b></h1>
-                <div class="w3-section w3-bottombar ">
-                </div>
-                <div class="w3-row-padding">
-                    <table class="table">
-                        <tr>
-                            <th>Pesanan</th>
-                            <th>Detail Pesanan</th>
-                            <th>Qty</th>
-                            <th>Total Harga per Menu</th>
-                            <th>Status</th>
-                            <th>Edit QTY</th>
-                            <th>Simpan</th>
-
-                        </tr>
-                        @foreach ($keranjang as $k => $item)
-                            <td>{{ $item->menu }}</td>
-                            <td>Rp.{{ $item->harga }},00</td>
-                            <td>{{ $item->qty }}</td>
-                            <td>Rp.{{ $item->qty * $item->harga }},00</td>
-                            <td>{{ $item->status }}</td>
-                            <td>
-                                <form action="{{ route('editkeranjang', ['id' => $item->id]) }}" method="GET">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <div class="cols-sm-10">
-                                            <div class="quantity">
-                                                <input type='button' value='-' class='qtyminus minus'
-                                                    field='qty' />
-                                                <input type='text' name='qty' value="{{ $item->qty }}"
-                                                    class='qty' />
-                                                <input type='button' value='+' class='qtyplus plus'
-                                                    field='qty' />
+            <form action="/checkout" method="POST">
+                {{ csrf_field() }}
+                <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
+                        class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+                <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                        class="fa fa-bars"></i></span>
+                <div class="w3-container">
+                    <h1><b>KERANJANG</b></h1>
+                    <div class="w3-section w3-bottombar ">
+                    </div>
+                    <div class="w3-row-padding">
+                        <table class="table">
+                            <tr>
+                                <th>Pesanan</th>
+                                <th>Harga</th>
+                                <th>Quantity</th>
+                                <th>Total Harga per Menu</th>
+                                <th>Hapus Pesanan</th>
+                            </tr>
+                            <?php
+                            $totalHargaSemuaPesanan = 0;
+                            ?>
+                            @foreach ($keranjang as $k => $item)
+                                <input type="hidden" name="keranjangId[]" value="{{ $item->id }}">
+                                <tr id="row_{{ $item->id }}">
+                                    <td>{{ $item->menu }}</td>
+                                    <td>
+                                        <span class="harga_per_satuan">{{ $item->harga }}.00</span>
+                                    </td>
+                                    <td>
+                                        <div class="form-group">
+                                            <div class="cols-sm-10">
+                                                <div class="quantity">
+                                                    <input type='button' value='-' class='qtyminus minus'
+                                                        field='qty' />
+                                                    <input type='text' id="qtyinput" name='qty[]'
+                                                        value="{{ $item->qty }}" class='qty'
+                                                        data-rowid="{{ $item->id }}" />
+                                                    <input type='button' value='+' class='qtyplus plus'
+                                                        field='qty' />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                            <td>
-                                <div class="">
-                                    <button type="submit" class="btn btn-primary w3-blue">SIMPAN</button>
+                                    </td>
+                                    <td class="total_harga">{{ $item->qty * $item->harga }}</td>
+                                    <?php
+                                    $totalHargaSemuaPesanan += $item->qty * $item->harga;
+                                    ?>
+                                    <td style="text-align: center;">
+                                        <a href="/keranjang/delete/{{ $item->id }}" style="color: red;">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                fill="currentColor" class="bi bi-eraser" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm2.121.707a1 1 0 0 0-1.414 0L4.16 7.547l5.293 5.293 4.633-4.633a1 1 0 0 0 0-1.414l-3.879-3.879zM8.746 13.547 3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </table>
+                    </div>
+                    <div class="table">
+                        <tr>
+                            <h3 id="totalhHarga">Total Harga Semua Pesanan Rp. <b>{{ $totalHargaSemuaPesanan }}</b>
+                            </h3>
+                            <h3>Jika Status Sudah Selesai Silahkan Klik Button Pembayaran Selesai Untuk Menyelesaikan
+                                Tahap
+                                Akhir Pembelian</h3>
+                            <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal"
+                                data-target="#myModal1">Checkout</button>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="myModal1" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content" style="width: 200%;">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title" style="font-weight: bold;">Pastikan pesanan anda sudah sesuai
+                                    sebelum
+                                    melakukan pembayaran</h4><br>
+                                <h4>Silahkan melakukan transfer pada salah satu metode pembayaran yang anda pilih dengan
+                                    nomor
+                                    pembayaran dibawah ini :</h4>
+                                <li>OVO : 20202020</li>
+                                <li>GOPAY : 3502139021390</li>
+                            </div>
+                            <div class="modal-body">
+                                <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>
+
+                                <div class="form-group">
+                                    <label for="">Pilih Metode Pembayaran</label>
+                                    <select name="metode"
+                                        class="form-control select2 @error('metode') is-invalid @enderror"
+                                        name="metode" value="{{ old('metode') }}" required autocomplete=""
+                                        autofocus />>
+                                    <option></option>
+                                    <option value="OVO">OVO</option>
+                                    <option value="GOPAY">GOPAY</option>
+                                    </select>
+                                    @error('metode')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
                                 </div>
-                            </td>
-                            </form>
-                            </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
-                <div class="table">
-                    <tr>
-                        <h3>Total Harga <b> Rp. {{ $total_orderan->totalorderan }} ,00 </b></h3>
-                        <h3>Jika Status Sudah Selesai Silahkan Klik Button Pembayaran Selesai Untuk Menyelesaikan Tahap
-                            Akhir Pembelian</h3>
-                        <button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal"
-                            data-target="#myModal1">Checkout</button>
-                </div>
+                                <h4>Setelah anda sudah melakukan transfer pada salah satu metode pembayaran diatas,
+                                    diharapkan
+                                    anda untuk mengisi ID Pembayaran dari E-Wallet anda pada input dibawah ini.</h4>
+                                <h5 style="color: rgb(168, 4, 4); font-weight: bold;">Catatan : ID Pembayaran dapat
+                                    anda
+                                    lihat
+                                    pada struk pembayaran anda</h5>
+                                <div class="form-group">
+                                    <input id="id_pembayaran" type="" placeholder=""
+                                        class="form-control @error('id_pembayaran') is-invalid @enderror"
+                                        name="id_pembayaran" required autocomplete="" autofocus />
+                                    @error('')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
 
-            </div>
-    </div>
-    </div>
-    </div>
-
-    <!-- Modal -->
-    <div class="modal fade" id="myModal1" role="dialog">
-        <div class="modal-dialog modal-sm">
-            <div class="modal-content" style="width: 200%;">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title" style="font-weight: bold;">Pastikan pesanan anda sudah sesuai sebelum
-                        melakukan pembayaran</h4><br>
-                    <h4>Silahkan melakukan transfer pada salah satu metode pembayaran yang anda pilih dengan nomor
-                        pembayaran dibawah ini :</h4>
-                    <li>OVO : 20202020</li>
-                    <li>GOPAY : 3502139021390</li>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                        data-target="#myModal1">Proses</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>
-                    <form action="/addpembayaran" method="POST">
-                        {{ csrf_field() }}
-                        <div class="form-group">
-                            <label for="">Pilih Metode Pembayaran</label>
-                            <select name="metode" class="form-control select2 @error('metode') is-invalid @enderror"
-                                name="metode" value="{{ old('metode') }}" required autocomplete="" autofocus />>
-                            <option></option>
-                            <option value="OVO">OVO</option>
-                            <option value="GOPAY">GOPAY</option>
-                            </select>
-                            @error('metode')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-                        <h4>Setelah anda sudah melakukan transfer pada salah satu metode pembayaran diatas, diharapkan
-                            anda untuk mengisi ID Pembayaran dari E-Wallet anda pada input dibawah ini.</h4>
-                        <h5 style="color: rgb(168, 4, 4); font-weight: bold;">Catatan : ID Pembayaran dapat anda lihat
-                            pada struk pembayaran anda</h5>
-                        <div class="form-group">
-                            <input id="pembayaran_id" type="" placeholder=""
-                                class="form-control @error('pembayaran_id') is-invalid @enderror" name="pembayaran_id"
-                                required autocomplete="" autofocus />
-                            @error('')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
-
-                        <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" data-toggle="modal"
-                                data-target="#myModal1">Proses</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+            </form>
+        </header>
     </div>
     </tr>
 
@@ -266,6 +280,48 @@ jQuery(document).ready(($) => {
     });
 </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tambahkan event listener untuk setiap tombol +/- pada setiap baris
+            document.querySelectorAll('.qtyplus, .qtyminus').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    var rowId = this.closest('tr').querySelector('.qty').getAttribute('data-rowid');
+                    var qtyInput = document.querySelector('#row_' + rowId + ' .qty');
+                    var qty = parseInt(qtyInput.value, 10);
+
+                    // Periksa apakah tombol yang diklik adalah tombol plus atau minus
+                    if (this.classList.contains('qtyplus')) {
+                        qty += 1;
+                    } else if (this.classList.contains('qtyminus') && qty > 0) {
+                        qty -= 1;
+                    }
+
+                    var hargaPerSatuan = parseFloat(document.querySelector('#row_' + rowId +
+                        ' .harga_per_satuan').innerText);
+                    var totalHarga = qty * hargaPerSatuan;
+                    document.querySelector('#row_' + rowId + ' .total_harga').innerText = totalHarga
+                        .toFixed(2);
+
+                    // Hitung total harga semua pesanan dan perbarui elemen <h3>
+                    updateTotalHarga();
+                });
+            });
+
+            // Fungsi untuk menghitung total harga semua pesanan
+            function updateTotalHarga() {
+                var totalHargaSemuaPesanan = 0;
+                document.querySelectorAll('.total_harga').forEach(function(element) {
+                    totalHargaSemuaPesanan += parseFloat(element.innerText);
+                });
+
+                // Perbarui elemen <h3> dengan total harga semua pesanan
+                document.querySelector('#totalhHarga b').innerText = totalHargaSemuaPesanan.toFixed(2);
+            }
+
+            // Panggil fungsi untuk menginisialisasi total harga saat halaman dimuat
+            updateTotalHarga();
+        });
+    </script>
 </body>
 
 </html>

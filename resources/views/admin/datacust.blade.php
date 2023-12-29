@@ -81,16 +81,8 @@ tr:nth-child(even) {
       <i class="fa fa-remove"></i>
     </a>
     <h4><b>ADMIN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to admin page!</p>
-  </div>
-</nav>
-<nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-      <i class="fa fa-remove"></i>
-    </a>
-    <h4><b>ADMIN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to admin page!</p>
+    <p class="w3-text-white">Selamat Datang <strong>{{ $user->username }} !</strong></p>
+    <p class="w3-text-white">Status Anda saat ini : <strong>{{ $user->role }}</strong></p>
   </div>
   <div class="w3-bar-block">
     <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cube fa-fw w3-margin-right"></i>DASHBOARD</a>
@@ -118,22 +110,24 @@ tr:nth-child(even) {
     <h1><b>Data Customer Sushi Key</b></h1>
     <table class="table">
         <tr>
-        <th>ID</th>
+        <th>No</th>
         <th>Username</th>
         <th>Email</th>
+        <td>Bagian</td>
         <th>Tanggal Pembuatan Akun</th>
         <th>Jam Pembuatan Akun</th>
         </tr>
-        @foreach($data_cust as $cust)
+        @foreach($data_cust as $index => $cust)
         <?php 
                   $temp = explode(' ',$cust->created_at);
          ?>
         <tr>
-        <td>{{$cust->id}}</td>   
+        <td>{{$index + 1}}</td>   
         <td>{{$cust->name}}</td> 
         <td>{{$cust->email}}</td> 
-        <td>{{$temp[0]}}</td>
-        <td>{{$temp[1]}}</td>
+        <td>{{ $cust->role }}</td>
+        <td>{{ $cust->created_at->format('d-m-Y') }}</td>
+        <td>{{ $cust->created_at->format('H:i:s') }}</td>
         </tr>
         @endforeach
         </tr>

@@ -24,12 +24,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        'role_id',
-        'isAdmin',
-        'isKoki',
-        'isPelayan',
-        'isUser',
-        'isKasir'
+        'role'
     ];
 
     /**
@@ -50,12 +45,20 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    public function details()
-    {
-        return $this->hasOne(Detail_user::class,'user_id');
+    // public function details()
+    // {
+    //     return $this->hasOne(Detail_user::class,'user_id');
+    // }
+    // public function sendPasswordResetNotification($token)
+    // {
+    //     $this->notify(new PasswordReset($token));
+    // }
+
+    public function pembayaran() {
+        return $this->hasMany(Pembayaran::class);
     }
-    public function sendPasswordResetNotification($token)
-    {
-        $this->notify(new PasswordReset($token));
+
+    public function keranjang() {
+        return $this->hasMany(keranjang::class);
     }
 }

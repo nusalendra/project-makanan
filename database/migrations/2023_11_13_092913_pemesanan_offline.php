@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('pemesananoffline', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->integer('user_id')->nullable();
             $table->string('nama_pembeli')->nullable();
             $table->string('menu_offline');

@@ -20,11 +20,7 @@ return new class extends Migration
             $table->string('username')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->boolean('isUser');
-            $table->boolean('isAdmin');
-            $table->boolean('isKasir');
-            $table->boolean('isPelayan');
-            $table->boolean('isKoki');
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
         });

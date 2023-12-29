@@ -1,13 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\karyawan_controller;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Auth\Events\PasswordReset;
-use App\Http\Controllers\orderan_controller;
-use App\Http\Controllers\user_controller;
 use App\Http\Controllers\Auth\LoginController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,111 +19,125 @@ use App\Http\Controllers\Auth\LoginController;
 //     return view('welcome');
 // });
 
-
-//USER
-route::get('/','user_controller@indexhalamanutama');
-route::get('/homepage','user_controller@indexuser')->name('homepages');
-route::post('/addtoCart','user_controller@addtoCart');
-route::post('/addpembeli','user_controller@addpembeli');
-route::get('/pageminuman','user_controller@indexminum');
-route::get('/pagealacarte','user_controller@indexalacarte');
-//route::get('/','landingpage_Controller@landingpage');
-route::get('/profil','user_controller@profil');
-route::get('/menu','user_controller@menu');
-route::get('/keranjang','user_controller@keranjang');
-route::get('/simpanoffline','user_controller@keranjangoffline');
-route::get('/editkeranjang/{id}','user_controller@editkeranjang')->name('editkeranjang');
-route::get('/editkeranjangoffline/{id}','user_controller@editkeranjangoffline')->name('editkeranjangoffline');
-route::get('/prosesviewdatakeranjang/{id}','user_controller@findidkeranjang');
-route::get('/invoice','user_controller@invoice');
-route::get('/selesai','user_controller@selesai');
-// route::get('/loginuser','user_controller@loginuser');
-route::view('/loginuser','user.loginuser');
-route::post('/addpembayaran','user_Controller@addpembayaran');
-route::post('/addvalidasibayar','user_Controller@addvalidasibayar');
-route::get('/hapusmakanan','user_controller@hapusmakanan');
-
-//KASIR
-route::get('/kasir','PelayanController@indexkasir')->name('kasir');;
-route::get('/kasironline','PelayanController@indexkasironline');
-route::get('/detailpesanan','PelayanController@indexdetailpesanan');
-route::post('/kembalian','PelayanController@hitungkembalian');
-route::get('/invoicekasir','PelayanController@invoice');
-route::get('/harga/{id}','PelayanController@getHarga');
-//Generate PDF Invoice
-route::get('/downloadPDF/cetakinvoice',[App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
-route::get('/downloadPDF/cetakinvoicekasir',[App\Http\Controllers\PelayanController::class, 'download_kasir'])->name('downloadpdf_kasir');
-//ADMIN
-route::post('/hitungpendapatan','AdminController@hitungpemasukanonline');
-route::post('/hitungpendapatanoffline','AdminController@hitungpemasukanoffline');
-route::get('/homeadmin','AdminController@indexadmin')->name('homeadmin');
-route::get('/loginadmin','AdminController@loginadmin');
-route::get('/datacust','AdminController@datacust');
-route::get('/dashboard','AdminController@dashboard');
-route::get('/riwayatdt','AdminController@riwayatdt');
-route::get('/validasibayar','AdminController@indexvalidasi');
-route::get('/editstatusadmin/{id}','AdminController@editstatusadmin')->name('editstatusadmin');
-
-//FUNCTION DATA MAKANAN
-route::get('/tambahmakanan','AdminController@tambahmakanan');
-route::get('/tambahlokasi','AdminController@tambahlokasi');
-route::post('/addmakanan','AdminController@addmakanan');
-route::get('/hapusmakanan/{id}','AdminController@hapusmakanan');
-route::get('/editmakanan/{id}','AdminController@editmakanan')->name('editmakanan');
-route::get('/prosesviewdatamakanan/{id}','AdminController@findidmakanan');
-
-//FUNCTION DATA LOKASI
-route::post('/addlokasi','AdminController@addlokasi');
-route::get('/editlokasi/{id}','AdminController@editlokasi')->name('editlokasi');
-route::get('/prosesviewdatalokasi/{id}','AdminController@findidlokasi');
-route::get('/deletelokasi/{id}','AdminController@hapuslokasi');
-
-//FUNCTION DATA PEGAWAI
-route::get('/tambahpegawai','AdminController@tambahpegawai');
-route::post('/addpegawai','AdminController@addpegawai');
-route::get('/editpegawai/{id}','AdminController@editpegawai')->name('editpegawai');
-route::get('/prosesviewdata/{id}','AdminController@findidpegawai');
-route::get('/deletepegawai/{id}','AdminController@hapuspegawai');
-
-//KARYAWAN
-route::post('/addpemesanan','karyawan_controller@addpemesanan');
-route::get('/loginkaryawan','karyawan_controller@loginkaryawan');
-route::get('/deletepemesanan/{id}','karyawan_controller@deletepemesanan');
-Route::get('/datamakanan','karyawan_controller@makanan'); 
-route::get('/dataminuman','karyawan_controller@formminuman');
-route::get('/datasnack','karyawan_controller@datasnack');
-route::get('/simpan','karyawan_controller@simpan');
-route::get('/homekaryawan','karyawan_controller@homekaryawan');
-route::get('/pesananmasuk','karyawan_controller@pesananmasuk');
-
-//KOKI
-Route::get('/koki','koki_controller@koki')->name('homekoki');
-Route::get('/kokioffline','koki_controller@kokioffline');
-Route::get('/loginkoki','koki_controller@loginkoki');  
-Route::get('/orderselesaikoki','koki_controller@orderselesaikoki');  
-route::get('/editstatus/{id}','koki_controller@editstatus')->name('editstatus');
-route::get('/editstatusoffline/{id}','koki_controller@editstatusoffline')->name('editstatusoffline');
-
-//PELAYAN
-route::get('/orderonline','PelayanController@indexpelayan');
-route::get('/orderoffline','PelayanController@indexpelayanoffline')->name('homepelayan');
-route::get('/keranjangoffline','PelayanController@keranjangoffline');
-route::put('/addorderoffline','PelayanController@addorderoffline');
-route::put('/addpesananoffline','PelayanController@addpesananoffline');
-route::get('/hapusorderoffline/{id}','PelayanController@hapusorderoffline');
-route::get('/editorderoffline/{id}','PelayanController@editorderoffline')->name('editorderoffline');
-route::get('/prosesviewdataorderoffline/{id}','PelayanController@findidorderoffline');
-route::get('/loginpelayan','PelayanController@loginpelayan');
-route::get('/selesaiorderall','PelayanController@selesaiorderall');
-
-//ADDORDERANl
-route::post('/addorderan','orderan_controller@addorderan');
-route::get('/hapusorderan/{id}','orderan_controller@hapusorderan');
-route::get('/prosesviewdataorderan/{id}','orderan_controller@findidorderan');
-route::get('/editorderan/{id}','orderan_controller@editorderan')->name('editorderan');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::post('/login',[LoginController::class,'Login'])->name('user.login');
-Route::post('logout',[LoginController::class,'logout'])->name('logout');
+Route::post('/login', [LoginController::class, 'Login'])->name('user.login');
+Route::post('logout', [LoginController::class, 'logout'])->name('logout');
+Route::view('/loginuser', 'user.loginuser');
+
+//USER
+Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function () {
+    Route::get('/', 'user_controller@indexhalamanutama');
+    Route::get('/homepage', 'user_controller@indexuser')->name('homepages');
+    Route::post('/addtoCart', 'user_controller@addtoCart');
+    Route::post('/addpembeli', 'user_controller@addpembeli');
+    Route::get('/pageminuman', 'user_controller@indexminum');
+    Route::get('/pagealacarte', 'user_controller@indexalacarte');
+    //Route::get('/','landingpage_Controller@landingpage');
+    Route::get('/profil', 'user_controller@profil');
+    Route::get('/menu', 'user_controller@menu');
+    Route::get('/keranjang', 'user_controller@keranjang');
+    Route::get('/simpanoffline', 'user_controller@keranjangoffline');
+    Route::get('/editkeranjang/{id}', 'user_controller@editkeranjang')->name('editkeranjang');
+    Route::get('/editkeranjangoffline/{id}', 'user_controller@editkeranjangoffline')->name('editkeranjangoffline');
+    Route::get('/prosesviewdatakeranjang/{id}', 'user_controller@findidkeranjang');
+    Route::get('/invoice', 'user_controller@invoice');
+    Route::get('/selesai', 'user_controller@selesai');
+    // Route::get('/loginuser','user_controller@loginuser');
+    Route::post('/addpembayaran', 'user_controller@addpembayaran');
+    Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
+    Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
+});
+
+//KASIR
+Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function () {
+    Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');;
+    Route::get('/kasironline', 'PelayanController@indexkasironline');
+    Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
+    Route::post('/kembalian', 'PelayanController@hitungkembalian');
+    Route::get('/invoicekasir', 'PelayanController@invoice');
+    Route::get('/harga/{id}', 'PelayanController@getHarga');
+    //Generate PDF Invoice
+    Route::get('/downloadPDF/cetakinvoice', [App\Http\Controllers\PelayanController::class, 'download_invoice'])->name('downloadpdf_invoice');
+    Route::get('/downloadPDF/cetakinvoicekasir', [App\Http\Controllers\PelayanController::class, 'download_kasir'])->name('downloadpdf_kasir');
+});
+
+//ADMIN
+Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function () {
+    Route::post('/hitungpendapatan', 'AdminController@hitungpemasukanonline');
+    Route::post('/hitungpendapatanoffline', 'AdminController@hitungpemasukanoffline');
+    Route::get('/homeadmin', 'AdminController@indexadmin')->name('homeadmin');
+    Route::get('/loginadmin', 'AdminController@loginadmin');
+    Route::get('/datacust', 'AdminController@datacust');
+    Route::get('/dashboard', 'AdminController@dashboard');
+    Route::get('/riwayatdt', 'AdminController@riwayatdt');
+    Route::get('/validasibayar', 'AdminController@indexvalidasi');
+    Route::get('/editstatusadmin/{id}', 'AdminController@editstatusadmin')->name('editstatusadmin');
+
+    //FUNCTION DATA MAKANAN
+    Route::get('/tambahmakanan', 'AdminController@tambahmakanan');
+    Route::get('/tambahlokasi', 'AdminController@tambahlokasi');
+    Route::post('/addmakanan', 'AdminController@addmakanan');
+    Route::get('/hapusmakanan/{id}', 'AdminController@hapusmakanan');
+    Route::get('/editmakanan/{id}', 'AdminController@editmakanan')->name('editmakanan');
+    Route::get('/prosesviewdatamakanan/{id}', 'AdminController@findidmakanan');
+
+    //FUNCTION DATA LOKASI
+    Route::post('/addlokasi', 'AdminController@addlokasi');
+    Route::get('/editlokasi/{id}', 'AdminController@editlokasi')->name('editlokasi');
+    Route::get('/prosesviewdatalokasi/{id}', 'AdminController@findidlokasi');
+    Route::get('/deletelokasi/{id}', 'AdminController@hapuslokasi');
+
+    //FUNCTION DATA PEGAWAI
+    Route::get('/tambahpegawai', 'AdminController@tambahpegawai');
+    Route::get('/formtambahpegawai', 'AdminController@formtambahpegawai');
+    Route::post('/addpegawai', 'AdminController@addpegawai');
+    Route::get('/editpegawai/{id}', 'AdminController@editpegawai')->name('editpegawai');
+    Route::get('/prosesviewdata/{id}', 'AdminController@findidpegawai');
+    Route::get('/deletepegawai/{id}', 'AdminController@hapuspegawai');
+});
+
+Route::middleware(['auth:sanctum', 'verified', 'role:Karyawan'])->group(function () {
+    //KARYAWAN
+    Route::post('/addpemesanan', 'karyawan_controller@addpemesanan');
+    Route::get('/loginkaryawan', 'karyawan_controller@loginkaryawan');
+    Route::get('/deletepemesanan/{id}', 'karyawan_controller@deletepemesanan');
+    Route::get('/datamakanan', 'karyawan_controller@makanan');
+    Route::get('/dataminuman', 'karyawan_controller@formminuman');
+    Route::get('/datasnack', 'karyawan_controller@datasnack');
+    Route::get('/simpan', 'karyawan_controller@simpan');
+    Route::get('/homekaryawan', 'karyawan_controller@homekaryawan');
+    Route::get('/pesananmasuk', 'karyawan_controller@pesananmasuk');
+});
+
+//KOKI
+Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () {
+    Route::get('/koki', 'koki_controller@koki')->name('homekoki');
+    Route::get('/kokioffline', 'koki_controller@kokioffline');
+    Route::get('/loginkoki', 'koki_controller@loginkoki');
+    Route::get('/orderselesaikoki', 'koki_controller@orderselesaikoki');
+    Route::get('/editstatus/{id}', 'koki_controller@editstatus')->name('editstatus');
+    Route::get('/editstatusoffline/{id}', 'koki_controller@editstatusoffline')->name('editstatusoffline');
+});
+
+//PELAYAN
+Route::middleware(['auth:sanctum', 'verified', 'role:Pelayan'])->group(function () {
+    Route::get('/orderonline', 'PelayanController@indexpelayan');
+    Route::get('/orderoffline', 'PelayanController@indexpelayanoffline')->name('homepelayan');
+    Route::get('/keranjangoffline', 'PelayanController@keranjangoffline');
+    Route::put('/addorderoffline', 'PelayanController@addorderoffline');
+    Route::put('/addpesananoffline', 'PelayanController@addpesananoffline');
+    Route::get('/hapusorderoffline/{id}', 'PelayanController@hapusorderoffline');
+    Route::get('/editorderoffline/{id}', 'PelayanController@editorderoffline')->name('editorderoffline');
+    Route::get('/prosesviewdataorderoffline/{id}', 'PelayanController@findidorderoffline');
+    Route::get('/loginpelayan', 'PelayanController@loginpelayan');
+    Route::get('/selesaiorderall', 'PelayanController@selesaiorderall');
+
+    //ADDORDERANl
+    Route::post('/addorderan', 'orderan_controller@addorderan');
+    Route::get('/hapusorderan/{id}', 'orderan_controller@hapusorderan');
+    Route::get('/prosesviewdataorderan/{id}', 'orderan_controller@findidorderan');
+    Route::get('/editorderan/{id}', 'orderan_controller@editorderan')->name('editorderan');
+});

@@ -5,7 +5,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <head>
-    <title>Halaman Tambah Menu Makanan</title>
+    <title>Halaman Tambah Akun Pegawai</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="asset/images/logo2.jpg">
@@ -69,95 +69,68 @@
 
     <!-- About Section -->
     <div class="w3-content w3-justify w3-text-black" id="about">
-        <h2 class="w3-text-light-black">Edit Data Makanan</h2>
+        <h2 class="w3-text-light-black">Tambah Akun Pegawai</h2>
         <hr style="width:240px" class="w3-opacity">
 
         <header class="w3-container">
             <div class="modal-body">
-                <form action="{{ route('editmakanan', ['id' => $tambahmakanan->id]) }}" method="GET"
-                    enctype="multipart/form-data">
+                <form action="/addpegawai" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <label for="">Pilih Kategori</label>
-                        <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror"
-                            name="kategori" value="{{ $tambahmakanan->kategori }}" required autocomplete=""
-                            autofocus />>
+                        <label for="username">Username</label>
+                        <input id="username" type="" placeholder=""
+                            class="form-control @error('username') is-invalid @enderror" name="username"
+                            value="{{ old('username') }}" required autocomplete="" autofocus />
+                        @error('username')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" placeholder=""
+                            class="form-control @error('email') is-invalid @enderror" name="email"
+                            value="{{ old('email') }}" required autocomplete="" autofocus />
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input id="name" type="text" placeholder=""
+                            class="form-control @error('name') is-invalid @enderror" name="name"
+                            value="{{ old('name') }}" required autocomplete="" autofocus />
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" placeholder=""
+                            class="form-control @error('password') is-invalid @enderror" name="password"
+                            value="{{ old('password') }}" required autocomplete="" autofocus />
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="">Tentukan Role / Bagian</label>
+                        <select name="role" class="form-control select2 @error('role') is-invalid @enderror"
+                            name="role" value="{{ old('role') }}" required autocomplete="" autofocus />>
                         <option></option>
-                        <option>Makanan</option>
-                        <option>Minuman</option>
+                        <option value="Pemilik">Pemilik</option>
+                        <option value="Kasir">Kasir</option>
+                        <option value="Koki">Koki</option>
+                        <option value="Pelayan">Pelayan</option>
                         </select>
-                        @error('kategori')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">No Produk</label>
-                        <input id="exampleInputEmail1" type="number" placeholder=""
-                            class="form-control @error('no_produk') is-invalid @enderror" name="no_produk"
-                            value="{{ $tambahmakanan->no_produk }}" required autocomplete="" autofocus />
-                        @error('no_produk')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Nama Produk</label>
-                        <input id="exampleInputEmail1" type="" placeholder=""
-                            class="form-control @error('nama_prdk') is-invalid @enderror" name="nama_prdk"
-                            value="{{ $tambahmakanan->nama_prdk }}" required autocomplete="" autofocus />
-                        @error('nama_prdk')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Komposisi</label>
-                        <input id="exampleInputEmail1" type="" placeholder=""
-                            class="form-control @error('komposisi') is-invalid @enderror" name="komposisi"
-                            value="{{ $tambahmakanan->komposisi }}" required autocomplete="" autofocus />
-                        @error('komposisi')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" class="cols-sm-2 control-label">Qty</label>
-                        <div class="cols-sm-10">
-                            <div class="quantity">
-                                <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                <input type='text' name='qty' value='1' class='qty' />
-                                <input type='button' value='+' class='qtyplus plus' field='qty' />
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Harga</label>
-                        <input id="exampleInputEmail1" value="Rp. " type="" placeholder=""
-                            class="form-control @error('harga') is-invalid @enderror" name="harga"
-                            value="{{ $tambahmakanan->harga }}" required autocomplete="" autofocus />
-                        @error('harga')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="exampleInputEmail1">Gambar</label>
-                        <input name="images" type="file" class="@error('images') is-invalid @enderror" required
-                            autocomplete="images" id="image" aria-describedby="emailHelp"
-                            placeholder="Nama Blog" accept="image/gif, image/jpeg, image/png">
-                        @error('images')
+                        @error('role')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -166,7 +139,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
+                <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
                 </form>
             </div>
         </header>

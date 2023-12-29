@@ -83,15 +83,6 @@ tr:nth-child(even) {
     <h4><b>ADMIN PAGE</b></h4>
     <p class="w3-text-white">Welcome to admin page!</p>
   </div>
-</nav>
-<nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-  <div class="w3-container">
-    <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey" title="close menu">
-      <i class="fa fa-remove"></i>
-    </a>
-    <h4><b>ADMIN PAGE</b></h4>
-    <p class="w3-text-white">Welcome to admin page!</p>
-  </div>
   <div class="w3-bar-block">
     <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-cube fa-fw w3-margin-right"></i>DASHBOARD</a>
     <a href="homeadmin" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-area-chart fa-fw w3-margin-right"></i>DATA MAKANAN</a> 

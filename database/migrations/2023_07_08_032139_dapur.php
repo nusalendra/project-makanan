@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::create('dapur', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
             $table->string('no_order');
             $table->string('orderan');
             $table->string('qty');

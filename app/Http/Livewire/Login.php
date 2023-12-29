@@ -39,11 +39,7 @@ class Login extends Component
         'email' => $this->email,
         'username' => $this->username,
         'password' => $this->password,
-        'isUser' => true,
-        'isPelayan' => false,
-        'isKoki' => false,
-        'isKasir' => false,
-        'isAdmin' =>false
+        'role' => 'Pengguna'
         ]);
 
         // dd($data);
@@ -59,22 +55,21 @@ class Login extends Component
         ]);
 
         if(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){
-            if(Auth::user()->isUser == true){
+            if(Auth::user()->role == 'Pengguna'){
                 return redirect()->route('homepages'); 
             } 
-            elseif(Auth::user()->isKasir == true){
+            elseif(Auth::user()->role == 'Kasir'){
                 return redirect()->route('kasir'); 
             } 
-            elseif(Auth::user()->isPelayan == true){
+            elseif(Auth::user()->role == 'Pelayan'){
                 return redirect()->route('homepelayan'); 
             } 
-            elseif(Auth::user()->isKoki == true){
+            elseif(Auth::user()->role == 'Koki'){
                 return redirect()->route('homekoki'); 
             } 
-            elseif(Auth::user()->isAdmin == true){
+            elseif(Auth::user()->role == 'Pemilik'){
                 return redirect()->route('homeadmin'); 
-            } 
-            
+            }
         }
         // elseif(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){
         //     return redirect()->route('kasir');

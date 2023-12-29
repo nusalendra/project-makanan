@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
+
 class LoginController extends Controller
 {
     /*
@@ -39,7 +42,7 @@ class LoginController extends Controller
     }
     public function Login(Request $request)
     {
-        if (\Auth::attempt($request->only(['username','password']))){
+        if (Auth::attempt($request->only(['username','password']))){
             return redirect()->intended('/');
         }else{
             session()->flash('error', 'email and password are wrong.');
@@ -51,7 +54,7 @@ class LoginController extends Controller
     {
         auth()->logout();
         $request->session()->flush();
-        \Session::forget('key');
-        return \Redirect::to('/');
+        Session::forget('key');
+        return redirect('/');
     }
 }

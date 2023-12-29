@@ -14,10 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::create('keranjang', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('user_id');
-            $table->string('user_nama');
-            $table->integer('tambahmakanan_id');
+            $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnUpdate()->cascadeOnDelete();
+            $table->foreignId('tambahmakanan_id')->constrained('tambahmakanan')->cascadeOnUpdate()->cascadeOnDelete();
             $table->string('menu');
             $table->integer('qty');
             $table->integer('harga');

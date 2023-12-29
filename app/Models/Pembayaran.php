@@ -10,6 +10,10 @@ class Pembayaran extends Model
     use HasFactory;
     protected $table = 'pembayaran';
     protected $primarykey = 'id';
-    protected $fillable = ['metode'];
+    protected $fillable = ['user_id', 'metode', 'id_pembayaran', 'status'];
+
+    public function user() {
+        return $this->belongsTo(User::class);
+    }
 }
 

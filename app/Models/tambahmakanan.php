@@ -11,5 +11,9 @@ class tambahmakanan extends Model
     protected $table = 'tambahmakanan';
     protected $primarykey = 'id';
     protected $fillable = ['kategori','no_produk','nama_prdk','komposisi','harga','images']; 
+
+    public function keranjang() {
+        return $this->belongsToMany(keranjang::class);
+    }
     
 }

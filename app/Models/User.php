@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        'role'
+        'role',
+        'telepon'
     ];
 
     /**
@@ -53,11 +54,7 @@ class User extends Authenticatable
     // {
     //     $this->notify(new PasswordReset($token));
     // }
-
-    public function pembayaran() {
-        return $this->hasMany(Pembayaran::class);
-    }
-
+    
     public function keranjang() {
         return $this->hasMany(keranjang::class);
     }

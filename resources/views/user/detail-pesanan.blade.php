@@ -114,45 +114,39 @@
             <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                     class="fa fa-bars"></i></span>
             <div class="w3-container">
-                <h1><b>ORDERAN SELESAI</b></h1>
+                <h1><b>DETAIL PESANAN</b></h1>
                 <div class="w3-row-padding">
-                    <table class="table">
-                        <tr>
-                            <th>Nomor</th>
-                            <th>Pesanan</th>
-                            <th>Qty</th>
-                            <th>ID Pembayaran</th>
-                            <th>Metode Pembayaran</th>
-                            <th>Status Validasi Pembayaran</th>
-                            <th>Status Dapur</th>
-                            <th>Detail Pesanan</th>
-                        </tr>
-                        @foreach ($data as $index => $item)
-                            <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->menu }}</td>
-                                <td>{{ $item->qty }}</td>
-                                <td>{{ $item->id_pembayaran }}</td>
-                                <td>{{ $item->metode }}</td>
-                                <td>{{ $item->status_pembayaran }}</td>
-                                <td>{{ $item->status_dapur }}</td>
-                                <td style="text-align: center;">
-                                  @php
-                                    $pembayaranIdEncrypt = Crypt::encrypt($item->id);
-                                  @endphp
-                                    <a href="/detail-pesanan/{{ $pembayaranIdEncrypt }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                            fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-                                            <path
-                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                            <path
-                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+                    <div class="w3-half">
+                        <h2>Informasi Pelanggan</h2>
+                        <p>Nama Pelanggan : {{ $data->username }}</p>
+                    </div>
+                    <div class="w3-half">
+                        <h2>Informasi Pesanan</h2>
+                        <p>Pesanan : {{ $data->menu }}</p>
+                        <p>Jumlah Pesanan : {{ $data->qty }} pcs</p>
+                        <p>Total Harga Yang Dibayar : {{ $data->qty * $data->harga }},00</p>
+                    </div>
+                </div>
+    
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <h2>Informasi Pembayaran</h2>
+                        <p>ID Pembayaran : {{ $data->id_pembayaran }}</p>
+                        <p>Metode Pembayaran : {{ $data->metode }}</p>
+                        
+                    </div>
+                    <div class="w3-half">
+                        <h2>Status</h2>
+                        <p>Status Validasi Pembayaran : {{ $data->status_pembayaran }}</p>
+                        <p>Status Dapur : {{ $data->status_dapur }}</p>
+                    </div>
+                </div>
+    
+                <!-- Tombol Konfirmasi Pembayaran -->
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-half">
+                        <a href="/selesai" class="w3-button w3-white w3-hover-orange w3-border" style="text-decoration: none;">Kembali</a>
+                    </div>
                 </div>
             </div>
         </header>

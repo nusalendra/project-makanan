@@ -8,9 +8,10 @@ use App\Models\tambahmakanan;
 use App\Models\Pembayaran;
 use App\Models\Pemesananoffline;
 use App\Models\keranjang;
-use App\Models\validasibayar;
-use Illuminate\Support\Facades\DB;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+
 
 
 class user_controller extends Controller
@@ -19,9 +20,14 @@ class user_controller extends Controller
     {
         $user = auth()->user();
         $tambahmakanan = tambahmakanan::all();
-        
-        $tambahmakananId = $tambahmakanan->first()->id;
-        
+
+        // Periksa apakah ada data tambahmakanan
+        if ($tambahmakanan->isNotEmpty()) {
+            $tambahmakananId = $tambahmakanan->first()->id;
+        } else {
+            $tambahmakananId = null; // atau nilai default lainnya sesuai kebutuhan
+        }
+
         $keranjang = keranjang::where('user_id', $user->id)
             ->where('tambahmakanan_id', $tambahmakananId)
             ->value('status');
@@ -42,7 +48,7 @@ class user_controller extends Controller
             'user_id' => auth()->user()->id,
             'user_nama' => auth()->user()->name,
             'menu' => $request->menu,
-            'qty' => 1,
+            'qty' => 0,
             'harga' => $request->harga,
             'status' => 'Dalam Keranjang'
         ];
@@ -64,17 +70,70 @@ class user_controller extends Controller
 
     public function profil(request $request)
     {
-        return view('user.profil');
+        $user = Auth::user();
+
+        return view('user.profil', compact('user'));
+    }
+
+    public function ubahProfil($id, Request $request)
+    {
+        $user = User::find($id);
+
+        $user->password = bcrypt('password');
+        $user->telepon = $request->telepon;
+        $user->save();
+        
+        return redirect('/profil');
     }
 
     public function keranjang(request $request)
     {
-        $keranjang = keranjang::all();
-        // dd($keranjang);
-        $total_orderan = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        $keranjang = keranjang::where('user_id', auth()->user()->id)->get();
-        return view('user.simpanmenu', compact('keranjang', 'total_orderan', 'keranjang'));
+        $keranjang = keranjang::where('user_id', auth()->user()->id)
+            ->where('status', '=', 'Dalam Keranjang')
+            ->get();
+
+        return view('user.simpanmenu', compact('keranjang'));
     }
+
+    public function keranjangdelete($id)
+    {
+        $keranjang = keranjang::find($id);
+
+        $keranjang->delete();
+
+        return redirect('/keranjang');
+    }
+
+    public function checkout(Request $request)
+    {
+        $keranjangIds = $request->input('keranjangId');
+        $qtys = $request->input('qty');
+
+        $user = Auth::user();
+
+        foreach ($keranjangIds as $index => $keranjangId) {
+            $data = Keranjang::find($keranjangId);
+
+            if ($data) {
+                $qty = $qtys[$index];
+
+                $data->qty = $qty;
+                $data->status = 'Proses';
+                $data->save();
+
+                // Buat pembayaran untuk setiap item di keranjang
+                $pembayaran = new Pembayaran();
+                $pembayaran->keranjang_id = $data->id; // Sesuaikan dengan kolom yang menyimpan id keranjang pada pembayaran
+                $pembayaran->metode = $request->metode;
+                $pembayaran->id_pembayaran = $request->id_pembayaran;
+                $pembayaran->status = 'Proses';
+                $pembayaran->save();
+            }
+        }
+
+        return redirect('keranjang')->with('sukses', 'Penambahan telah berhasil!');
+    }
+
 
     public function keranjangoffline(request $request)
     {
@@ -129,13 +188,25 @@ class user_controller extends Controller
 
     public function selesai(request $request)
     {
-        $pemesananoffline = pemesananoffline::all();
-        $data = validasibayar::where('status', 'selesai')->get();
-        $data = DB::table('keranjang')
-            ->join('pembayaran', 'pembayaran.id', '=', 'keranjang.id')
-            ->join('validasibayar', 'validasibayar.id', '=', 'pembayaran.id')
+        // $data = keranjang::all();
+        $user = Auth::user();
+        $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
+            ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at')
+            ->where('keranjang.user_id', '=', $user->id)
             ->get();
-        return view('user.selesai', compact('pemesananoffline'))->with('data', $data);
+
+        return view('user.selesai', compact('data'));
+    }
+
+    public function detailpesanan($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
+            ->join('users', 'keranjang.user_id', '=', 'users.id')
+            ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at', 'users.username')
+            ->find($idDecrypt);
+
+        return view('user.detail-pesanan', compact('data'));
     }
 
     public function loginuser(request $request)
@@ -143,25 +214,11 @@ class user_controller extends Controller
         return view('user.loginuser');
     }
 
-    public function addpembayaran(request $request)
-    {
-        $user = Auth::user();
-        // dd($user);
-        $pembayaran = new Pembayaran();
-
-        $pembayaran->user_id = $user->id;
-        $pembayaran->metode = $request->metode;
-
-        $pembayaran->save();
-
-        return redirect('keranjang')->with('sukses', 'penambahan telah berhasil!');
-    }
-
-    public function addvalidasibayar(request $request)
-    {
-        validasibayar::create($request->all());
-        return redirect('keranjang')->with('sukses', 'penambahan telah berhasil!');
-    }
+    // public function addvalidasibayar(request $request)
+    // {
+    //     validasibayar::create($request->all());
+    //     return redirect('keranjang')->with('sukses', 'penambahan telah berhasil!');
+    // }
 
     public function addpembeli(request $request)
     {

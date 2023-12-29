@@ -37,8 +37,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/pagealacarte', 'user_controller@indexalacarte');
     //Route::get('/','landingpage_Controller@landingpage');
     Route::get('/profil', 'user_controller@profil');
+    Route::post('/ubahprofil/{id}', 'user_controller@ubahProfil');
     Route::get('/menu', 'user_controller@menu');
     Route::get('/keranjang', 'user_controller@keranjang');
+    Route::get('/keranjang/delete/{id}', 'user_controller@keranjangdelete');
     Route::get('/simpanoffline', 'user_controller@keranjangoffline');
     Route::get('/editkeranjang/{id}', 'user_controller@editkeranjang')->name('editkeranjang');
     Route::get('/editkeranjangoffline/{id}', 'user_controller@editkeranjangoffline')->name('editkeranjangoffline');
@@ -46,7 +48,8 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/invoice', 'user_controller@invoice');
     Route::get('/selesai', 'user_controller@selesai');
     // Route::get('/loginuser','user_controller@loginuser');
-    Route::post('/addpembayaran', 'user_controller@addpembayaran');
+    Route::post('/checkout', 'user_controller@checkout');
+    Route::get('/detail-pesanan/{id}', 'user_controller@detailpesanan');
     Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });

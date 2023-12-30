@@ -23,4 +23,8 @@ class keranjang extends Model
     public function pembayaran() {
         return $this->belongsToMany(Pembayaran::class);
     }
+
+    public function keranjangPembayaran() {
+        return $this->belongsToMany(KeranjangPembayaran::class, 'keranjang_pembayaran', 'keranjang_id', 'pembayaran_id');
+    }
 }

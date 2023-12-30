@@ -92,8 +92,8 @@
                     class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a>
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
-            <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
+            <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -114,32 +114,24 @@
             <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                     class="fa fa-bars"></i></span>
             <div class="w3-container">
-                <h1><b>ORDERAN SELESAI</b></h1>
+                <h1><b>RIWAYAT PESANAN</b></h1>
                 <div class="w3-row-padding">
                     <table class="table">
                         <tr>
-                            <th>Nomor</th>
-                            <th>Pesanan</th>
-                            <th>Qty</th>
-                            <th>ID Pembayaran</th>
-                            <th>Metode Pembayaran</th>
+                            <th>Nomor Order</th>
                             <th>Status Validasi Pembayaran</th>
                             <th>Status Dapur</th>
                             <th>Detail Pesanan</th>
                         </tr>
-                        @foreach ($data as $index => $item)
+                        @foreach ($data as $item)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
-                                <td>{{ $item->menu }}</td>
-                                <td>{{ $item->qty }}</td>
-                                <td>{{ $item->id_pembayaran }}</td>
-                                <td>{{ $item->metode }}</td>
-                                <td>{{ $item->status_pembayaran }}</td>
-                                <td>{{ $item->status_dapur }}</td>
+                                <td>{{ $item->nomor_order }}</td>
+                                <td>{{ $item->keranjang->first()->status }}</td>
+                                <td>{{ $item->status }}</td>
                                 <td style="text-align: center;">
-                                  @php
-                                    $pembayaranIdEncrypt = Crypt::encrypt($item->id);
-                                  @endphp
+                                    @php
+                                        $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                    @endphp
                                     <a href="/detail-pesanan/{{ $pembayaranIdEncrypt }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">

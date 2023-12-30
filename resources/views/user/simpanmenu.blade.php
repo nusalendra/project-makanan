@@ -94,8 +94,8 @@
                     class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a>
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
-            <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
+            <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>

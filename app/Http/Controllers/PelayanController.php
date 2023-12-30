@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\orderan;
 use App\Models\pemesananoffline;
 use App\Models\Orderoffline;
 use App\Models\tambahmakanan;
 use App\Models\keranjang;
 use App\Models\Pembayaran;
-use PDF;
-use DB;
+use App\Models\KeranjangPembayaran;
+use Illuminate\Support\Facades\PDF;
+use Illuminate\Support\Facades\Crypt;
+use Termwind\Components\Raw;
 
 class PelayanController extends Controller
 {
@@ -40,11 +41,43 @@ class PelayanController extends Controller
 
     public function indexkasironline(request $request)
     {
-        $data = keranjang::join('pembayaran', 'pembayaran.keranjang_id', '=', 'keranjang.id')
-            ->get();
+        $data = Pembayaran::with('keranjang')->get();
         return view('kasir.kasironline')->with('data', $data);
     }
 
+    public function detailPesanan($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+        // dd($data);
+        return view('kasir.detail-pesanan', compact('data'));
+    }
+
+    public function validasiPesanan(Request $request) {
+        $pembayaranIds = $request->input('pembayaranId');
+
+        $data = Pembayaran::find($pembayaranIds);
+
+        if($data) {
+            $data->status = 'Diterima';
+
+            $data->save();
+        }
+        
+        // foreach($keranjangIds as $index => $keranjangId) {
+        //     $data = keranjang::find($keranjangId);
+
+        //     if($data) {
+        //         $data->status = 'Diterima';
+
+        //         $data->save();
+        //     }
+        // }
+
+        return redirect ('/kasir-online');
+    }
 
     public function indexdetailpesanan(request $request)
     {

@@ -152,15 +152,15 @@
                         <p>{{ $tambahmakanan->komposisi }}</p>
                         <p>Rp {{ $tambahmakanan->harga }}</p>
                         <div class="w3-row-padding w3-center">
-                            @php
+                            {{-- @php
                                 // Mencari status keranjang untuk produk ini
                                 $keranjang = $user
                                     ->keranjang()
                                     ->where('tambahmakanan_id', $tambahmakanan->id)
                                     ->first();
-                            @endphp
+                            @endphp --}}
 
-                            @if ($keranjang && $keranjang->status == 'Dalam Keranjang')
+                            @if ($keranjang->contains($tambahmakanan->id))
                                 <button type="button" style="font-weight: bold;" disabled>
                                     Dalam Keranjang
                                 </button>

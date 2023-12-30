@@ -49,15 +49,17 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/riwayat-pesanan', 'user_controller@riwayatPesanan');
     // Route::get('/loginuser','user_controller@loginuser');
     Route::post('/checkout', 'user_controller@checkout');
-    Route::get('/detail-pesanan/{id}', 'user_controller@detailpesanan');
+    Route::get('/riwayat-pesanan/detail-pesanan/{id}', 'user_controller@detailpesanan');
     Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });
 
 //KASIR
 Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function () {
-    Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');;
-    Route::get('/kasironline', 'PelayanController@indexkasironline');
+    Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');
+    Route::get('/kasir-online', 'PelayanController@indexkasironline');
+    Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesanan');
+    Route::post('/kasir-online/validasi-pesanan', 'PelayanController@validasiPesanan');
     Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
     Route::post('/kembalian', 'PelayanController@hitungkembalian');
     Route::get('/invoicekasir', 'PelayanController@invoice');
@@ -100,19 +102,6 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/editpegawai/{id}', 'AdminController@editpegawai')->name('editpegawai');
     Route::get('/prosesviewdata/{id}', 'AdminController@findidpegawai');
     Route::get('/deletepegawai/{id}', 'AdminController@hapuspegawai');
-});
-
-Route::middleware(['auth:sanctum', 'verified', 'role:Karyawan'])->group(function () {
-    //KARYAWAN
-    Route::post('/addpemesanan', 'karyawan_controller@addpemesanan');
-    Route::get('/loginkaryawan', 'karyawan_controller@loginkaryawan');
-    Route::get('/deletepemesanan/{id}', 'karyawan_controller@deletepemesanan');
-    Route::get('/datamakanan', 'karyawan_controller@makanan');
-    Route::get('/dataminuman', 'karyawan_controller@formminuman');
-    Route::get('/datasnack', 'karyawan_controller@datasnack');
-    Route::get('/simpan', 'karyawan_controller@simpan');
-    Route::get('/homekaryawan', 'karyawan_controller@homekaryawan');
-    Route::get('/pesananmasuk', 'karyawan_controller@pesananmasuk');
 });
 
 //KOKI

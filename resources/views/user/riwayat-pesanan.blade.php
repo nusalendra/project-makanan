@@ -126,13 +126,13 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{ $item->nomor_order }}</td>
-                                <td>{{ $item->keranjang->first()->status }}</td>
                                 <td>{{ $item->status }}</td>
+                                <td>{{ $item->keranjang->first()->status }}</td>
                                 <td style="text-align: center;">
                                     @php
                                         $pembayaranIdEncrypt = Crypt::encrypt($item->id);
                                     @endphp
-                                    <a href="/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                    <a href="/riwayat-pesanan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
                                             <path

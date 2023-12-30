@@ -72,7 +72,7 @@ tr:nth-child(even) {
   </div>
   <div class="w3-bar-block">
     <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a> 
-    <a href="/kasironline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a> 
+    <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a> 
     <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
   </div>
   <div class="w3-panel w3-large">

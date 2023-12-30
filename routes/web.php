@@ -49,15 +49,17 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/riwayat-pesanan', 'user_controller@riwayatPesanan');
     // Route::get('/loginuser','user_controller@loginuser');
     Route::post('/checkout', 'user_controller@checkout');
-    Route::get('/detail-pesanan/{id}', 'user_controller@detailpesanan');
+    Route::get('/riwayat-pesanan/detail-pesanan/{id}', 'user_controller@detailpesanan');
     Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });
 
 //KASIR
 Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function () {
-    Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');;
-    Route::get('/kasironline', 'PelayanController@indexkasironline');
+    Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');
+    Route::get('/kasir-online', 'PelayanController@indexkasironline');
+    Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesanan');
+    Route::post('/kasir-online/validasi-pesanan', 'PelayanController@validasiPesanan');
     Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
     Route::post('/kembalian', 'PelayanController@hitungkembalian');
     Route::get('/invoicekasir', 'PelayanController@invoice');

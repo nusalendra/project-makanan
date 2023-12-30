@@ -22,17 +22,10 @@ class user_controller extends Controller
         $user = auth()->user();
         $tambahmakanan = tambahmakanan::all();
 
-        // Periksa apakah ada data tambahmakanan
-        if ($tambahmakanan->isNotEmpty()) {
-            $tambahmakananId = $tambahmakanan->first()->id;
-        } else {
-            $tambahmakananId = null; // atau nilai default lainnya sesuai kebutuhan
-        }
-
         $keranjang = keranjang::where('user_id', $user->id)
-            ->where('tambahmakanan_id', $tambahmakananId)
-            ->value('status');
-
+            ->where('status', 'Dalam Keranjang')
+            ->pluck('tambahmakanan_id');
+            
         return view('user.homepage', compact('tambahmakanan', 'keranjang', 'user'));
     }
 
@@ -131,7 +124,7 @@ class user_controller extends Controller
 
         // Simpan array ID keranjang ke dalam relasi many-to-many
         $pembayaran = new Pembayaran();
-        $pembayaran->nomor_order = '23132112';
+        $pembayaran->nomor_order = 'ORD_' . rand(100000000, 999999999);
         $pembayaran->metode = $request->metode;
         $pembayaran->id_pembayaran = $request->id_pembayaran;
         $pembayaran->status = 'Proses';
@@ -214,7 +207,7 @@ class user_controller extends Controller
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
-            
+
         return view('user.detail-pesanan', compact('data', 'user'));
     }
 

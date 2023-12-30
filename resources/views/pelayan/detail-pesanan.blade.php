@@ -136,98 +136,63 @@
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
         <div class="w3-container">
-            <h1><b>Silahkan Isi Pesanan Pelanggan</b></h1>
-            <header class="w3-container">
-                <div class="w3-section w3-bottombar w3-padding-6">
-                    <div class="modal-body">
-                        <form action="/addpesananoffline" method="POST">
-                            @method('put')
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>
-           <input type="text" class="nama_pembeli"> -->
-
-                                <label for="name" class="cols-sm-2 control-label">Pesanan</label>
-                                <div class="cols-sm-10">
-                                    <div class="input-group">
-                                        <select name="menu_offline" class="harga select2 form-control"
-                                            id="exampleFormControlSelect1">
-                                            <option></option>
-                                            @foreach ($keranjang as $tambahmakanan)
-                                                <option value="{{ $tambahmakanan->id }}">{{ $tambahmakanan->menu }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                <div class="cols-sm-10">
-                                    <div class="quantity">
-                                        <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                        <input type='text' name='qty_offline' min="0" class='qty' />
-                                        <input type='button' value='+' class='qtyplus plus' field='qty' />
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="harga">Harga</label>
-                                <input id="harga_offline" type="" readonly placeholder=""
-                                    class="hargafinal form-control @error('harga_offline') is-invalid @enderror"
-                                    name="harga_offline" value="" required autocomplete="" autofocus />
-                                <input type="hidden" class="harganow" name="hargaproduk">
-                                <input type="hidden" class="namaproduk" name="namaproduk">
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary w3-red">KERANJANG</button>
-                        </form>
-
+            <h3><b>DETAIL PESANAN</b></h3>
+            <div class="w3-section w3-bottombar w3-padding-13">
+            </div>
+            <div class="w3-container">
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <h2>Informasi Pelanggan</h2>
+                        <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                        <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+                    </div>
+                    <div class="w3-half">
+                        <h2>Informasi Pesanan</h2>
+                        @foreach ($data as $item)
+                            <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                            <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                            <p>Total Harga Yang Dibayar : Rp.
+                                {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
+                            <br>
+                        @endforeach
                     </div>
                 </div>
-            </header>
-        </div>
 
-    </div>
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <h2>Informasi Pembayaran</h2>
+                        <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                        <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
 
-
-    <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-
-            <h1><b>MENU dan HARGA</b></h1>
-            <!-- First Photo Grid-->
-
-            <div class="w3-third w3-container w3-margin-bottom">
-
-                <div class="w3-container w3-white">
-                    @foreach ($keranjang as $tambahmakanan)
-                        <p><b>{{ $tambahmakanan->menu }}</b></p>
-                        <p>{{ $tambahmakanan->komposisi }}</p>
-                        <p>Rp {{ $tambahmakanan->harga }},00</p>
-                    @endforeach
-                    <div class="w3-row-padding w3-center">
+                    </div>
+                    <div class="w3-half">
+                        <h2>Status</h2>
+                        <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                        <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-            <!-- First Photo Grid-->
-
+            <div class="w3-row-padding w3-margin-top">
+                <div class="w3-half" style="display: flex;">
+                    <a href="/order-online" class="w3-button w3-white w3-hover-red w3-border"
+                        style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                    <form action="/order-online/pesanan-diambil" method="POST">
+                        @csrf
+                        @foreach ($data as $item)
+                            <input type="hidden" name="keranjangId[]" value="{{ $item->keranjang->id }}">
+                        @endforeach
+                        <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
+                            Pesanan Sudah Diambil
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-        <!-- Your custom script here -->
-        <script type="text/babel">
+    </div>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Your custom script here -->
+    <script type="text/babel">
 jQuery(document).ready(($) => {
   var qty = $(".qty").val("1")
         $('.quantity').on('click', '.plus', function(e) {
@@ -255,37 +220,6 @@ jQuery(document).ready(($) => {
         });
     });
 </script>
-
-        <script>
-            function fun_remove() {
-                var element = document.getElementById("id_dropdown");
-                element.remove(element.selectedIndex);
-            }
-        </script>
-
-        <script>
-            $('.select2').select2();
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                $(".harga").change(function() {
-                    var id = $(".harga").val()
-
-
-                    $.ajax({
-                        type: 'get',
-                        url: '/harga/' + id,
-                        success: function(response) {
-                            $(".hargafinal").val(response.makanan.harga)
-                            $(".harganow").val(response.makanan.harga)
-                            $(".namaproduk").val(response.makanan.nama_prdk)
-                        }
-                    });
-
-                });
-            });
-        </script>
 
 </body>
 

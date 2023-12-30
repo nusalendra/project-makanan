@@ -45,7 +45,7 @@ class PelayanController extends Controller
         return view('kasir.kasironline')->with('data', $data);
     }
 
-    public function detailPesanan($id)
+    public function detailPesananKasir($id)
     {
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
@@ -55,17 +55,18 @@ class PelayanController extends Controller
         return view('kasir.detail-pesanan', compact('data'));
     }
 
-    public function validasiPesanan(Request $request) {
+    public function validasiPesanan(Request $request)
+    {
         $pembayaranIds = $request->input('pembayaranId');
 
         $data = Pembayaran::find($pembayaranIds);
 
-        if($data) {
+        if ($data) {
             $data->status = 'Diterima';
 
             $data->save();
         }
-        
+
         // foreach($keranjangIds as $index => $keranjangId) {
         //     $data = keranjang::find($keranjangId);
 
@@ -76,7 +77,7 @@ class PelayanController extends Controller
         //     }
         // }
 
-        return redirect ('/kasir-online');
+        return redirect('/kasir-online');
     }
 
     public function indexdetailpesanan(request $request)
@@ -123,6 +124,50 @@ class PelayanController extends Controller
         $keranjang = keranjang::all();
         $pemesananoffline = pemesananoffline::all();
         return view('pelayan.offlinepage', compact('keranjang', 'pemesananoffline'));
+    }
+
+    public function indexpelayanonline(request $request)
+    {
+        $data = Pembayaran::with('keranjang')->where('status', 'Diterima')->get();
+        return view('pelayan.order-online', compact('data'));
+    }
+
+    public function detailPesananPelayan($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+        // dd($data);
+        return view('pelayan.detail-pesanan', compact('data'));
+    }
+
+    public function pesananDiambil(Request $request)
+    {
+        $keranjangIds = $request->input('keranjangId');
+
+        foreach ($keranjangIds as $index => $keranjangId) {
+            $data = keranjang::find($keranjangId);
+
+            if ($data) {
+                $data->status = 'Pesanan Diambil';
+
+                $data->save();
+            }
+        }
+
+        return redirect('/order-online');
+    }
+
+    public function orderSelesai()
+    {
+        $data = Pembayaran::with('keranjang')
+            ->whereHas('keranjang', function ($query) {
+                $query->where('keranjang.status', '=', 'Pesanan Diambil');
+            })
+            ->get();
+        $pemesananoffline = pemesananoffline::where('status_offline', 'selesai')->get();
+        return view('pelayan.order-selesai', compact('data', 'pemesananoffline'));
     }
 
     public function keranjangoffline(request $request)

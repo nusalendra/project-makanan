@@ -129,8 +129,6 @@
             <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
             <div class="w3-section w3-bottombar w3-padding-13">
             </div>
-
-
             <div class="w3-row-padding">
                 <table class="table">
                     <tr>
@@ -162,7 +160,8 @@
                     @endforeach
                 </table>
             </div>
-
+        </div>
+    </div>
 </body>
 
 </html>

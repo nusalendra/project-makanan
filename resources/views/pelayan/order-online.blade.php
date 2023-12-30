@@ -135,99 +135,51 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h1><b>Silahkan Isi Pesanan Pelanggan</b></h1>
-            <header class="w3-container">
-                <div class="w3-section w3-bottombar w3-padding-6">
-                    <div class="modal-body">
-                        <form action="/addpesananoffline" method="POST">
-                            @method('put')
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>
-           <input type="text" class="nama_pembeli"> -->
-
-                                <label for="name" class="cols-sm-2 control-label">Pesanan</label>
-                                <div class="cols-sm-10">
-                                    <div class="input-group">
-                                        <select name="menu_offline" class="harga select2 form-control"
-                                            id="exampleFormControlSelect1">
-                                            <option></option>
-                                            @foreach ($keranjang as $tambahmakanan)
-                                                <option value="{{ $tambahmakanan->id }}">{{ $tambahmakanan->menu }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                <div class="cols-sm-10">
-                                    <div class="quantity">
-                                        <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                        <input type='text' name='qty_offline' min="0" class='qty' />
-                                        <input type='button' value='+' class='qtyplus plus' field='qty' />
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="harga">Harga</label>
-                                <input id="harga_offline" type="" readonly placeholder=""
-                                    class="hargafinal form-control @error('harga_offline') is-invalid @enderror"
-                                    name="harga_offline" value="" required autocomplete="" autofocus />
-                                <input type="hidden" class="harganow" name="hargaproduk">
-                                <input type="hidden" class="namaproduk" name="namaproduk">
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary w3-red">KERANJANG</button>
-                        </form>
-
-                    </div>
+        <header id="portfolio">
+            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
+                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                    class="fa fa-bars"></i></span>
+            <div class="w3-container">
+                <h3><b>Pesanan Pelanggan</b></h3>
+                <div class="w3-section w3-bottombar w3-padding-13">
                 </div>
-            </header>
-        </div>
-
-    </div>
-
-
-    <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-
-            <h1><b>MENU dan HARGA</b></h1>
-            <!-- First Photo Grid-->
-
-            <div class="w3-third w3-container w3-margin-bottom">
-
-                <div class="w3-container w3-white">
-                    @foreach ($keranjang as $tambahmakanan)
-                        <p><b>{{ $tambahmakanan->menu }}</b></p>
-                        <p>{{ $tambahmakanan->komposisi }}</p>
-                        <p>Rp {{ $tambahmakanan->harga }},00</p>
-                    @endforeach
-                    <div class="w3-row-padding w3-center">
-                    </div>
+                <div class="w3-row-padding">
+                    <table class="table">
+                        <tr>
+                            <th>Nomor Order</th>
+                            <th>Status Dapur</th>
+                            <th>Detail Pesanan</th>
+                        </tr>
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $item->nomor_order }}</td>
+                                <td>{{ $item->keranjang->first()->status }}</td>
+                                <td style="text-align: center;">
+                                    @php
+                                        $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                    @endphp
+                                    <a href="/order-online/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                            fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                            <path
+                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
+        </header>
+    </div>
 
-
-
-
-
-
-
-
-
-
-            <!-- First Photo Grid-->
-
-        </div>
-        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-        <!-- Your custom script here -->
-        <script type="text/babel">
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Your custom script here -->
+    <script type="text/babel">
 jQuery(document).ready(($) => {
   var qty = $(".qty").val("1")
         $('.quantity').on('click', '.plus', function(e) {
@@ -255,37 +207,6 @@ jQuery(document).ready(($) => {
         });
     });
 </script>
-
-        <script>
-            function fun_remove() {
-                var element = document.getElementById("id_dropdown");
-                element.remove(element.selectedIndex);
-            }
-        </script>
-
-        <script>
-            $('.select2').select2();
-        </script>
-
-        <script>
-            $(document).ready(function() {
-                $(".harga").change(function() {
-                    var id = $(".harga").val()
-
-
-                    $.ajax({
-                        type: 'get',
-                        url: '/harga/' + id,
-                        success: function(response) {
-                            $(".hargafinal").val(response.makanan.harga)
-                            $(".harganow").val(response.makanan.harga)
-                            $(".namaproduk").val(response.makanan.nama_prdk)
-                        }
-                    });
-
-                });
-            });
-        </script>
 
 </body>
 

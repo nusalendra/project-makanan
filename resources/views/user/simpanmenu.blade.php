@@ -139,7 +139,7 @@
                                 <tr id="row_{{ $item->id }}">
                                     <td>{{ $item->menu }}</td>
                                     <td>
-                                        <span class="harga_per_satuan">{{ $item->harga }}.00</span>
+                                        <span class="harga_per_satuan">Rp. {{ $item->harga }}</span>
                                     </td>
                                     <td>
                                         <div class="form-group">
@@ -156,7 +156,7 @@
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="total_harga">{{ $item->qty * $item->harga }}</td>
+                                    <td class="total_harga">Rp. {{ $item->qty * $item->harga }}</td>
                                     <?php
                                     $totalHargaSemuaPesanan += $item->qty * $item->harga;
                                     ?>
@@ -175,7 +175,7 @@
                     </div>
                     <div class="table">
                         <tr>
-                            <h3 id="totalhHarga">Total Harga Semua Pesanan Rp. <b>{{ $totalHargaSemuaPesanan }}</b>
+                            <h3 id="totalhHarga">Total Harga Semua Pesanan <b>Rp. {{ $totalHargaSemuaPesanan }}</b>
                             </h3>
                             <h3>Jika Status Sudah Selesai Silahkan Klik Button Pembayaran Selesai Untuk Menyelesaikan
                                 Tahap
@@ -297,10 +297,12 @@ jQuery(document).ready(($) => {
                     }
 
                     var hargaPerSatuan = parseFloat(document.querySelector('#row_' + rowId +
-                        ' .harga_per_satuan').innerText);
+                            ' .harga_per_satuan').innerText.replace('Rp.', '').replace(',', '')
+                        .trim());
                     var totalHarga = qty * hargaPerSatuan;
-                    document.querySelector('#row_' + rowId + ' .total_harga').innerText = totalHarga
-                        .toFixed(2);
+                    document.querySelector('#row_' + rowId + ' .total_harga').innerText = 'Rp.' +
+                        totalHarga
+                        .toFixed(0);
 
                     // Hitung total harga semua pesanan dan perbarui elemen <h3>
                     updateTotalHarga();
@@ -311,15 +313,23 @@ jQuery(document).ready(($) => {
             function updateTotalHarga() {
                 var totalHargaSemuaPesanan = 0;
                 document.querySelectorAll('.total_harga').forEach(function(element) {
-                    totalHargaSemuaPesanan += parseFloat(element.innerText);
+                    // Mengambil nilai teks dari elemen
+                    var nilaiTeks = element.innerText;
+
+                    // Menghilangkan 'Rp.' dan mengonversi ke nilai numerik
+                    var hargaItem = parseFloat(nilaiTeks.replace('Rp.', '').replace(',', '').trim());
+
+                    if (!isNaN(hargaItem)) {
+                        totalHargaSemuaPesanan += hargaItem;
+                    } else {
+                        console.error('Nilai total_harga pada elemen', element, 'tidak valid.');
+                    }
                 });
 
-                // Perbarui elemen <h3> dengan total harga semua pesanan
-                document.querySelector('#totalhHarga b').innerText = totalHargaSemuaPesanan.toFixed(2);
-            }
+                console.log('totalHargaSemuaPesanan:', totalHargaSemuaPesanan);
 
-            // Panggil fungsi untuk menginisialisasi total harga saat halaman dimuat
-            updateTotalHarga();
+                document.querySelector('#totalhHarga b').innerText = 'Rp. ' + totalHargaSemuaPesanan.toFixed(0);
+            }
         });
     </script>
 </body>

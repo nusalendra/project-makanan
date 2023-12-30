@@ -102,19 +102,6 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/deletepegawai/{id}', 'AdminController@hapuspegawai');
 });
 
-Route::middleware(['auth:sanctum', 'verified', 'role:Karyawan'])->group(function () {
-    //KARYAWAN
-    Route::post('/addpemesanan', 'karyawan_controller@addpemesanan');
-    Route::get('/loginkaryawan', 'karyawan_controller@loginkaryawan');
-    Route::get('/deletepemesanan/{id}', 'karyawan_controller@deletepemesanan');
-    Route::get('/datamakanan', 'karyawan_controller@makanan');
-    Route::get('/dataminuman', 'karyawan_controller@formminuman');
-    Route::get('/datasnack', 'karyawan_controller@datasnack');
-    Route::get('/simpan', 'karyawan_controller@simpan');
-    Route::get('/homekaryawan', 'karyawan_controller@homekaryawan');
-    Route::get('/pesananmasuk', 'karyawan_controller@pesananmasuk');
-});
-
 //KOKI
 Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () {
     Route::get('/koki', 'koki_controller@koki')->name('homekoki');

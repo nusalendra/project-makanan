@@ -214,12 +214,7 @@ class user_controller extends Controller
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
-        
-        // $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
-        //     ->join('users', 'keranjang.user_id', '=', 'users.id')
-        //     ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at', 'users.username')
-        //     ->find($idDecrypt);
-
+            
         return view('user.detail-pesanan', compact('data', 'user'));
     }
 

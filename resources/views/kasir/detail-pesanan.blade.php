@@ -125,60 +125,57 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
+        <h3><b>DETAIL PESANAN</b></h3>
+        <div class="w3-section w3-bottombar w3-padding-13">
+        </div>
         <div class="w3-container">
-            <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
-            <div class="w3-section w3-bottombar w3-padding-13">
-            </div>
-            <div class="w3-container">
-                <h1><b>DETAIL PESANAN</b></h1>
-                <div class="w3-row-padding">
-                    <div class="w3-half">
-                        <h2>Informasi Pelanggan</h2>
-                        <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
-                    </div>
-                    <div class="w3-half">
-                        <h2>Informasi Pesanan</h2>
-                        @foreach ($data as $item)
-                            <p>Pesanan : {{ $item->keranjang->menu }}</p>
-                            <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
-                            <p>Total Harga Yang Dibayar : Rp.
-                                {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
-                            <br>
-                        @endforeach
-                    </div>
+            <h1><b>DETAIL PESANAN</b></h1>
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <h2>Informasi Pelanggan</h2>
+                    <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                    <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
                 </div>
-
-                <div class="w3-row-padding">
-                    <div class="w3-half">
-                        <h2>Informasi Pembayaran</h2>
-                        <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
-                        <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
-
-                    </div>
-                    <div class="w3-half">
-                        <h2>Status</h2>
-                        <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
-                        <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
-                    </div>
+                <div class="w3-half">
+                    <h2>Informasi Pesanan</h2>
+                    @foreach ($data as $item)
+                        <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                        <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                        <p>Total Harga Yang Dibayar : Rp.
+                            {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
+                        <br>
+                    @endforeach
                 </div>
             </div>
-            <div class="w3-row-padding w3-margin-top">
-                <div class="w3-half" style="display: flex;">
-                    <a href="/kasir-online" class="w3-button w3-white w3-hover-red w3-border"
-                        style="text-decoration: none; margin-right: 5px;">Kembali</a>
-                    <form action="/kasir-online/validasi-pesanan" method="POST">
-                        @csrf
 
-                        @foreach ($data as $item)
-                            <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
-                        @endforeach
-                        <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
-                            Validasi Pembayaran
-                        </button>
-                    </form>
+            <div class="w3-row-padding">
+                <div class="w3-half">
+                    <h2>Informasi Pembayaran</h2>
+                    <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                    <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+
+                </div>
+                <div class="w3-half">
+                    <h2>Status</h2>
+                    <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                    <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                 </div>
             </div>
         </div>
+        <div class="w3-row-padding w3-margin-top">
+            <div class="w3-half" style="display: flex;">
+                <a href="/kasir-online" class="w3-button w3-white w3-hover-red w3-border"
+                    style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                <form action="/kasir-online/validasi-pesanan" method="POST">
+                    @csrf
+                    <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
+                    <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
+                        Validasi Pembayaran
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
     </div>
 </body>
 

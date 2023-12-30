@@ -58,7 +58,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
 Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function () {
     Route::get('/kasir', 'PelayanController@indexkasir')->name('kasir');
     Route::get('/kasir-online', 'PelayanController@indexkasironline');
-    Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesanan');
+    Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesananKasir');
     Route::post('/kasir-online/validasi-pesanan', 'PelayanController@validasiPesanan');
     Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
     Route::post('/kembalian', 'PelayanController@hitungkembalian');
@@ -107,6 +107,9 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
 //KOKI
 Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () {
     Route::get('/koki', 'koki_controller@koki')->name('homekoki');
+    Route::get('/daftar-orderan-online/detail-pesanan/{id}', 'koki_controller@detailPesananOnline');
+    Route::post('/daftar-orderan-online/pesanan-siap', 'koki_controller@pesananSiap');
+    Route::get('/orderan-online-selesai/detail-pesanan/{id}', 'koki_controller@detailPesananOnlineSelesai');
     Route::get('/kokioffline', 'koki_controller@kokioffline');
     Route::get('/loginkoki', 'koki_controller@loginkoki');
     Route::get('/orderselesaikoki', 'koki_controller@orderselesaikoki');
@@ -118,6 +121,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () 
 Route::middleware(['auth:sanctum', 'verified', 'role:Pelayan'])->group(function () {
     Route::get('/orderonline', 'PelayanController@indexpelayan');
     Route::get('/orderoffline', 'PelayanController@indexpelayanoffline')->name('homepelayan');
+    Route::get('/order-online', 'PelayanController@indexpelayanonline');
+    Route::get('/order-online/detail-pesanan/{id}', 'PelayanController@detailPesananPelayan');
+    Route::post('/order-online/pesanan-diambil', 'PelayanController@pesananDiambil');
+    Route::get('/order-selesai', 'PelayanController@orderSelesai');
     Route::get('/keranjangoffline', 'PelayanController@keranjangoffline');
     Route::put('/addorderoffline', 'PelayanController@addorderoffline');
     Route::put('/addpesananoffline', 'PelayanController@addpesananoffline');

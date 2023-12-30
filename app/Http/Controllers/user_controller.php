@@ -8,6 +8,7 @@ use App\Models\tambahmakanan;
 use App\Models\Pembayaran;
 use App\Models\Pemesananoffline;
 use App\Models\keranjang;
+use App\Models\KeranjangPembayaran;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
@@ -82,7 +83,7 @@ class user_controller extends Controller
         $user->password = bcrypt('password');
         $user->telepon = $request->telepon;
         $user->save();
-        
+
         return redirect('/profil');
     }
 
@@ -111,6 +112,8 @@ class user_controller extends Controller
 
         $user = Auth::user();
 
+        $keranjangIdsToSave = [];
+
         foreach ($keranjangIds as $index => $keranjangId) {
             $data = Keranjang::find($keranjangId);
 
@@ -121,15 +124,20 @@ class user_controller extends Controller
                 $data->status = 'Proses';
                 $data->save();
 
-                // Buat pembayaran untuk setiap item di keranjang
-                $pembayaran = new Pembayaran();
-                $pembayaran->keranjang_id = $data->id; // Sesuaikan dengan kolom yang menyimpan id keranjang pada pembayaran
-                $pembayaran->metode = $request->metode;
-                $pembayaran->id_pembayaran = $request->id_pembayaran;
-                $pembayaran->status = 'Proses';
-                $pembayaran->save();
+                // Tambahkan ID keranjang ke array untuk disimpan di pivot table antara Keranjang dan Pembayaran
+                $keranjangIdsToSave[] = $data->id;
             }
         }
+
+        // Simpan array ID keranjang ke dalam relasi many-to-many
+        $pembayaran = new Pembayaran();
+        $pembayaran->nomor_order = '23132112';
+        $pembayaran->metode = $request->metode;
+        $pembayaran->id_pembayaran = $request->id_pembayaran;
+        $pembayaran->status = 'Proses';
+        $pembayaran->save();
+
+        $pembayaran->keranjang()->attach($keranjangIdsToSave);
 
         return redirect('keranjang')->with('sukses', 'Penambahan telah berhasil!');
     }
@@ -186,27 +194,33 @@ class user_controller extends Controller
         return view('user.invoice', compact('keranjang', 'total_orderan', 'pembayaran'));
     }
 
-    public function selesai(request $request)
+    public function riwayatPesanan(request $request)
     {
         // $data = keranjang::all();
         $user = Auth::user();
-        $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
-            ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at')
-            ->where('keranjang.user_id', '=', $user->id)
+        $data = Pembayaran::with('keranjang')
+            ->whereHas('keranjang', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })
             ->get();
 
-        return view('user.selesai', compact('data'));
+        return view('user.riwayat-pesanan', compact('data'));
     }
 
     public function detailpesanan($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
-        $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
-            ->join('users', 'keranjang.user_id', '=', 'users.id')
-            ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at', 'users.username')
-            ->find($idDecrypt);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+        
+        // $data = Pembayaran::join('keranjang', 'pembayaran.keranjang_id', '=', 'keranjang.id')
+        //     ->join('users', 'keranjang.user_id', '=', 'users.id')
+        //     ->select('pembayaran.id', 'pembayaran.metode', 'pembayaran.id_pembayaran', 'pembayaran.status as status_pembayaran', 'keranjang.menu', 'keranjang.qty', 'keranjang.harga', 'keranjang.status as status_dapur', 'keranjang.created_at', 'users.username')
+        //     ->find($idDecrypt);
 
-        return view('user.detail-pesanan', compact('data'));
+        return view('user.detail-pesanan', compact('data', 'user'));
     }
 
     public function loginuser(request $request)

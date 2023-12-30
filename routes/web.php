@@ -46,7 +46,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/editkeranjangoffline/{id}', 'user_controller@editkeranjangoffline')->name('editkeranjangoffline');
     Route::get('/prosesviewdatakeranjang/{id}', 'user_controller@findidkeranjang');
     Route::get('/invoice', 'user_controller@invoice');
-    Route::get('/selesai', 'user_controller@selesai');
+    Route::get('/riwayat-pesanan', 'user_controller@riwayatPesanan');
     // Route::get('/loginuser','user_controller@loginuser');
     Route::post('/checkout', 'user_controller@checkout');
     Route::get('/detail-pesanan/{id}', 'user_controller@detailpesanan');

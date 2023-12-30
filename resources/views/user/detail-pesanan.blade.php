@@ -93,7 +93,7 @@
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
             <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>SELESAI</a>
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Riwayat Pesanan</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -118,34 +118,39 @@
                 <div class="w3-row-padding">
                     <div class="w3-half">
                         <h2>Informasi Pelanggan</h2>
-                        <p>Nama Pelanggan : {{ $data->username }}</p>
+                        <p>Nama Pelanggan : {{ $user->username }}</p>
                     </div>
                     <div class="w3-half">
                         <h2>Informasi Pesanan</h2>
-                        <p>Pesanan : {{ $data->menu }}</p>
-                        <p>Jumlah Pesanan : {{ $data->qty }} pcs</p>
-                        <p>Total Harga Yang Dibayar : {{ $data->qty * $data->harga }},00</p>
+                        @foreach ($data as $item)
+                            <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                            <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                            <p>Total Harga Yang Dibayar : Rp.
+                                {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
+                            <br>
+                        @endforeach
                     </div>
                 </div>
-    
+
                 <div class="w3-row-padding">
                     <div class="w3-half">
                         <h2>Informasi Pembayaran</h2>
-                        <p>ID Pembayaran : {{ $data->id_pembayaran }}</p>
-                        <p>Metode Pembayaran : {{ $data->metode }}</p>
-                        
+                        <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                        <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+
                     </div>
                     <div class="w3-half">
                         <h2>Status</h2>
-                        <p>Status Validasi Pembayaran : {{ $data->status_pembayaran }}</p>
-                        <p>Status Dapur : {{ $data->status_dapur }}</p>
+                        <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                        <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                     </div>
                 </div>
-    
+
                 <!-- Tombol Konfirmasi Pembayaran -->
                 <div class="w3-row-padding w3-margin-top">
                     <div class="w3-half">
-                        <a href="/selesai" class="w3-button w3-white w3-hover-orange w3-border" style="text-decoration: none;">Kembali</a>
+                        <a href="/riwayat-pesanan" class="w3-button w3-white w3-hover-red w3-border"
+                            style="text-decoration: none;">Kembali</a>
                     </div>
                 </div>
             </div>

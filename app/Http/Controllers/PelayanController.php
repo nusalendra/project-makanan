@@ -25,13 +25,32 @@ class PelayanController extends Controller
         return view('pelayan.onlinepage', compact('keranjang'));
     }
 
-    public function indexkasir(request $request)
+    public function indexkasiroffline(request $request)
     {
-        $keranjang = keranjang::all();
+        $data = Pembeli::with('pesananOffline')->get();
         // $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('kasir.homekasir', compact('keranjang'));
+        return view('kasir.kasir-offline', compact('data'));
     }
 
+    public function detailPesananKasirOffline($id) {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
+            ->where('pembeli_id', $idDecrypt)
+            ->get();
+        // dd($data);
+        return view('kasir.detail-pesanan-offline', compact('data'));
+    }
+
+    public function pembayaran($id, Request $request) {
+        $pembeli = Pembeli::find($id);
+
+        $pembeli->uang_dibayarkan = $request->uang_dibayarkan;
+        $pembeli->status_pembayaran = 'Sudah Bayar';
+
+        $pembeli->save();
+
+        return redirect('/order-offline');
+    }
     // public function invoice(request $request)
     // {
     //     $keranjang = keranjang::all();
@@ -46,14 +65,14 @@ class PelayanController extends Controller
         return view('kasir.kasironline')->with('data', $data);
     }
 
-    public function detailPesananKasir($id)
+    public function detailPesananKasirOnline($id)
     {
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('kasir.detail-pesanan', compact('data'));
+        return view('kasir.detail-pesanan-online', compact('data'));
     }
 
     public function validasiPesanan(Request $request)
@@ -167,7 +186,7 @@ class PelayanController extends Controller
         $qtys = $request->input('qty');
 
         $pesananOfflineIdsToSave = [];
-
+        $totalSemuaPesanan = 0;
         foreach ($pesananOfflineIds as $index => $pesananOfflineId) {
             $data = PesananOffline::find($pesananOfflineId);
 
@@ -176,17 +195,20 @@ class PelayanController extends Controller
 
                 $data->qty = $qty;
                 $data->status_pesanan = 'Proses';
+
                 $data->save();
 
                 // Tambahkan ID keranjang ke array untuk disimpan di pivot table antara Keranjang dan Pembayaran
                 $pesananOfflineIdsToSave[] = $data->id;
             }
+            $totalSemuaPesanan += $data->qty * $data->harga;
         }
 
         // Simpan array ID keranjang ke dalam relasi many-to-many
         $pembeli = new Pembeli();
         $pembeli->nomor_order = 'ORD_' . rand(100000000, 999999999);
         $pembeli->nama = $request->nama;
+        $pembeli->total_harga_semua_pesanan = $totalSemuaPesanan;
         $pembeli->status_pembayaran = 'Belum Bayar';
 
         $pembeli->save();

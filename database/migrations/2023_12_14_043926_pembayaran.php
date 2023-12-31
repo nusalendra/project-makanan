@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('nomor_order');
             $table->string('metode');
             $table->string('id_pembayaran');
+            $table->string('total_harga_semua_pesanan');
             $table->string('status');
             $table->timestamps();
         });

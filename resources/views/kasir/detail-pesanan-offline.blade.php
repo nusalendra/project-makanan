@@ -233,7 +233,7 @@
                 var uangDibayarkan = $(this).val();
 
                 // Menghitung kembalian
-                var kembalian = totalHargaSemuaPesanan - uangDibayarkan;
+                var kembalian = uangDibayarkan - totalHargaSemuaPesanan;
 
                 // Memperbarui nilai pada input kembalian
                 $('#kembalian').val('Rp. ' + kembalian.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'));

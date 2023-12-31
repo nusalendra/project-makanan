@@ -9,9 +9,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#tabel-pesanan-offline').DataTable();
+        });
+    </script>
     <style>
         body,
         h1,
@@ -98,17 +107,8 @@
                 <i class="fa fa-remove"></i>
             </a>
             <h4><b>ADMIN PAGE</b></h4>
-            <p class="w3-text-white">Welcome to admin page!</p>
-        </div>
-    </nav>
-    <nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-        <div class="w3-container">
-            <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey"
-                title="close menu">
-                <i class="fa fa-remove"></i>
-            </a>
-            <h4><b>ADMIN PAGE</b></h4>
-            <p class="w3-text-white">Welcome to admin page!</p>
+            <p class="w3-text-white">Selamat Datang <strong>{{ $user->username }} !</strong></p>
+            <p class="w3-text-white">Status Anda saat ini : <strong>{{ $user->role }}</strong></p>
         </div>
         <div class="w3-bar-block">
             <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
@@ -134,51 +134,52 @@
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
         <div class="w3-container">
-            <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
+            <h3><b>DETAIL PESANAN</b></h3>
             <div class="w3-section w3-bottombar w3-padding-13">
             </div>
+            <div class="w3-container">
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <h2>Informasi Pelanggan</h2>
+                        <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                        <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+                    </div>
+                    <div class="w3-half">
+                        <h2>Informasi Pesanan</h2>
+                        @foreach ($data as $item)
+                            <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                            <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                            <p>Total Harga Yang Dibayar : Rp.
+                                {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
+                            <br>
+                        @endforeach
+                        <p><b>Total Harga Semua Pesanan : Rp.
+                                {{ number_format($data->first()->pembayaran->total_harga_semua_pesanan, 0, ',', '.') }}
+                            </b></p>
+                    </div>
+                </div>
 
-
-            <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nomor Pesanan</th>
-                        <th>Nama Pemesan</th>
-                        <th>Pesanan</th>
-                        <th>Harga per Item</th>
-                        <th>Qty</th>
-                        <th>ID Pembayaran</th>
-                        <th>Metode Pembayaran</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                    @foreach ($data as $k => $item)
-                        <tr>
-                            <td>{{ $k + 1 }}</td>
-                            <td>{{ $item->user_nama }}</td>
-                            <td>{{ $item->menu }}</td>
-                            <td>Rp.{{ $item->harga }},00</td>
-                            <td>{{ $item->qty }}</td>
-                            <td>{{ $item->id_pembayaran }}</td>
-                            <td>{{ $item->metode }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>
-                                <form action="{{ route('editstatusadmin', ['id' => $item->id]) }}" method="GET">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <input id="exampleInputEmail1" type="hidden" placeholder="" name="status"
-                                            value="selesai" required autocomplete="" autofocus />
-                                    </div>
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                <div class="w3-row-padding">
+                    <div class="w3-half">
+                        <h2>Informasi Pembayaran</h2>
+                        <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                        <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+                    </div>
+                    <div class="w3-half">
+                        <h2>Status</h2>
+                        <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                        <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
+                    </div>
+                </div>
             </div>
-
+            <div class="w3-row-padding w3-margin-top">
+                <div class="w3-half" style="display: flex;">
+                    <a href="/report-pesanan-online" class="w3-button w3-white w3-hover-red w3-border"
+                        style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

@@ -170,8 +170,10 @@
                     class="fa fa-male fa-fw w3-margin-right"></i>DATA PEGAWAI</a>
             <a href="/datacust" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-group fa-fw w3-margin-right"></i>DATA CUSTOMER</a>
-            <a href="/riwayatdt" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-folder fa-fw w3-margin-right"></i>REPORT</a>
+            <a href="/report-pesanan-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-folder fa-fw w3-margin-right"></i>REPORT ONLINE</a>
+            <a href="/report-pesanan-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-folder fa-fw w3-margin-right"></i>REPORT OFFLINE</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -212,7 +214,8 @@
                             <td>{{ $tambahmakanan->nama_prdk }}</td>
                             <td>{{ $tambahmakanan->komposisi }}</td>
                             <td>{{ $tambahmakanan->harga }}</td>
-                            <td><img src="{{ asset('makanan/' . $tambahmakanan->images) }}" height="35px" width="35px">
+                            <td><img src="{{ asset('makanan/' . $tambahmakanan->images) }}" height="35px"
+                                    width="35px">
                             </td>
                             <td>
                                 <a href="/hapusmakanan/{{ $tambahmakanan->id }}" class="btn fa fa-trash w3-red"></a>

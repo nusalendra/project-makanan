@@ -9,9 +9,18 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table-pesanan-online').DataTable();
+        });
+    </script>
     <style>
         body,
         h1,
@@ -98,17 +107,8 @@
                 <i class="fa fa-remove"></i>
             </a>
             <h4><b>ADMIN PAGE</b></h4>
-            <p class="w3-text-white">Welcome to admin page!</p>
-        </div>
-    </nav>
-    <nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
-        <div class="w3-container">
-            <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey"
-                title="close menu">
-                <i class="fa fa-remove"></i>
-            </a>
-            <h4><b>ADMIN PAGE</b></h4>
-            <p class="w3-text-white">Welcome to admin page!</p>
+            <p class="w3-text-white">Selamat Datang <strong>{{ $user->username }} !</strong></p>
+            <p class="w3-text-white">Status Anda saat ini : <strong>{{ $user->role }}</strong></p>
         </div>
         <div class="w3-bar-block">
             <a href="/dashboard" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
@@ -133,52 +133,47 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
-            <div class="w3-section w3-bottombar w3-padding-13">
-            </div>
-
-
+        <header id="">
             <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nomor Pesanan</th>
-                        <th>Nama Pemesan</th>
-                        <th>Pesanan</th>
-                        <th>Harga per Item</th>
-                        <th>Qty</th>
-                        <th>ID Pembayaran</th>
-                        <th>Metode Pembayaran</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                    @foreach ($data as $k => $item)
-                        <tr>
-                            <td>{{ $k + 1 }}</td>
-                            <td>{{ $item->user_nama }}</td>
-                            <td>{{ $item->menu }}</td>
-                            <td>Rp.{{ $item->harga }},00</td>
-                            <td>{{ $item->qty }}</td>
-                            <td>{{ $item->id_pembayaran }}</td>
-                            <td>{{ $item->metode }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>
-                                <form action="{{ route('editstatusadmin', ['id' => $item->id]) }}" method="GET">
-                                    {{ csrf_field() }}
-                                    <div class="form-group">
-                                        <input id="exampleInputEmail1" type="hidden" placeholder="" name="status"
-                                            value="selesai" required autocomplete="" autofocus />
-                                    </div>
-                                    <div class="">
-                                        <button type="submit" class="btn btn-primary w3-blue">SELESAI</button>
-                                    </div>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                <div class="w3-container">
+                    <h1><b>REPORT PESANAN ONLINE</b></h1>
+                    <table id="table-pesanan-online" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Tanggal Pemesanan</th>
+                                <th>Nomor Order</th>
+                                <th>Total Harga</th>
+                                <th>Detail Pesanan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach ($orderSelesaiOnline as $item)
+                                <tr>
+                                    <td>{{ $item->created_at->format('d-m-Y / H:i:s') }}</td>
+                                    <td>{{ $item->nomor_order }}</td>
+                                    <td>Rp. {{ number_format($item->total_harga_semua_pesanan, 0, ',', '.') }}</td>
+                                    <td style="text-align: center;">
+                                        @php
+                                            $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                        @endphp
+                                        <a href="/report-pesanan-online/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                                fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                                <path
+                                                    d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                            </svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-
+        </header>
+    </div>
 </body>
 
 </html>

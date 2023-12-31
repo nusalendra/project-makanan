@@ -10,7 +10,7 @@ class Pembeli extends Model
     use HasFactory;
     protected $table = 'pembeli';
     protected $primarykey = 'id';
-    protected $fillable = ['nomor_order','nama','status_pembayaran'];
+    protected $fillable = ['nomor_order','nama','status_pembayaran', 'total_harga_semua_pesanan', 'uang_dibayarkan'];
 
     public function pesananOffline() {
         return $this->belongsToMany(PesananOffline::class);

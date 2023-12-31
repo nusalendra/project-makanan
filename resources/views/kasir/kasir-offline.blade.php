@@ -86,7 +86,7 @@
             <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
         </div>
         <div class="w3-bar-block">
-            <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
+            <a href="/kasir-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a>
             <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a>
@@ -104,53 +104,49 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h1><b>HALAMAN KASIR</b></h1>
-            <div class="w3-section w3-bottombar ">
-            </div>
-            <h1><b>TABEL ORDERAN OFFLINE</b></h1>
-            <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nama Pembeli</th>
-                        <th>Pesanan</th>
-                        <th>Qty</th>
-                        <th>Harga Satuan</th>
-                        <th>Total Harga</th>
-                    </tr>
-                    {{-- @foreach ($pemesananoffline as $pesanoffline)
+        <header id="portfolio">
+            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
+                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                    class="fa fa-bars"></i></span>
+            <div class="w3-container">
+                <h3><b>Pesanan Pelanggan</b></h3>
+                <div class="w3-row-padding">
+                    <table class="table">
                         <tr>
-                            <td>{{ $pesanoffline->nama_pembeli }}</td>
-                            <td>{{ $pesanoffline->menu_offline }}</td>
-                            <td>{{ $pesanoffline->qty_offline }}</td>
-                            <td>{{ $pesanoffline->harga_offline }}</td>
-                            <td>{{ $pesanoffline->qty_offline * $pesanoffline->harga_offline }}</td>
+                            <th>Nomor Order</th>
+                            <th>Nama Pembeli</th>
+                            <th>Status Validasi Pembayaran</th>
+                            <th>Status Dapur</th>
+                            <th>Detail Pesanan</th>
                         </tr>
-                    @endforeach --}}
-                </table>
-            </div>
-
-            <tr>
-                {{-- <h3>Total Harga <b> Rp{{ $total_orderan->totalorderan }} ,00 </b></h3> --}}
-                <form method="post" action="/kembalian">
-                    {{ csrf_field() }}
-                    <input type="text" name="bil_1" class="bil" autocomplete="off"
-                        placeholder="Masukkan Uang Bayar">
-                    <input type="text" readonly name="bil_2" class="bil" autocomplete="off"
-                        {{-- placeholder="Masukkan Total Belanja" value="{{ $total_orderan->totalorderan }}"> --}}
-
-                    <button type="submit" class="btn btn-info">Hasil</button>
-                </form>
-                <div class="w3-container">
-                    @if (session('info'))
-                        <div class="alert alert-info">
-                            {{ session('info') }}
-                        </div>
-                    @endif
+                        @foreach ($data as $item)
+                            <tr>
+                                <td>{{ $item->nomor_order }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td>{{ $item->status_pembayaran }}</td>
+                                <td>{{ $item->pesananOffline->first()->status_pesanan }}</td>
+                                <td style="text-align: center;">
+                                    @php
+                                        $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                    @endphp
+                                    <a href="/kasir-offline/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                            fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                                            <path
+                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                            <path
+                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                        </svg>
+                                    </a>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
-                <a href="/invoicekasir"><button type="button" class="btn btn-default btn-lg w3-red" data-toggle="modal"
-                        data-target="#myModal1">Print Struk</button></a>
-
+            </div>
+        </header>
+    </div>
 </body>
 
 </html>

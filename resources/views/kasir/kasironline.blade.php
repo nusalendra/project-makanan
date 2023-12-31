@@ -111,7 +111,7 @@
             <p class="w3-text-white">Welcome to admin page!</p>
         </div>
         <div class="w3-bar-block">
-            <a href="/kasir" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
+            <a href="/kasir-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a>
             <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a>

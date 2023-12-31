@@ -32,7 +32,8 @@ class PelayanController extends Controller
         return view('kasir.kasir-offline', compact('data'));
     }
 
-    public function detailPesananKasirOffline($id) {
+    public function detailPesananKasirOffline($id)
+    {
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)
@@ -41,7 +42,8 @@ class PelayanController extends Controller
         return view('kasir.detail-pesanan-offline', compact('data'));
     }
 
-    public function pembayaran($id, Request $request) {
+    public function pembayaran($id, Request $request)
+    {
         $pembeli = Pembeli::find($id);
 
         $pembeli->uang_dibayarkan = $request->uang_dibayarkan;
@@ -220,7 +222,10 @@ class PelayanController extends Controller
 
     public function orderOffline()
     {
-        $data = Pembeli::with('pesananOffline')->get();
+        $data = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where('status_pesanan', '!=', 'Pesanan Diambil');
+            })->get();
 
         return view('pelayan.order-offline', compact('data'));
     }
@@ -238,7 +243,8 @@ class PelayanController extends Controller
         return view('pelayan.detail-pesanan-offline', compact('data'));
     }
 
-    public function pesananDiambilOffline(Request $request) {
+    public function pesananDiambilOffline(Request $request)
+    {
         $pesananOfflineIds = $request->input('pesananOfflineId');
 
         foreach ($pesananOfflineIds as $index => $pesananOfflineId) {
@@ -293,16 +299,45 @@ class PelayanController extends Controller
         return redirect('/order-online');
     }
 
-    // public function orderSelesai()
-    // {
-    //     $data = Pembayaran::with('keranjang')
-    //         ->whereHas('keranjang', function ($query) {
-    //             $query->where('keranjang.status', '=', 'Pesanan Diambil');
-    //         })
-    //         ->get();
-    //     $pemesananoffline = pemesananoffline::where('status_offline', 'selesai')->get();
-    //     return view('pelayan.order-selesai', compact('data', 'pemesananoffline'));
-    // }
+    public function orderSelesai()
+    {
+        $orderSelesaiOffline = Pembeli::with('pesananOffline')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where(function ($subquery) {
+                    $subquery->Where('status_pesanan', '=', 'Pesanan Diambil');
+                });
+            })
+            ->where('status_pembayaran', '=', 'Sudah Bayar')
+            ->get();
+
+        $orderSelesaiOnline = Pembayaran::with('keranjang')
+            ->whereHas('keranjang', function ($query) {
+                $query->where('status', '=', 'Pesanan Diambil');
+            })
+            ->where('status', 'Diterima')
+            ->get();
+
+        return view('pelayan.order-selesai', compact('orderSelesaiOffline', 'orderSelesaiOnline'));
+    }
+
+    public function detailPesananOrderanSelesaiOnline($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+
+        return view('pelayan.detail-pesanan-online-order-selesai', compact('data'));
+    }
+
+    public function detailPesananOrderanSelesaiOffline($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
+            ->where('pembeli_id', $idDecrypt)->get();
+
+        return view('pelayan.detail-pesanan-offline-order-selesai', compact('data'));
+    }
 
     // public function addorderoffline(request $request)
     // {

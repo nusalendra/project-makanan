@@ -80,8 +80,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/datacust', 'AdminController@datacust');
     Route::get('/dashboard', 'AdminController@dashboard');
     Route::get('/report-pesanan-online', 'AdminController@reportOnline');
+    Route::get('/report-pesanan-online/cetak-pdf', 'AdminController@cetakPdfOnline');
     Route::get('/report-pesanan-online/detail-pesanan/{id}', 'AdminController@detailPesananReportOnline');
     Route::get('/report-pesanan-offline', 'AdminController@reportOffline');
+    Route::get('/report-pesanan-offline/cetak-pdf', 'AdminController@cetakPdfOffline');
     Route::get('/report-pesanan-offline/detail-pesanan/{id}', 'AdminController@detailPesananReportOffline');
     Route::get('/validasibayar', 'AdminController@indexvalidasi');
     Route::get('/editstatusadmin/{id}', 'AdminController@editstatusadmin')->name('editstatusadmin');
@@ -142,6 +144,8 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pelayan'])->group(function 
     Route::get('/order-online/detail-pesanan/{id}', 'PelayanController@detailPesananOnline');
     Route::post('/order-online/pesanan-diambil', 'PelayanController@pesananDiambilOnline');
     Route::get('/order-selesai', 'PelayanController@orderSelesai');
+    Route::get('/orderan-selesai/detail-pesanan-online/{id}', 'PelayanController@detailPesananOrderanSelesaiOnline');
+    Route::get('/orderan-selesai/detail-pesanan-offline/{id}', 'PelayanController@detailPesananOrderanSelesaiOffline');
     Route::put('/addorderoffline', 'PelayanController@addorderoffline');
     Route::put('/addpesananoffline', 'PelayanController@addpesananoffline');
     Route::get('/hapusorderoffline/{id}', 'PelayanController@hapusorderoffline');

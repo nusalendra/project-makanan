@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use App\Models\PembeliPesananOffline;
+use App\Models\PesananOffline;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class AdminController extends Controller
 {
@@ -222,12 +224,25 @@ class AdminController extends Controller
         return view('admin.report-pesanan-online', compact('orderSelesaiOnline', 'user'));
     }
 
+    public function cetakPdfOnline()
+    {
+        $keranjang = Keranjang::with('pembayaran')->where('status', 'Pesanan Diambil')->get();
+
+        $totalHargaSemuaPesanan = Pembayaran::whereHas('keranjang', function ($query) {
+            $query->where('status', 'Pesanan Diambil');
+        })->sum('total_harga_semua_pesanan');
+
+        $pdf = PDF::loadView('admin/report-online-pdf', ['title' => 'Report Pesanan Online'], compact('keranjang', 'totalHargaSemuaPesanan'));
+        $pdf->setPaper('A4', 'potrait');
+        return $pdf->stream('report-online.pdf');
+    }
+
     public function detailPesananReportOnline($id)
     {
-        
+
         $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
-        
+
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
@@ -244,10 +259,23 @@ class AdminController extends Controller
                     $subquery->Where('status_pesanan', '=', 'Pesanan Diambil');
                 });
             })
-            ->where('status_pembayaran', '=', 'Sudah Dibayar')
+            ->where('status_pembayaran', '=', 'Sudah Bayar')
             ->get();
 
         return view('admin.report-pesanan-offline', compact('orderSelesaiOffline', 'user'));
+    }
+
+    public function cetakPdfOffline()
+    {
+        $pesananOffline = PesananOffline::with('pembeli')->where('status_pesanan', 'Pesanan Diambil')->get();
+
+        $totalHargaSemuaPesanan = Pembeli::whereHas('pesananOffline', function ($query) {
+            $query->where('status_pesanan', 'Pesanan Diambil');
+        })->sum('total_harga_semua_pesanan');
+
+        $pdf = PDF::loadView('admin/report-offline-pdf', ['title' => 'Report Pesanan Offline'], compact('pesananOffline', 'totalHargaSemuaPesanan'));
+        $pdf->setPaper('A4', 'potrait');
+        return $pdf->stream('report-online.pdf');
     }
 
     public function detailPesananReportOffline($id)

@@ -25,7 +25,7 @@ class user_controller extends Controller
         $keranjang = keranjang::where('user_id', $user->id)
             ->where('status', 'Dalam Keranjang')
             ->pluck('tambahmakanan_id');
-            
+
         return view('user.homepage', compact('tambahmakanan', 'keranjang', 'user'));
     }
 
@@ -192,8 +192,12 @@ class user_controller extends Controller
         // $data = keranjang::all();
         $user = Auth::user();
         $data = Pembayaran::with('keranjang')
-            ->whereHas('keranjang', function ($query) use ($user) {
-                $query->where('user_id', $user->id);
+            ->where(function ($query) {
+                $query->where('status', 'Diterima')
+                    ->orWhere('status', 'Proses');
+            })
+            ->whereHas('keranjang', function ($query) {
+                $query->where('status', '!=', 'Pesanan Diambil');
             })
             ->get();
 

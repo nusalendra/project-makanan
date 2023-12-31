@@ -139,23 +139,33 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <header id="">
-            <div class="w3-row-padding">
-                <div class="w3-container">
-                    <h1><b>Daftar Orderan Online Selesai</b></h1>
-                    <table>
+        <header id="portfolio">
+            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
+                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                    class="fa fa-bars"></i></span>
+            <div class="w3-container">
+                <h3><b>Pesanan Pelanggan</b></h3>
+                <div class="w3-row-padding">
+                    <table class="table">
                         <tr>
                             <th>Nomor Order</th>
+                            <th>Nama Pembeli</th>
+                            <th>Status Validasi Pembayaran</th>
+                            <th>Status Dapur</th>
                             <th>Detail Pesanan</th>
                         </tr>
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{ $item->nomor_order }}</td>
+                                <td>{{ $item->nama }}</td>
+                                <td>{{ $item->status_pembayaran }}</td>
+                                <td>{{ $item->pesananOffline->first()->status_pesanan }}</td>
                                 <td style="text-align: center;">
                                     @php
                                         $pembayaranIdEncrypt = Crypt::encrypt($item->id);
                                     @endphp
-                                    <a href="/orderan-online-selesai/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                    <a href="/order-offline/detail-pesanan/{{ $pembayaranIdEncrypt }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
                                             <path
@@ -169,66 +179,39 @@
                         @endforeach
                     </table>
                 </div>
-                <div class="w3-row-padding">
-                    <div class="w3-container">
-                        <h1><b>Daftar Orderan Offline Selesai</b></h1>
-                        <table>
-                            <tr>
-                                <th>Id Order</th>
-                                <th>Tanggal</th>
-                                <th>Nama Pelanggan</th>
-                                <th>Pesanan</th>
-                                <th>Qty</th>
-                                <th>Hasil</th>
-                            </tr>
-                            @foreach ($pemesananoffline as $pesanoffline)
-                                <tr>
-                                    <td>{{ $pesanoffline->id }}</td>
-                                    <td>{{ $pesanoffline->created_at }}</td>
-                                    <td>{{ $pesanoffline->nama_pembeli }}</td>
-                                    <td>{{ $pesanoffline->menu_offline }}</td>
-                                    <td>{{ $pesanoffline->qty_offline }}</td>
-                                    <td>{{ $pesanoffline->status_offline }}</td>
-                                <tr>
-                            @endforeach
-                        </table>
-                    </div>
-                </div>
             </div>
         </header>
     </div>
-
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <!-- Your custom script here -->
-    <script type="text/babel">
-jQuery(document).ready(($) => {
-  var qty = $(".qty").val("1")
-        $('.quantity').on('click', '.plus', function(e) {
-            let $input = $(this).prev('input.qty');
-            let val = parseInt($input.val());
-            $input.val( val+1 ).change();
-            var qty = $(".qty").val()
-            var id = $(".harganow").val()
-            var jumlah = $(".qty").val()
-            var total = id * jumlah
-            $(".hargafinal").val(total)
-        });
- 
-        $('.quantity').on('click', '.minus', 
-            function(e) {
-            let $input = $(this).next('input.qty');
-            var val = parseInt($input.val());
-            if (val > 0) {
-                $input.val( val-1 ).change();
-            } 
-            var id = $(".harganow").val()
-            var jumlah = $(".qty").val()
-            var total = id * jumlah
-            $(".hargafinal").val(total)
-        });
-    });
-</script>
+    <script>
+        $(document).ready(function() {
 
+            //Ketika elemen class sembunyi di klik maka elemen class gambar sembunyi
+            $('.sembunyi').click(function() {
+                //Sembunyikan elemen class gambar
+                $('.table').hide();
+            });
+        });
+    </script>
+    <script type="text/babel">
+ jQuery(document).ready(($) => {
+         $('.quantity').on('click', '.plus', function(e) {
+             let $input = $(this).prev('input.qty');
+             let val = parseInt($input.val());
+             $input.val( val+1 ).change();
+         });
+  
+         $('.quantity').on('click', '.minus', 
+             function(e) {
+             let $input = $(this).next('input.qty');
+             var val = parseInt($input.val());
+             if (val > 0) {
+                 $input.val( val-1 ).change();
+             } 
+         });
+     });
+ </script>
 </body>
 
 </html>

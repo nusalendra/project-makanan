@@ -138,13 +138,22 @@
                 </div>
                 <div class="w3-half">
                     <h2>Informasi Pesanan</h2>
+                    @php
+                        $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
+                    @endphp
                     @foreach ($data as $item)
                         <p>Pesanan : {{ $item->keranjang->menu }}</p>
                         <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
                         <p>Total Harga Yang Dibayar : Rp.
                             {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
                         <br>
+                        @php
+                            // Menambahkan total harga pesanan saat ini ke totalSemuaPesanan
+                            $totalSemuaPesanan += $item->keranjang->qty * $item->keranjang->harga;
+                        @endphp
                     @endforeach
+                    <p style="color: red;"><b>Total Harga Semua Pesanan: Rp.
+                            {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
                 </div>
             </div>
 

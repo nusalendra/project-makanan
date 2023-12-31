@@ -119,7 +119,11 @@
             <p class="w3-text-white">Welcome to order page!</p>
         </div>
         <div class="w3-bar-block">
-            <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+            <a href="/menu-pelanggan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>Menu</a>
+            <a href="/keranjang-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>KERANJANG</a>
+            <a href="/order-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a>
             <a href="/order-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a>

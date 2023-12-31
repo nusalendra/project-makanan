@@ -7,14 +7,40 @@ use App\Models\pemesananoffline;
 use App\Models\keranjang;
 use App\Models\Pembayaran;
 use App\Models\KeranjangPembayaran;
+use App\Models\Pembeli;
+use App\Models\PembeliPesananOffline;
+use App\Models\PesananOffline;
 use Illuminate\Support\Facades\Crypt;
 
 class koki_controller extends Controller
 {
     public function koki(request $request)
     {
-        $data = Pembayaran::with('keranjang')->where('status', 'Diterima')->get();
+        $data = Pembayaran::with('keranjang')
+            ->where('status', 'Diterima')
+            ->whereHas('keranjang', function ($query) {
+                $query->whereNotIn('status', ['Pesanan Sudah Siap', 'Pesanan Diambil']);
+            })
+            ->get();
+
         return view('koki.homekoki', compact('data'));
+    }
+
+    public function pesananSiapOffline(Request $request)
+    {
+        $pesananOfflineIds = $request->input('pesananOfflineId');
+
+        foreach ($pesananOfflineIds as $index => $pesananOfflineId) {
+            $data = PesananOffline::find($pesananOfflineId);
+
+            if ($data) {
+                $data->status_pesanan = 'Pesanan Sudah Siap';
+
+                $data->save();
+            }
+        }
+
+        return redirect('/kokioffline');
     }
 
     public function detailPesananOnline($id)
@@ -24,10 +50,10 @@ class koki_controller extends Controller
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('koki.detail-pesanan', compact('data'));
+        return view('koki.detail-pesanan-online', compact('data'));
     }
 
-    public function pesananSiap(Request $request)
+    public function pesananSiapOnline(Request $request)
     {
         $keranjangIds = $request->input('keranjangId');
 
@@ -56,8 +82,32 @@ class koki_controller extends Controller
 
     public function kokioffline(request $request)
     {
-        $pemesananoffline = pemesananoffline::all();
-        return view('koki.kokioffline', compact('pemesananoffline'));
+        $data = Pembeli::with('pesananOffline')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where('status_pesanan', 'Proses');
+            })
+            ->get();
+
+        return view('koki.kokioffline', compact('data'));
+    }
+
+    public function detailPesananOffline($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
+            ->where('pembeli_id', $idDecrypt)->get();
+        // dd($data);
+        return view('koki.detail-pesanan-offline', compact('data'));
+    }
+
+    public function detailPesananOfflineSelesai($id)
+    {
+
+        $idDecrypt = Crypt::decrypt($id);
+        $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
+            ->where('pembeli_id', $idDecrypt)->get();
+
+        return view('koki.detail-pesanan-offline-selesai', compact('data'));
     }
 
     public function loginkoki(request $request)
@@ -67,13 +117,19 @@ class koki_controller extends Controller
 
     public function orderselesaikoki(request $request)
     {
-        $data = Pembayaran::with('keranjang')
+        $orderSelesaiOnline = Pembayaran::with('keranjang')
+            ->where('status', 'Diterima')
             ->whereHas('keranjang', function ($query) {
-                $query->where('keranjang.status', '=', 'Pesanan Sudah Siap')->orWhere('keranjang.status', '=', 'Pesanan Diambil');
+                $query->whereNotIn('status', ['Pesanan Diambil']);
             })
             ->get();
-        $pemesananoffline = pemesananoffline::where('status_offline', 'selesai')->get();
-        return view('koki.orderselesaikoki', compact('data', 'pemesananoffline'));
+
+        $orderSelesaiOffline = Pembeli::with('pesananOffline')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where('status_pesanan', '=', 'Pesanan Sudah Siap')->orWhere('status_pesanan', '=', 'Pesanan Diambil');
+            })->get();
+
+        return view('koki.orderselesaikoki', compact('orderSelesaiOnline', 'orderSelesaiOffline'));
     }
 
     public function editstatus(request $request, $id)

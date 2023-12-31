@@ -107,8 +107,12 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
 //KOKI
 Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () {
     Route::get('/koki', 'koki_controller@koki')->name('homekoki');
+    Route::post('/daftar-orderan-offline/pesanan-siap', 'koki_controller@pesananSiapOffline');
     Route::get('/daftar-orderan-online/detail-pesanan/{id}', 'koki_controller@detailPesananOnline');
-    Route::post('/daftar-orderan-online/pesanan-siap', 'koki_controller@pesananSiap');
+    Route::post('/daftar-orderan-online/pesanan-siap', 'koki_controller@pesananSiapOnline');
+    Route::get('/daftar-orderan-offline/detail-pesanan/{id}', 'koki_controller@detailPesananOffline');
+    Route::post('/daftar-orderan-offline/pesanan-siap', 'koki_controller@pesananSiapOffline');
+    Route::get('/orderan-offline-selesai/detail-pesanan/{id}', 'koki_controller@detailPesananOfflineSelesai');
     Route::get('/orderan-online-selesai/detail-pesanan/{id}', 'koki_controller@detailPesananOnlineSelesai');
     Route::get('/kokioffline', 'koki_controller@kokioffline');
     Route::get('/loginkoki', 'koki_controller@loginkoki');
@@ -120,12 +124,19 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Koki'])->group(function () 
 //PELAYAN
 Route::middleware(['auth:sanctum', 'verified', 'role:Pelayan'])->group(function () {
     Route::get('/orderonline', 'PelayanController@indexpelayan');
-    Route::get('/orderoffline', 'PelayanController@indexpelayanoffline')->name('homepelayan');
+    Route::get('/menu-pelanggan', 'PelayanController@menuPelanggan')->name('homepelayan');
+    Route::get('/order-offline', 'PelayanController@orderOffline');
+    Route::get('/order-offline/detail-pesanan/{id}', 'PelayanController@detailPesananOffline');
+    Route::post('/order-offline/pesanan-diambil', 'PelayanController@pesananDiambilOffline');
+    Route::post('/tambah-keranjang', 'PelayanController@tambahKeranjang');
+    Route::get('/keranjang-offline', 'PelayanController@keranjangOffline');
+    Route::get('/keranjang-offline/delete/{id}', 'PelayanController@keranjangDelete');
+    Route::post('/checkout-pembeli', 'PelayanController@checkoutPembeli');
+
     Route::get('/order-online', 'PelayanController@indexpelayanonline');
-    Route::get('/order-online/detail-pesanan/{id}', 'PelayanController@detailPesananPelayan');
-    Route::post('/order-online/pesanan-diambil', 'PelayanController@pesananDiambil');
+    Route::get('/order-online/detail-pesanan/{id}', 'PelayanController@detailPesananOnline');
+    Route::post('/order-online/pesanan-diambil', 'PelayanController@pesananDiambilOnline');
     Route::get('/order-selesai', 'PelayanController@orderSelesai');
-    Route::get('/keranjangoffline', 'PelayanController@keranjangoffline');
     Route::put('/addorderoffline', 'PelayanController@addorderoffline');
     Route::put('/addpesananoffline', 'PelayanController@addpesananoffline');
     Route::get('/hapusorderoffline/{id}', 'PelayanController@hapusorderoffline');

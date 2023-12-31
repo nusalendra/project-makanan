@@ -119,7 +119,11 @@
             <p class="w3-text-white">Welcome to order page!</p>
         </div>
         <div class="w3-bar-block">
-            <a href="orderoffline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+            <a href="/menu-pelanggan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>Menu</a>
+            <a href="/keranjang-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>KERANJANG</a>
+            <a href="/order-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>ORDER OFFLINE</a>
             <a href="/order-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>ORDER ONLINE</a>
@@ -135,99 +139,79 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h1><b>Silahkan Isi Pesanan Pelanggan</b></h1>
-            <header class="w3-container">
-                <div class="w3-section w3-bottombar w3-padding-6">
-                    <div class="modal-body">
-                        <form action="/addpesananoffline" method="POST">
-                            @method('put')
-                            {{ csrf_field() }}
-                            <div class="form-group">
-                                <!-- <label for="nama" class="cols-sm-2 control-label">Nama Pembeli</label>
-           <input type="text" class="nama_pembeli"> -->
 
-                                <label for="name" class="cols-sm-2 control-label">Pesanan</label>
-                                <div class="cols-sm-10">
-                                    <div class="input-group">
-                                        <select name="menu_offline" class="harga select2 form-control"
-                                            id="exampleFormControlSelect1">
-                                            <option></option>
-                                            @foreach ($keranjang as $tambahmakanan)
-                                                <option value="{{ $tambahmakanan->id }}">{{ $tambahmakanan->menu }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="email" class="cols-sm-2 control-label">Qty</label>
-                                <div class="cols-sm-10">
-                                    <div class="quantity">
-                                        <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                        <input type='text' name='qty_offline' min="0" class='qty' />
-                                        <input type='button' value='+' class='qtyplus plus' field='qty' />
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="harga">Harga</label>
-                                <input id="harga_offline" type="" readonly placeholder=""
-                                    class="hargafinal form-control @error('harga_offline') is-invalid @enderror"
-                                    name="harga_offline" value="" required autocomplete="" autofocus />
-                                <input type="hidden" class="harganow" name="hargaproduk">
-                                <input type="hidden" class="namaproduk" name="namaproduk">
-                            </div>
-
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary w3-red">KERANJANG</button>
-                        </form>
-
-                    </div>
+        <header id="portfolio">
+            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
+                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
+            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
+                    class="fa fa-bars"></i></span>
+            <div class="w3-container">
+                <h1><b>Menu Paket Sushi</b></h1>
+                <div class="w3-section w3-bottombar w3-padding-16">
+                    <span class="w3-margin-right">Filter:</span>
+                    <button class="w3-button w3-black">ALL</button>
+                    <a href="/homepage"><button class="w3-button w3-white"><i
+                                class="fa fa-cutlery w3-margin-right"></i>Paket Sushi</button></a>
+                    <a href="/pagealacarte"><button class="w3-button w3-white w3-hide-small"><i
+                                class="fa fa-cutlery w3-margin-right"></i>Ala Carte Sushi</button></a>
+                    <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i
+                                class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
                 </div>
-            </header>
-        </div>
+            </div>
+        </header>
 
-    </div>
+        <!-- MODAL -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">WARNING!</h5>
+                    </div>
+                    <div class="modal-body">
+                        <h4><b>Menu Sudah Anda Pilih</b></h4><br>
+                        <h4>Selanjutnya menu dapat anda lihat dan tambah jumlah di halaman keranjang </h4>
 
 
-    <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
 
-            <h1><b>MENU dan HARGA</b></h1>
-            <!-- First Photo Grid-->
-
-            <div class="w3-third w3-container w3-margin-bottom">
-
-                <div class="w3-container w3-white">
-                    @foreach ($keranjang as $tambahmakanan)
-                        <p><b>{{ $tambahmakanan->menu }}</b></p>
-                        <p>{{ $tambahmakanan->komposisi }}</p>
-                        <p>Rp {{ $tambahmakanan->harga }},00</p>
-                    @endforeach
-                    <div class="w3-row-padding w3-center">
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-warning" data-dismiss="modal">Close</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-            <!-- First Photo Grid-->
-
         </div>
-        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-        <!-- Your custom script here -->
-        <script type="text/babel">
+        <!-- ENDMODAL -->
+
+        <!-- First Photo Grid-->
+        @foreach ($tambahmakanan as $tambahmakanan)
+            <form method="POST" action="/tambah-keranjang" enctype="multipart/form-data">
+                @csrf
+                <div class="w3-third w3-container w3-margin-bottom">
+                    <input type="hidden" name="tambahMakananId" value="{{ $tambahmakanan->id }}" />
+                    <input type="hidden" name="harga" value="{{ $tambahmakanan->harga }}" />
+                    <input type="hidden" name="menu" value="{{ $tambahmakanan->nama_prdk }}" />
+                    <div><img class="rounded-circle mt-5" width="100px"
+                            src="{{ asset('makanan/' . $tambahmakanan->images) }}" style="width:100%"></div>
+                    <div class="w3-container w3-white" style="padding: 20px;">
+                        <p><b>{{ $tambahmakanan->nama_prdk }}</b></p>
+                        <p>{{ $tambahmakanan->komposisi }}</p>
+                        <p>Rp {{ $tambahmakanan->harga }}</p>
+                        <div class="w3-row-padding w3-center">
+                            <button type="submit" class="button button3">
+                                Tambah ke Keranjang
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        @endforeach
+    </div>
+
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <!-- Your custom script here -->
+    <script type="text/babel">
 jQuery(document).ready(($) => {
   var qty = $(".qty").val("1")
         $('.quantity').on('click', '.plus', function(e) {
@@ -256,36 +240,36 @@ jQuery(document).ready(($) => {
     });
 </script>
 
-        <script>
-            function fun_remove() {
-                var element = document.getElementById("id_dropdown");
-                element.remove(element.selectedIndex);
-            }
-        </script>
+    <script>
+        function fun_remove() {
+            var element = document.getElementById("id_dropdown");
+            element.remove(element.selectedIndex);
+        }
+    </script>
 
-        <script>
-            $('.select2').select2();
-        </script>
+    <script>
+        $('.select2').select2();
+    </script>
 
-        <script>
-            $(document).ready(function() {
-                $(".harga").change(function() {
-                    var id = $(".harga").val()
+    <script>
+        $(document).ready(function() {
+            $(".harga").change(function() {
+                var id = $(".harga").val()
 
 
-                    $.ajax({
-                        type: 'get',
-                        url: '/harga/' + id,
-                        success: function(response) {
-                            $(".hargafinal").val(response.makanan.harga)
-                            $(".harganow").val(response.makanan.harga)
-                            $(".namaproduk").val(response.makanan.nama_prdk)
-                        }
-                    });
-
+                $.ajax({
+                    type: 'get',
+                    url: '/harga/' + id,
+                    success: function(response) {
+                        $(".hargafinal").val(response.makanan.harga)
+                        $(".harganow").val(response.makanan.harga)
+                        $(".namaproduk").val(response.makanan.nama_prdk)
+                    }
                 });
+
             });
-        </script>
+        });
+    </script>
 
 </body>
 

@@ -9,11 +9,15 @@ use App\Models\Pegawai;
 use App\Models\Lokasi;
 use App\Models\tambahmakanan;
 use App\Models\keranjang;
+use App\Models\KeranjangPembayaran;
 use App\Models\pemesananoffline;
 use App\Models\Pembayaran;
 use App\Models\validasibayar;
+use App\Models\Pembeli;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Crypt;
+use App\Models\PembeliPesananOffline;
 
 class AdminController extends Controller
 {
@@ -46,15 +50,16 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $data = user::Orwhere('role', '=', 'Pemilik')
-        ->Orwhere('role', '=', 'Kasir')
-        ->Orwhere('role', '=', 'Koki')
-        ->Orwhere('role', '=', 'Pelayan')
-        ->get();
+            ->Orwhere('role', '=', 'Kasir')
+            ->Orwhere('role', '=', 'Koki')
+            ->Orwhere('role', '=', 'Pelayan')
+            ->get();
 
         return view('admin.tambahpegawai', compact('data', 'user'));
     }
 
-    public function formtambahpegawai() {
+    public function formtambahpegawai()
+    {
         return view('admin.formtambahpegawai');
     }
 
@@ -69,7 +74,7 @@ class AdminController extends Controller
         $user->role = $request->role;
         // dd($user);
         $user->save();
-        
+
         return redirect('tambahpegawai')->with('sukses', 'penambahan telah berhasil!');
     }
 
@@ -201,18 +206,59 @@ class AdminController extends Controller
         $pemesananoffline = pemesananoffline::all();
         $total_orderan_online = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
         $total_orderan_offline = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('admin.dashboard', compact('user' ,'pemesananoffline', 'keranjang', 'total_orderan_online', 'total_orderan_offline'));
+        return view('admin.dashboard', compact('user', 'pemesananoffline', 'keranjang', 'total_orderan_online', 'total_orderan_offline'));
     }
 
-    public function riwayatdt(request $request)
+    public function reportOnline(request $request)
     {
         $user = Auth::user();
-        $pemesananoffline = pemesananoffline::all();
-        $data = DB::table('keranjang')
-            ->join('pembayaran', 'pembayaran.id', '=', 'keranjang.id')
-            ->join('validasibayar', 'validasibayar.id', '=', 'pembayaran.id')
+        $orderSelesaiOnline = Pembayaran::with('keranjang')
+            ->whereHas('keranjang', function ($query) {
+                $query->where('status', '=', 'Pesanan Diambil');
+            })
+            ->where('status', 'Diterima')
             ->get();
-        return view('admin.riwayatdt', compact('pemesananoffline','user'))->with('data', $data);
+
+        return view('admin.report-pesanan-online', compact('orderSelesaiOnline', 'user'));
+    }
+
+    public function detailPesananReportOnline($id)
+    {
+        
+        $user = Auth::user();
+        $idDecrypt = Crypt::decrypt($id);
+        
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+
+        return view('admin.detail-pesanan-report-online', compact('data', 'user'));
+    }
+
+    public function reportOffline(Request $request)
+    {
+        $user = Auth::user();
+        $orderSelesaiOffline = Pembeli::with('pesananOffline')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where(function ($subquery) {
+                    $subquery->Where('status_pesanan', '=', 'Pesanan Diambil');
+                });
+            })
+            ->where('status_pembayaran', '=', 'Sudah Dibayar')
+            ->get();
+
+        return view('admin.report-pesanan-offline', compact('orderSelesaiOffline', 'user'));
+    }
+
+    public function detailPesananReportOffline($id)
+    {
+        $user = Auth::user();
+        $idDecrypt = Crypt::decrypt($id);
+        $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
+            ->where('pembeli_id', $idDecrypt)
+            ->get();
+
+        return view('admin.detail-pesanan-report-offline', compact('data', 'user'));
     }
 
     public function editstatusadmin(request $request, $id)

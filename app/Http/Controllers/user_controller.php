@@ -106,7 +106,7 @@ class user_controller extends Controller
         $user = Auth::user();
 
         $keranjangIdsToSave = [];
-
+        $totalSemuaPesanan = 0;
         foreach ($keranjangIds as $index => $keranjangId) {
             $data = Keranjang::find($keranjangId);
 
@@ -120,6 +120,7 @@ class user_controller extends Controller
                 // Tambahkan ID keranjang ke array untuk disimpan di pivot table antara Keranjang dan Pembayaran
                 $keranjangIdsToSave[] = $data->id;
             }
+            $totalSemuaPesanan += $data->qty * $data->harga;
         }
 
         // Simpan array ID keranjang ke dalam relasi many-to-many
@@ -127,6 +128,7 @@ class user_controller extends Controller
         $pembayaran->nomor_order = 'ORD_' . rand(100000000, 999999999);
         $pembayaran->metode = $request->metode;
         $pembayaran->id_pembayaran = $request->id_pembayaran;
+        $pembayaran->total_harga_semua_pesanan = $totalSemuaPesanan;
         $pembayaran->status = 'Proses';
         $pembayaran->save();
 

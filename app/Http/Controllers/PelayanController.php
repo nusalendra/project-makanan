@@ -222,7 +222,10 @@ class PelayanController extends Controller
 
     public function orderOffline()
     {
-        $data = Pembeli::with('pesananOffline')->get();
+        $data = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+            ->whereHas('pesananOffline', function ($query) {
+                $query->where('status_pesanan', '!=', 'Pesanan Diambil');
+            })->get();
 
         return view('pelayan.order-offline', compact('data'));
     }
@@ -304,7 +307,7 @@ class PelayanController extends Controller
                     $subquery->Where('status_pesanan', '=', 'Pesanan Diambil');
                 });
             })
-            ->where('status_pembayaran', '=', 'Sudah Dibayar')
+            ->where('status_pembayaran', '=', 'Sudah Bayar')
             ->get();
 
         $orderSelesaiOnline = Pembayaran::with('keranjang')
@@ -323,7 +326,7 @@ class PelayanController extends Controller
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
-        
+
         return view('pelayan.detail-pesanan-online-order-selesai', compact('data'));
     }
 

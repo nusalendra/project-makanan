@@ -80,8 +80,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/datacust', 'AdminController@datacust');
     Route::get('/dashboard', 'AdminController@dashboard');
     Route::get('/report-pesanan-online', 'AdminController@reportOnline');
+    Route::get('/report-pesanan-online/cetak-pdf', 'AdminController@cetakPdfOnline');
     Route::get('/report-pesanan-online/detail-pesanan/{id}', 'AdminController@detailPesananReportOnline');
     Route::get('/report-pesanan-offline', 'AdminController@reportOffline');
+    Route::get('/report-pesanan-offline/cetak-pdf', 'AdminController@cetakPdfOffline');
     Route::get('/report-pesanan-offline/detail-pesanan/{id}', 'AdminController@detailPesananReportOffline');
     Route::get('/validasibayar', 'AdminController@indexvalidasi');
     Route::get('/editstatusadmin/{id}', 'AdminController@editstatusadmin')->name('editstatusadmin');

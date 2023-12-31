@@ -138,6 +138,11 @@
                 <div class="w3-row-padding">
                     <div class="w3-container">
                         <h1><b>REPORT PESANAN OFFLINE</b></h1>
+                        <div class="text-center">
+                            <a href="/report-pesanan-offline/cetak-pdf" target="blank_"
+                                class="w3-button w3-white w3-hover-blue w3-border" style="text-decoration: none;">Cetak
+                                Report</a>
+                        </div>
                         <table id="tabel-pesanan-offline" class="table table-striped">
                             <thead>
                                 <tr>

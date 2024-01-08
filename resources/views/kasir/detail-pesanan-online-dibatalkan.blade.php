@@ -128,42 +128,72 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h3><b>Pembayaran Yang Harus Divalidasi!</b></h3>
-            <div class="w3-section w3-bottombar w3-padding-13">
-            </div>
-            <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nomor Order</th>
-                        <th>Status Validasi Pembayaran</th>
-                        <th>Status Dapur</th>
-                        <th>Detail Pesanan</th>
-                    </tr>
-                    @foreach ($data as $item)
-                        <tr>
-                            <td>{{ $item->nomor_order }}</td>
-                            <td>{{ $item->status }}</td>
-                            <td>{{ $item->keranjang->first()->status }}</td>
-                            <td style="text-align: center;">
+        <header id="portfolio">
+            <div class="w3-container">
+                <h3><b>DETAIL PESANAN ONLINE DIBATALKAN</b></h3>
+                <div class="w3-section w3-bottombar w3-padding-13">
+                </div>
+                <div class="w3-container">
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pelanggan</h2>
+                            <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                            <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
+                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
+                            @endif
+                        </div>
+                        <div class="w3-half">
+                            <h2>Informasi Pesanan</h2>
+                            @php
+                                $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
+                            @endphp
+                            @foreach ($data as $item)
+                                <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                                <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                                <p>Total Harga Yang Dibayar : Rp.
+                                    {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}
+                                </p>
+                                <br>
                                 @php
-                                    $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                    // Menambahkan total harga pesanan saat ini ke totalSemuaPesanan
+                                    $totalSemuaPesanan += $item->keranjang->qty * $item->keranjang->harga;
                                 @endphp
-                                <a href="/kasir-online/detail-pesanan/{{ $pembayaranIdEncrypt }}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                        fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-                                        <path
-                                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                        <path
-                                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                    </svg>
-                                </a>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                            @endforeach
+                            <p style="color: red;"><b>Total Harga Semua Pesanan: Rp.
+                                    {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pembayaran</h2>
+                            <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                            <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->ongkos_kirim)
+                                <p style="color: red;"><b>Ongkos Kirim :
+                                        {{ number_format($data->first()->pembayaran->ongkos_kirim, 0, ',', '.') }}</b>
+                                </p>
+                            @endif
+
+                        </div>
+                        <div class="w3-half">
+                            <h2>Status</h2>
+                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
+                            <p style="color: red;">Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                            <p style="color: red;">Status Dapur : {{ $data->first()->keranjang->status }}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-half" style="display: flex;">
+                        <a href="/pesanan-online-dibatalkan" class="w3-button w3-white w3-hover-red w3-border"
+                            style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                    </div>
+                </div>
             </div>
-        </div>
+        </header>
+    </div>
     </div>
 </body>
 

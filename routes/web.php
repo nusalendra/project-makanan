@@ -63,7 +63,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function ()
     Route::get('/kasir-online', 'PelayanController@indexkasironline');
     Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesananKasirOnline');
     Route::post('/kasir-online/validasi-pesanan', 'PelayanController@validasiPesanan');
+    Route::post('/kasir-online/tambah-ongkir', 'PelayanController@tambahOngkir');
     Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
+    Route::get('/pesanan-online-dibatalkan', 'PelayanController@pesananOnlineDibatalkan');
+    Route::get('/pesanan-online-dibatalkan/detail-pesanan/{od}', 'PelayanController@detailPesananOnlineDibatalkan');
     Route::post('/kembalian', 'PelayanController@hitungkembalian');
     Route::get('/invoicekasir', 'PelayanController@invoice');
     Route::get('/harga/{id}', 'PelayanController@getHarga');

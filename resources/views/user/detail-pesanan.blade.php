@@ -122,9 +122,8 @@
                             <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
                             <p>Nama Pelanggan : {{ $user->username }}</p>
                             @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
-                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
+                                <p>Alamat Pengiriman : {{ $data->first()->pembayaran->alamat }}</p>
                             @endif
-
                         </div>
                         <div class="w3-half">
                             <h2>Informasi Pesanan</h2>
@@ -152,7 +151,11 @@
                             <h2>Informasi Pembayaran</h2>
                             <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
                             <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
-
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->ongkos_kirim)
+                                <p style="color: red;"><b>Ongkos Kirim :
+                                        {{ number_format($data->first()->pembayaran->ongkos_kirim, 0, ',', '.') }}</b>
+                                </p>
+                            @endif
                         </div>
                         <div class="w3-half">
                             <h2>Status</h2>

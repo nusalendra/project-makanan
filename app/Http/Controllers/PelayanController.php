@@ -63,7 +63,15 @@ class PelayanController extends Controller
 
     public function indexkasironline(request $request)
     {
-        $data = Pembayaran::with('keranjang')->get();
+        $data = Pembayaran::with('keranjang')
+            ->where(function ($query) {
+                $query->where('status', '!=', 'Pesanan Dibatalkan');
+            })
+            ->whereHas('keranjang', function ($query) {
+                $query->where('status', '!=', 'Pesanan Dibatalkan');
+            })
+            ->get();
+
         return view('kasir.kasironline')->with('data', $data);
     }
 
@@ -100,6 +108,46 @@ class PelayanController extends Controller
         // }
 
         return redirect('/kasir-online');
+    }
+
+    public function tambahOngkir(Request $request)
+    {
+        $pembayaranIds = $request->input('pembayaranId');
+
+        $data = Pembayaran::find($pembayaranIds);
+
+        if ($data) {
+            $data->status = 'Diterima';
+            $data->ongkos_kirim = $request->ongkos_kirim;
+
+            $data->save();
+        }
+
+        return redirect('/kasir-online');
+    }
+
+    public function pesananOnlineDibatalkan()
+    {
+        $data = Pembayaran::with('keranjang')
+            ->where(function ($query) {
+                $query->where('status', 'Pesanan Dibatalkan');
+            })
+            ->whereHas('keranjang', function ($query) {
+                $query->where('status', '=', 'Pesanan Dibatalkan');
+            })
+            ->get();
+
+        return view('kasir.pesanan-online-dibatalkan', compact('data'));
+    }
+
+    public function detailPesananOnlineDibatalkan($id)
+    {
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+        
+        return view('kasir.detail-pesanan-online-dibatalkan', compact('data'));
     }
 
     // public function indexdetailpesanan(request $request)

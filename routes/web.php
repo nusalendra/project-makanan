@@ -47,10 +47,11 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/prosesviewdatakeranjang/{id}', 'user_controller@findidkeranjang');
     Route::get('/invoice', 'user_controller@invoice');
     Route::get('/riwayat-pesanan', 'user_controller@riwayatPesanan');
-    // Route::get('/loginuser','user_controller@loginuser');
     Route::post('/checkout', 'user_controller@checkout');
     Route::get('/riwayat-pesanan/detail-pesanan/{id}', 'user_controller@detailpesanan');
-    Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
+    Route::post('/riwayat-pesanan/cancel-pesanan/{id}', 'user_controller@cancelpesanan');
+    Route::get('/pesanan-dibatalkan', 'user_controller@pesananDibatalkan');
+    Route::get('/pesanan-dibatalkan/detail-pesanan/{id}', 'user_controller@detailPesananDibatalkan');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });
 

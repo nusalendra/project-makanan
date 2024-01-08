@@ -96,6 +96,8 @@
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
             <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
+            <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -220,8 +222,7 @@
                                     <label for="telepon_input" id="teleponLabel" style="display: none;">Masukkan
                                         Nomor Handphone Anda</label>
                                     <input id="telepon_input" type="" class="form-control"
-                                        name="telepon_input" style="display: none;"
-                                        value="{{ $user->telepon }}">
+                                        name="telepon_input" style="display: none;" value="{{ $user->telepon }}">
                                 </div>
                                 <div class="form-group">
                                     <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>

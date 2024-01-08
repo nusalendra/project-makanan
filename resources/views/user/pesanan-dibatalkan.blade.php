@@ -134,7 +134,7 @@
                                     @php
                                         $pembayaranIdEncrypt = Crypt::encrypt($item->id);
                                     @endphp
-                                    <a href="/riwayat-pesanan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                    <a href="/pesanan-dibatalkan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
                                             <path

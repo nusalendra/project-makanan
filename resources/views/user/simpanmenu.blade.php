@@ -200,23 +200,38 @@
                                 <li>GOPAY : 3502139021390</li>
                             </div>
                             <div class="modal-body">
-                                <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>
+                                <label for="">Pilih Opsi Pengiriman</label>
+                                <div class="form-group">
+                                    <select name="opsi_pengiriman" class="form-control select2"
+                                        name="opsi_pengiriman" required autofocus>
+                                        <option selected disabled>Pilih Opsi Pengiriman</option>
+                                        <option value="Ambil Di Tempat">Ambil Di Tempat</option>
+                                        <option value="Antarkan">Antarkan</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="alamat_input" id="alamatLabel" style="display: none;">Masukkan Alamat
+                                        Anda</label>
+                                    <input id="alamat_input" type="" class="form-control" name="alamat_input"
+                                        style="display: none;" value="{{ $user->alamat }}">
+                                </div>
 
                                 <div class="form-group">
+                                    <label for="telepon_input" id="teleponLabel" style="display: none;">Masukkan
+                                        Nomor Handphone Anda</label>
+                                    <input id="telepon_input" type="" class="form-control"
+                                        name="telepon_input" style="display: none;"
+                                        value="{{ $user->telepon }}">
+                                </div>
+                                <div class="form-group">
+                                    <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>
                                     <label for="">Pilih Metode Pembayaran</label>
-                                    <select name="metode"
-                                        class="form-control select2 @error('metode') is-invalid @enderror"
-                                        name="metode" value="{{ old('metode') }}" required autocomplete=""
-                                        autofocus />>
-                                    <option></option>
-                                    <option value="OVO">OVO</option>
-                                    <option value="GOPAY">GOPAY</option>
+                                    <select name="metode" class="form-control select2" name="metode" required
+                                        autocomplete="" autofocus>
+                                        <option></option>
+                                        <option value="OVO">OVO</option>
+                                        <option value="GOPAY">GOPAY</option>
                                     </select>
-                                    @error('metode')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
                                 <h4>Setelah anda sudah melakukan transfer pada salah satu metode pembayaran diatas,
                                     diharapkan
@@ -226,14 +241,8 @@
                                     lihat
                                     pada struk pembayaran anda</h5>
                                 <div class="form-group">
-                                    <input id="id_pembayaran" type="" placeholder=""
-                                        class="form-control @error('id_pembayaran') is-invalid @enderror"
-                                        name="id_pembayaran" required autocomplete="" autofocus />
-                                    @error('')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <input id="id_pembayaran" type="" placeholder="" class="form-control"
+                                        name="id_pembayaran" required>
                                 </div>
 
                                 <div class="modal-footer">
@@ -329,6 +338,32 @@ jQuery(document).ready(($) => {
                 console.log('totalHargaSemuaPesanan:', totalHargaSemuaPesanan);
 
                 document.querySelector('#totalhHarga b').innerText = 'Rp. ' + totalHargaSemuaPesanan.toFixed(0);
+            }
+        });
+    </script>
+    <script>
+        // Tangkap elemen select
+        var opsi_pengiriman = document.querySelector('select[name="opsi_pengiriman"]');
+        // Tangkap elemen input
+        var alamatInput = document.getElementById('alamat_input');
+        var teleponInput = document.getElementById('telepon_input');
+        // Tangkap elemen label
+        var alamatLabel = document.getElementById('alamatLabel');
+        var teleponLabel = document.getElementById('teleponLabel');
+
+        opsi_pengiriman.addEventListener('change', function() {
+            if (opsi_pengiriman.value === 'Antarkan') {
+                alamatInput.style.display = 'block'; // Tampilkan input jika "Antarkan" dipilih
+                alamatLabel.style.display = 'block'; // Tampilkan label jika "Antarkan" dipilih
+                teleponInput.style.display = 'block'; // Tampilkan input jika "Antarkan" dipilih
+                teleponLabel.style.display = 'block'; // Tampilkan label jika "Antarkan" dipilih
+            } else {
+                alamatInput.style.display = 'none'; // Sembunyikan input jika pilihan lain dipilih
+                alamatLabel.style.display = 'none'; // Sembunyikan label jika pilihan lain dipilih
+                teleponInput.style.display = 'none'; // Sembunyikan input jika pilihan lain dipilih
+                teleponLabel.style.display = 'none'; // Sembunyikan label jika pilihan lain dipilih
+                alamatInput.value = ''; // Kosongkan nilai input saat disembunyikan
+                teleponInput.value = ''; // Kosongkan nilai input saat disembunyikan
             }
         });
     </script>

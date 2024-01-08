@@ -205,10 +205,8 @@ class AdminController extends Controller
     {
         $user = Auth::user();
         $keranjang = keranjang::all();
-        $pemesananoffline = pemesananoffline::all();
         $total_orderan_online = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        $total_orderan_offline = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('admin.dashboard', compact('user', 'pemesananoffline', 'keranjang', 'total_orderan_online', 'total_orderan_offline'));
+        return view('admin.dashboard', compact('user', 'keranjang', 'total_orderan_online'));
     }
 
     public function reportOnline(request $request)

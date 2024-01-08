@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_order');
+            $table->string('opsi_pengiriman');
+            $table->string('alamat')->nullable();
             $table->string('metode');
             $table->string('id_pembayaran');
             $table->string('total_harga_semua_pesanan');

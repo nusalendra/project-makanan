@@ -125,58 +125,12 @@
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
         <div class="w3-container">
-            <h1><b>DATA PEMASUKKAN ONLINE</b></h1>
+            <h1><b>Dashboard</b></h1>
             <div class="w3-section w3-bottombar ">
             </div>
             <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nomor Pesanan</th>
-                        <th>Tanggal Pembelian</th>
-                        <th>Jam Pembelian</th>
-                        <th>Pemasukkan</th>
-                    </tr>
-                    @foreach ($keranjang as $tambahmakanan)
-                        <?php
-                        $temp = explode(' ', $tambahmakanan->created_at);
-                        ?>
-                        <tr>
-                            <td>{{ $tambahmakanan->id }}</td>
-                            <td>{{ $temp[0] }}</td>
-                            <td>{{ $temp[1] }}</td>
-                            <td>Rp.{{ $tambahmakanan->qty * $tambahmakanan->harga }},00</td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
-
-
-
-
-            <h1><b>DATA PEMASUKKAN OFFLINE</b></h1>
-            <div class="w3-section w3-bottombar w3-padding-13">
-            </div>
-            <div class="w3-row-padding">
-                <table class="table">
-                    <tr>
-                        <th>Nomor Pesanan</th>
-                        <th>Nama Pembeli</th>
-                        <th>Tanggal Pembelian</th>
-                        <th>Jam pembelian</th>
-                        <th>Pemasukkan</th>
-                    </tr>
-                    <?php $no = 0; ?>
-                    @foreach ($pemesananoffline as $pesanoffline)
-                        <?php $no++; ?>
-                        <tr>
-                            <td>{{ $pesanoffline->id }}</td>
-                            <td>{{ $pesanoffline->nama_pembeli }}</td>
-                            <td>{{ $temp[0] }}</td>
-                            <td>{{ $temp[1] }}</td>
-                            <td>Rp.{{ $pesanoffline->qty_offline * $pesanoffline->harga_offline }},00</td>
-                        </tr>
-                    @endforeach
-                </table>
+                <div style="width: 30%; height: 30%; background-color: blue;">
+                </div>
             </div>
         </div>
 </body>

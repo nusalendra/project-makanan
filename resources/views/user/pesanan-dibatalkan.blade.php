@@ -71,7 +71,7 @@
             background-color: #dddddd;
         }
     </style>
-    <title>KASIR</title>
+    <title>USER PAGE</title>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -82,17 +82,20 @@
                 title="close menu">
                 <i class="fa fa-remove"></i>
             </a>
-            <h4><b>SUSHI UBUD CANGGU</b></h4>
-            <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
+            <h4><b>SUSHI KEY</b></h4>
+            <p class="w3-text-white">Welcome to Sushi Key!</p>
         </div>
         <div class="w3-bar-block">
-            <a href="/kasir-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
-                    class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a>
-            <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
-                    class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a>
-            <a href="/pesanan-online-dibatalkan" onclick="w3_close()"
-                class="w3-bar-item w3-button w3-padding w3-text-white"><i
-                    class="fa fa-book fa-fw w3-margin-right"></i>PESANAN ONLINE DIBATALKAN</a>
+            <a href="/homepage" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
+                    class="fa fa-cutlery fa-fw w3-margin-right"></i>MENU</a>
+            <a href="/profil" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a>
+            <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
+            <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
+            <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -113,12 +116,11 @@
             <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                     class="fa fa-bars"></i></span>
             <div class="w3-container">
-                <h3><b>Pesanan Pelanggan</b></h3>
+                <h1><b>RIWAYAT PESANAN</b></h1>
                 <div class="w3-row-padding">
                     <table class="table">
                         <tr>
                             <th>Nomor Order</th>
-                            <th>Nama Pembeli</th>
                             <th>Status Validasi Pembayaran</th>
                             <th>Status Dapur</th>
                             <th>Detail Pesanan</th>
@@ -126,14 +128,13 @@
                         @foreach ($data as $item)
                             <tr>
                                 <td>{{ $item->nomor_order }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->status_pembayaran }}</td>
-                                <td>{{ $item->pesananOffline->first()->status_pesanan }}</td>
-                                <td style="text-align: center;">
+                                <td>{{ $item->status }}</td>
+                                <td>{{ $item->keranjang->first()->status }}</td>
+                                <td style="text-align: center; d-flex">
                                     @php
                                         $pembayaranIdEncrypt = Crypt::encrypt($item->id);
                                     @endphp
-                                    <a href="/kasir-offline/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                    <a href="/pesanan-dibatalkan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                             fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
                                             <path

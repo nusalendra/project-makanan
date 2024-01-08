@@ -47,10 +47,11 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::get('/prosesviewdatakeranjang/{id}', 'user_controller@findidkeranjang');
     Route::get('/invoice', 'user_controller@invoice');
     Route::get('/riwayat-pesanan', 'user_controller@riwayatPesanan');
-    // Route::get('/loginuser','user_controller@loginuser');
     Route::post('/checkout', 'user_controller@checkout');
     Route::get('/riwayat-pesanan/detail-pesanan/{id}', 'user_controller@detailpesanan');
-    Route::post('/addvalidasibayar', 'user_controller@addvalidasibayar');
+    Route::post('/riwayat-pesanan/cancel-pesanan/{id}', 'user_controller@cancelpesanan');
+    Route::get('/pesanan-dibatalkan', 'user_controller@pesananDibatalkan');
+    Route::get('/pesanan-dibatalkan/detail-pesanan/{id}', 'user_controller@detailPesananDibatalkan');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });
 
@@ -62,7 +63,10 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Kasir'])->group(function ()
     Route::get('/kasir-online', 'PelayanController@indexkasironline');
     Route::get('/kasir-online/detail-pesanan/{id}', 'PelayanController@detailPesananKasirOnline');
     Route::post('/kasir-online/validasi-pesanan', 'PelayanController@validasiPesanan');
+    Route::post('/kasir-online/tambah-ongkir', 'PelayanController@tambahOngkir');
     Route::get('/detailpesanan', 'PelayanController@indexdetailpesanan');
+    Route::get('/pesanan-online-dibatalkan', 'PelayanController@pesananOnlineDibatalkan');
+    Route::get('/pesanan-online-dibatalkan/detail-pesanan/{od}', 'PelayanController@detailPesananOnlineDibatalkan');
     Route::post('/kembalian', 'PelayanController@hitungkembalian');
     Route::get('/invoicekasir', 'PelayanController@invoice');
     Route::get('/harga/{id}', 'PelayanController@getHarga');

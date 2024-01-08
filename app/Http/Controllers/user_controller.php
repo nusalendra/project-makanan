@@ -198,15 +198,15 @@ class user_controller extends Controller
 
     public function riwayatPesanan(request $request)
     {
-        // $data = keranjang::all();
         $user = Auth::user();
         $data = Pembayaran::with('keranjang')
             ->where(function ($query) {
                 $query->where('status', 'Diterima')
                     ->orWhere('status', 'Proses');
             })
-            ->whereHas('keranjang', function ($query) {
+            ->whereHas('keranjang', function ($query) use ($user) {
                 $query->where('status', '!=', 'Pesanan Diambil');
+                $query->where('user_id', '=', $user->id);
             })
             ->get();
 
@@ -222,6 +222,59 @@ class user_controller extends Controller
             ->get();
 
         return view('user.detail-pesanan', compact('data', 'user'));
+    }
+
+    public function cancelpesanan($id, Request $request)
+    {
+        $pembayaran = Pembayaran::find($id);
+
+        $pembayaran->status = 'Pesanan Dibatalkan';
+        if ($request->batalkan_pengiriman === 'Alasan Lainnya') {
+            $pembayaran->alasan_pembatalan_pesanan = $request->batalkan_pengiriman_input;
+        } else {
+            $pembayaran->alasan_pembatalan_pesanan = $request->batalkan_pengiriman;
+        }
+        $pembayaran->save();
+
+        $keranjangPembayaran = KeranjangPembayaran::where('pembayaran_id', $pembayaran->id)->get();
+
+        foreach ($keranjangPembayaran as $item) {
+            // Mengakses entitas Keranjang
+            $keranjang = Keranjang::find($item->keranjang_id);
+
+            // Mengubah status pada entitas Keranjang
+            $keranjang->status = 'Pesanan Dibatalkan';
+            $keranjang->save();
+        }
+
+        return redirect('/riwayat-pesanan');
+    }
+
+    public function pesananDibatalkan()
+    {
+        $user = Auth::user();
+        $data = Pembayaran::with('keranjang')
+            ->where(function ($query) {
+                $query->where('status', 'Pesanan Dibatalkan');
+            })
+            ->whereHas('keranjang', function ($query) use ($user) {
+                $query->where('status', '=', 'Pesanan Dibatalkan');
+                $query->where('user_id', '=', $user->id);
+            })
+            ->get();
+
+        return view('user.pesanan-dibatalkan', compact('data'));
+    }
+
+    public function detailPesananDibatalkan($id)
+    {
+        $user = Auth::user();
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+
+        return view('user.detail-pesanan-dibatalkan', compact('data', 'user'));
     }
 
     public function loginuser(request $request)

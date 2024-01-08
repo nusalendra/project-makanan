@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
     <style>
@@ -24,10 +24,10 @@
         }
 
         .button {
-            background-color: #4CAF50;
+            background-color: #FFFFFF;
             /* Green */
-            border: none;
-            color: white;
+            border: 0.5 px;
+            color: black;
             padding: 10px 22px;
             text-align: center;
             text-decoration: none;
@@ -36,11 +36,6 @@
             margin: 6px 2px;
             transition-duration: 0.4s;
             cursor: pointer;
-        }
-
-        .buttonbtm {
-            position: absolute;
-            bottom: 10%;
         }
 
         .button3 {
@@ -63,15 +58,35 @@
         td,
         th {
             border: 1px solid #dddddd;
-            text-align: left;
-            padding: 6px;
+            text-align: center;
+            padding: 8px;
         }
 
         tr:nth-child(even) {
             background-color: #dddddd;
         }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        /* Create two equal columns that floats next to each other */
+        .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            height: 300px;
+            /* Should be removed. Only for demonstration */
+        }
+
+        /* Clear floats after the columns */
+        .row:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
     </style>
-    <title>KASIR</title>
+    <title>ADMIN PAGE</title>
 </head>
 
 <body class="w3-light-grey w3-content" style="max-width:1600px">
@@ -82,8 +97,18 @@
                 title="close menu">
                 <i class="fa fa-remove"></i>
             </a>
-            <h4><b>SUSHI UBUD CANGGU</b></h4>
-            <p class="w3-text-white">Welcome to Sushi Ubud Canggu!</p>
+            <h4><b>ADMIN PAGE</b></h4>
+            <p class="w3-text-white">Welcome to admin page!</p>
+        </div>
+    </nav>
+    <nav class="w3-sidebar w3-collapse w3-red w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
+        <div class="w3-container">
+            <a href="#" onclick="w3_close()" class="w3-hide-large w3-right w3-jumbo w3-padding w3-hover-grey"
+                title="close menu">
+                <i class="fa fa-remove"></i>
+            </a>
+            <h4><b>ADMIN PAGE</b></h4>
+            <p class="w3-text-white">Welcome to admin page!</p>
         </div>
         <div class="w3-bar-block">
             <a href="/kasir-offline" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
@@ -96,10 +121,6 @@
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
-        <div class="w3-panel w3-large">
-            <i class="fa fa-facebook-official w3-hover-opacity"></i>
-            <a href="https://www.instagram.com/sushikey.bali/" class="fa fa-instagram w3-hover-opacity"></a>
-        </div>
     </nav>
     <!-- Overlay effect when opening sidebar on small screens -->
     <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer"
@@ -107,48 +128,42 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <header id="portfolio">
-            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
-                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
-                    class="fa fa-bars"></i></span>
-            <div class="w3-container">
-                <h3><b>Pesanan Pelanggan</b></h3>
-                <div class="w3-row-padding">
-                    <table class="table">
-                        <tr>
-                            <th>Nomor Order</th>
-                            <th>Nama Pembeli</th>
-                            <th>Status Validasi Pembayaran</th>
-                            <th>Status Dapur</th>
-                            <th>Detail Pesanan</th>
-                        </tr>
-                        @foreach ($data as $item)
-                            <tr>
-                                <td>{{ $item->nomor_order }}</td>
-                                <td>{{ $item->nama }}</td>
-                                <td>{{ $item->status_pembayaran }}</td>
-                                <td>{{ $item->pesananOffline->first()->status_pesanan }}</td>
-                                <td style="text-align: center;">
-                                    @php
-                                        $pembayaranIdEncrypt = Crypt::encrypt($item->id);
-                                    @endphp
-                                    <a href="/kasir-offline/detail-pesanan/{{ $pembayaranIdEncrypt }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                            fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-                                            <path
-                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                            <path
-                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
-                </div>
+        <div class="w3-container">
+            <h3><b>Daftar Pesanan Online Dibatalkan</b></h3>
+            <div class="w3-section w3-bottombar w3-padding-13">
             </div>
-        </header>
+            <div class="w3-row-padding">
+                <table class="table">
+                    <tr>
+                        <th>Nomor Order</th>
+                        <th>Status Validasi Pembayaran</th>
+                        <th>Status Dapur</th>
+                        <th>Detail Pesanan</th>
+                    </tr>
+                    @foreach ($data as $item)
+                        <tr>
+                            <td>{{ $item->nomor_order }}</td>
+                            <td>{{ $item->status }}</td>
+                            <td>{{ $item->keranjang->first()->status }}</td>
+                            <td style="text-align: center;">
+                                @php
+                                    $pembayaranIdEncrypt = Crypt::encrypt($item->id);
+                                @endphp
+                                <a href="/pesanan-online-dibatalkan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                        fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
+                                        <path
+                                            d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
+                                        <path
+                                            d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
+                                    </svg>
+                                </a>
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+        </div>
     </div>
 </body>
 

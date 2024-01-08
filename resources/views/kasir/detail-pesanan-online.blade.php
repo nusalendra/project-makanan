@@ -115,6 +115,9 @@
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a>
             <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a>
+            <a href="/pesanan-online-dibatalkan" onclick="w3_close()"
+                class="w3-bar-item w3-button w3-padding w3-text-white"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>PESANAN ONLINE DIBATALKAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -125,65 +128,109 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <h3><b>DETAIL PESANAN</b></h3>
-        <div class="w3-section w3-bottombar w3-padding-13">
-        </div>
-        <div class="w3-container">
-            <h1><b>DETAIL PESANAN</b></h1>
-            <div class="w3-row-padding">
-                <div class="w3-half">
-                    <h2>Informasi Pelanggan</h2>
-                    <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
-                    <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+        <header id="portfolio">
+            <div class="w3-container">
+                <h3><b>DETAIL PESANAN ONLINE</b></h3>
+                <div class="w3-section w3-bottombar w3-padding-13">
                 </div>
-                <div class="w3-half">
-                    <h2>Informasi Pesanan</h2>
-                    @php
-                        $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
-                    @endphp
-                    @foreach ($data as $item)
-                        <p>Pesanan : {{ $item->keranjang->menu }}</p>
-                        <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
-                        <p>Total Harga Yang Dibayar : Rp.
-                            {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}</p>
-                        <br>
-                        @php
-                            // Menambahkan total harga pesanan saat ini ke totalSemuaPesanan
-                            $totalSemuaPesanan += $item->keranjang->qty * $item->keranjang->harga;
-                        @endphp
-                    @endforeach
-                    <p style="color: red;"><b>Total Harga Semua Pesanan: Rp.
-                            {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
-                </div>
-            </div>
+                <div class="w3-container">
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pelanggan</h2>
+                            <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                            <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
+                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
+                            @endif
+                        </div>
+                        <div class="w3-half">
+                            <h2>Informasi Pesanan</h2>
+                            @php
+                                $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
+                            @endphp
+                            @foreach ($data as $item)
+                                <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                                <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                                <p>Total Harga Yang Dibayar : Rp.
+                                    {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}
+                                </p>
+                                <br>
+                                @php
+                                    // Menambahkan total harga pesanan saat ini ke totalSemuaPesanan
+                                    $totalSemuaPesanan += $item->keranjang->qty * $item->keranjang->harga;
+                                @endphp
+                            @endforeach
+                            <p style="color: red;"><b>Total Harga Semua Pesanan: Rp.
+                                    {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                        </div>
+                    </div>
 
-            <div class="w3-row-padding">
-                <div class="w3-half">
-                    <h2>Informasi Pembayaran</h2>
-                    <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
-                    <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pembayaran</h2>
+                            <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                            <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->ongkos_kirim)
+                                <p style="color: red;"><b>Ongkos Kirim :
+                                        {{ number_format($data->first()->pembayaran->ongkos_kirim, 0, ',', '.') }}</b>
+                                </p>
+                            @endif
 
+                        </div>
+                        <div class="w3-half">
+                            <h2>Status</h2>
+                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
+                            <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                            <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="w3-half">
-                    <h2>Status</h2>
-                    <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
-                    <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
+                <div class="w3-row-padding w3-margin-top">
+                    <div class="w3-half" style="display: flex;">
+                        <a href="/kasir-online" class="w3-button w3-white w3-hover-red w3-border"
+                            style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                        <form action="/kasir-online/validasi-pesanan" method="POST">
+                            @csrf
+                            <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
+                            <button type="submit" class="w3-button w3-white w3-hover-orange w3-border"
+                                style="margin-right: 5px;">
+                                Validasi Pembayaran
+                            </button>
+                        </form>
+                        <button data-toggle="modal" data-target="#modalTambahOngkir"
+                            class="w3-button w3-white w3-hover-orange w3-border">
+                            Tambah Ongkos Kirim
+                        </button>
+                        <form action="/kasir-online/tambah-ongkir" method="POST">
+                            @csrf
+                            <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
+                            <div class="modal fade" id="modalTambahOngkir" role="dialog">
+                                <div class="modal-dialog modal-sm">
+                                    <div class="modal-content" style="width: 200%;">
+                                        <div class="modal-header">
+                                            <button type="button" class="close"
+                                                data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title" style="font-weight: bold;">Tambah Ongkos Kirim
+                                                Pesanan
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <input type="number" class="form-control" name="ongkos_kirim">
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-primary" data-toggle="modal"
+                                                    data-target="#modalTambahOngkir">Tambah</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="w3-row-padding w3-margin-top">
-            <div class="w3-half" style="display: flex;">
-                <a href="/kasir-online" class="w3-button w3-white w3-hover-red w3-border"
-                    style="text-decoration: none; margin-right: 5px;">Kembali</a>
-                <form action="/kasir-online/validasi-pesanan" method="POST">
-                    @csrf
-                    <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
-                    <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
-                        Validasi Pembayaran
-                    </button>
-                </form>
-            </div>
-        </div>
+        </header>
     </div>
     </div>
 </body>

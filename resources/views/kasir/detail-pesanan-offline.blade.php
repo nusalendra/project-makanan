@@ -115,6 +115,8 @@
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR OFFLINE</a>
             <a href="/kasir-online" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
                     class="fa fa-book fa-fw w3-margin-right"></i>KASIR ONLINE</a>
+            <a href="/pesanan-online-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i
+                    class="fa fa-book fa-fw w3-margin-right"></i>PESANAN ONLINE DIBATALKAN</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -125,102 +127,112 @@
 
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
-        <div class="w3-container">
-            <h3><b>DETAIL PESANAN</b></h3>
-            <div class="w3-section w3-bottombar w3-padding-13">
-            </div>
+        <header id="portfolio">
             <div class="w3-container">
-                <div class="w3-row-padding">
-                    <div class="w3-half">
-                        <h2>Informasi Pelanggan</h2>
-                        <p>Nomor Order : {{ $data->first()->pembeli->nomor_order }}</p>
-                        <p>Nama Pelanggan : {{ $data->first()->pembeli->nama }}</p>
+                <div class="w3-container">
+                    <h3><b>DETAIL PESANAN</b></h3>
+                    <div class="w3-section w3-bottombar w3-padding-13">
                     </div>
-                    <div class="w3-half">
-                        <h2>Informasi Pesanan</h2>
-                        @php
-                            $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
-                        @endphp
-                        @foreach ($data as $item)
-                            <p>Pesanan : {{ $item->pesananOffline->menu }}</p>
-                            <p>Jumlah Pesanan : {{ $item->pesananOffline->qty }} pcs</p>
-                            <p>Total Harga Yang Dibayar : Rp.
-                                {{ number_format($item->pesananOffline->qty * $item->pesananOffline->harga, 0, ',', '.') }}
-                            </p>
-                            <br>
-                            @php
-                                $totalSemuaPesanan += $item->pesananOffline->qty * $item->pesananOffline->harga;
-                            @endphp
-                        @endforeach
+                    <div class="w3-container">
+                        <div class="w3-row-padding">
+                            <div class="w3-half">
+                                <h2>Informasi Pelanggan</h2>
+                                <p>Nomor Order : {{ $data->first()->pembeli->nomor_order }}</p>
+                                <p>Nama Pelanggan : {{ $data->first()->pembeli->nama }}</p>
+                            </div>
+                            <div class="w3-half">
+                                <h2>Informasi Pesanan</h2>
+                                @php
+                                    $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
+                                @endphp
+                                @foreach ($data as $item)
+                                    <p>Pesanan : {{ $item->pesananOffline->menu }}</p>
+                                    <p>Jumlah Pesanan : {{ $item->pesananOffline->qty }} pcs</p>
+                                    <p>Total Harga Yang Dibayar : Rp.
+                                        {{ number_format($item->pesananOffline->qty * $item->pesananOffline->harga, 0, ',', '.') }}
+                                    </p>
+                                    <br>
+                                    @php
+                                        $totalSemuaPesanan += $item->pesananOffline->qty * $item->pesananOffline->harga;
+                                    @endphp
+                                @endforeach
 
-                        <p style="color: red;"><b>Total Harga Semua Pesanan : Rp.
-                                {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                                <p style="color: red;"><b>Total Harga Semua Pesanan : Rp.
+                                        {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                            </div>
+                        </div>
+
+                        <div class="w3-row-padding">
+                            <div class="w3-half">
+                                <h2>Status</h2>
+                                <p>Status Validasi Pembayaran : {{ $data->first()->pembeli->status_pembayaran }}</p>
+                                <p>Status Dapur : {{ $data->first()->pesananOffline->status_pesanan }}</p>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                    <div class="w3-row-padding w3-margin-top">
+                        <div class="w3-half" style="display: flex;">
+                            <a href="/kasir-offline" class="w3-button w3-white w3-hover-red w3-border"
+                                style="text-decoration: none; margin-right: 5px;">Kembali</a>
+                            <form action="/kasir-offline/pembayaran/{{ $data->first()->pembeli->id }}" method="POST">
+                                @csrf
+                                @foreach ($data as $item)
+                                    <input type="hidden" name="pesananOfflineId[]"
+                                        value="{{ $item->pesananOffline->id }}">
+                                @endforeach
+                                <button type="button" class="w3-button w3-white w3-hover-orange w3-border"
+                                    data-toggle="modal" data-target="#modal-bayar">
+                                    Pembayaran
+                                </button>
 
-                <div class="w3-row-padding">
-                    <div class="w3-half">
-                        <h2>Status</h2>
-                        <p>Status Validasi Pembayaran : {{ $data->first()->pembeli->status_pembayaran }}</p>
-                        <p>Status Dapur : {{ $data->first()->pesananOffline->status_pesanan }}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="w3-row-padding w3-margin-top">
-                <div class="w3-half" style="display: flex;">
-                    <a href="/kasir-offline" class="w3-button w3-white w3-hover-red w3-border"
-                        style="text-decoration: none; margin-right: 5px;">Kembali</a>
-                    <form action="/kasir-offline/pembayaran/{{ $data->first()->pembeli->id }}" method="POST">
-                        @csrf
-                        @foreach ($data as $item)
-                            <input type="hidden" name="pesananOfflineId[]" value="{{ $item->pesananOffline->id }}">
-                        @endforeach
-                        <button type="button" class="w3-button w3-white w3-hover-orange w3-border" data-toggle="modal"
-                            data-target="#modal-bayar">
-                            Pembayaran
-                        </button>
+                                <div class="modal fade" id="modal-bayar" role="dialog">
+                                    <div class="modal-dialog modal-sm">
+                                        <div class="modal-content" style="width: 200%;">
+                                            <div class="modal-header">
+                                                <button type="button" class="close"
+                                                    data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title" style="font-weight: bold;">Form Pembayaran
+                                                    Pembeli</h4>
+                                                <br>
+                                            </div>
+                                            <div class="modal-body">
+                                                <div class="form-group">
+                                                    <label for="total_harga_semua_pesanan">Total Harga Semua
+                                                        Pesanan</label>
+                                                    <input id="total_harga_semua_pesanan" type=""
+                                                        placeholder="" class="form-control"
+                                                        name="total_harga_semua_pesanan"
+                                                        value="Rp. {{ number_format($data->first()->pembeli->total_harga_semua_pesanan, 0, ',', '.') }}"
+                                                        disabled />
 
-                        <div class="modal fade" id="modal-bayar" role="dialog">
-                            <div class="modal-dialog modal-sm">
-                                <div class="modal-content" style="width: 200%;">
-                                    <div class="modal-header">
-                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        <h4 class="modal-title" style="font-weight: bold;">Form Pembayaran Pembeli</h4>
-                                        <br>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="total_harga_semua_pesanan">Total Harga Semua Pesanan</label>
-                                            <input id="total_harga_semua_pesanan" type="" placeholder=""
-                                                class="form-control" name="total_harga_semua_pesanan"
-                                                value="Rp. {{ number_format($data->first()->pembeli->total_harga_semua_pesanan, 0, ',', '.') }}"
-                                                disabled />
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="uang_dibayarkan">Uang Yang Dibayarkan</label>
+                                                    <input id="uang_dibayarkan" type="number" class="form-control"
+                                                        name="uang_dibayarkan" />
+                                                </div>
 
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="uang_dibayarkan">Uang Yang Dibayarkan</label>
-                                            <input id="uang_dibayarkan" type="number" class="form-control"
-                                                name="uang_dibayarkan" />
-                                        </div>
+                                                <div class="form-group">
+                                                    <label for="kembalian">Kembalian</label>
+                                                    <input id="kembalian" type="text" placeholder=""
+                                                        class="form-control" name="kembalian" value="Rp. 0"
+                                                        disabled />
+                                                </div>
 
-                                        <div class="form-group">
-                                            <label for="kembalian">Kembalian</label>
-                                            <input id="kembalian" type="text" placeholder="" class="form-control"
-                                                name="kembalian" value="Rp. 0" disabled />
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="submit" class="btn btn-primary" data-toggle="modal"
-                                                data-target="#myModal1">Proses</button>
+                                                <div class="modal-footer">
+                                                    <button type="submit" class="btn btn-primary"
+                                                        data-toggle="modal" data-target="#myModal1">Proses</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        </header>
     </div>
     <script>
         $(document).ready(function() {

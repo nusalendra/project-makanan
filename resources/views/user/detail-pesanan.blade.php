@@ -92,7 +92,7 @@
                     class="fa fa-user fa-fw w3-margin-right"></i>PROFIL</a>
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
-            <a href="/selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+            <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Riwayat Pesanan</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
@@ -119,6 +119,10 @@
                             <h2>Informasi Pelanggan</h2>
                             <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
                             <p>Nama Pelanggan : {{ $user->username }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
+                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
+                            @endif
+
                         </div>
                         <div class="w3-half">
                             <h2>Informasi Pesanan</h2>
@@ -150,6 +154,7 @@
                         </div>
                         <div class="w3-half">
                             <h2>Status</h2>
+                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
                             <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
                             <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                         </div>

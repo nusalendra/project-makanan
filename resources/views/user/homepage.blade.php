@@ -79,6 +79,10 @@
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
             <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
+            <a href="/pesanan-selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN SELESAI</a>
+            <a href="/pesanan-selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN SELESAI</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -151,35 +155,23 @@
                             src="{{ asset('makanan/' . $tambahmakanan->images) }}" style="width:100%"></div>
                     <div class="w3-container w3-white" style="padding: 20px;">
                         <p><b>{{ $tambahmakanan->nama_prdk }}</b></p>
-                        <p>{{ $tambahmakanan->komposisi }}</p>
-                        <p>Rp {{ $tambahmakanan->harga }}</p>
+                        <p>Komposisi : {{ $tambahmakanan->komposisi }}</p>
+                        <p>Kuota Tersisa : {{ $tambahmakanan->kuota }}</p>
+                        <p>Harga : Rp. {{ $tambahmakanan->harga }}</p>
                         <div class="w3-row-padding w3-center">
-                            {{-- @php
-                                // Mencari status keranjang untuk produk ini
-                                $keranjang = $user
-                                    ->keranjang()
-                                    ->where('tambahmakanan_id', $tambahmakanan->id)
-                                    ->first();
-                            @endphp --}}
-
                             @if ($keranjang->contains($tambahmakanan->id))
                                 <button type="button" style="font-weight: bold;" disabled>
                                     Dalam Keranjang
+                                </button>
+                            @elseif($tambahmakanan->kuota === 0)
+                                <button type="button" style="font-weight: bold;" disabled>
+                                    Kuota Menu Habis
                                 </button>
                             @else
                                 <button type="submit" class="button button3">
                                     Tambah ke Keranjang
                                 </button>
                             @endif
-                            {{-- @if ($keranjang)
-                                <button type="submit" class="button button3" disabled>
-                                    Dalam Keranjang
-                                </button>
-                            @else
-                                <button type="submit" class="button button3">
-                                    Tambah ke Keranjang
-                                </button>
-                            @endif --}}
                         </div>
                     </div>
                 </div>

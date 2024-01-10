@@ -124,6 +124,12 @@ class user_controller extends Controller
 
                 // Tambahkan ID keranjang ke array untuk disimpan di pivot table antara Keranjang dan Pembayaran
                 $keranjangIdsToSave[] = $data->id;
+
+                $tambahmakanan = tambahmakanan::find($data->tambahmakanan_id);
+                if ($tambahmakanan) {
+                    $tambahmakanan->kuota -= $qty;
+                    $tambahmakanan->save();
+                }
             }
             $totalSemuaPesanan += $data->qty * $data->harga;
         }
@@ -239,12 +245,17 @@ class user_controller extends Controller
         $keranjangPembayaran = KeranjangPembayaran::where('pembayaran_id', $pembayaran->id)->get();
 
         foreach ($keranjangPembayaran as $item) {
-            // Mengakses entitas Keranjang
             $keranjang = Keranjang::find($item->keranjang_id);
 
-            // Mengubah status pada entitas Keranjang
             $keranjang->status = 'Pesanan Dibatalkan';
             $keranjang->save();
+
+            $tambahmakanan = tambahmakanan::find($keranjang->tambahmakanan_id);
+
+            if ($tambahmakanan) {
+                $tambahmakanan->kuota += $keranjang->qty;
+                $tambahmakanan->save();
+            }
         }
 
         return redirect('/riwayat-pesanan');
@@ -275,6 +286,30 @@ class user_controller extends Controller
             ->get();
 
         return view('user.detail-pesanan-dibatalkan', compact('data', 'user'));
+    }
+
+    public function pesananSelesai()
+    {
+        $user = Auth::user();
+        $data = Pembayaran::with('keranjang')
+            ->whereHas('keranjang', function ($query) use ($user) {
+                $query->where('status', '=', 'Pesanan Diambil');
+                $query->where('user_id', '=', $user->id);
+            })
+            ->get();
+
+        return view('/user.pesanan-selesai', compact('data'));
+    }
+
+    public function detailPesananSelesai($id)
+    {
+        $user = Auth::user();
+        $idDecrypt = Crypt::decrypt($id);
+        $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
+            ->where('pembayaran_id', $idDecrypt)
+            ->get();
+
+        return view('user.detail-pesanan-selesai', compact('data', 'user'));
     }
 
     public function loginuser(request $request)

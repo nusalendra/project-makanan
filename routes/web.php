@@ -52,6 +52,8 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pengguna'])->group(function
     Route::post('/riwayat-pesanan/cancel-pesanan/{id}', 'user_controller@cancelpesanan');
     Route::get('/pesanan-dibatalkan', 'user_controller@pesananDibatalkan');
     Route::get('/pesanan-dibatalkan/detail-pesanan/{id}', 'user_controller@detailPesananDibatalkan');
+    Route::get('/pesanan-selesai', 'user_controller@pesananSelesai');
+    Route::get('/pesanan-selesai/detail-pesanan/{id}', 'user_controller@detailPesananSelesai');
     Route::get('/hapusmakanan', 'user_controller@hapusmakanan');
 });
 

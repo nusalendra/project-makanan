@@ -93,7 +93,7 @@
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
             <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Riwayat Pesanan</a>
             <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
             <a href="/pesanan-selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
@@ -113,46 +113,86 @@
     <!-- !PAGE CONTENT! -->
     <div class="w3-main" style="margin-left:300px">
         <header id="portfolio">
-            <a href="#"><img src="/w3images/avatar_g2.jpg" style="width:65px;"
-                    class="w3-circle w3-right w3-margin w3-hide-large w3-hover-opacity"></a>
-            <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
-                    class="fa fa-bars"></i></span>
             <div class="w3-container">
-                <h1><b>RIWAYAT PESANAN</b></h1>
-                <div class="w3-row-padding">
-                    <table class="table">
-                        <tr>
-                            <th>Nomor Order</th>
-                            <th>Status Validasi Pembayaran</th>
-                            <th>Status Dapur</th>
-                            <th>Detail Pesanan</th>
-                        </tr>
-                        @foreach ($data as $item)
-                            <tr>
-                                <td>{{ $item->nomor_order }}</td>
-                                <td>{{ $item->status }}</td>
-                                <td>{{ $item->keranjang->first()->status }}</td>
-                                <td style="text-align: center; d-flex">
-                                    @php
-                                        $pembayaranIdEncrypt = Crypt::encrypt($item->id);
-                                    @endphp
-                                    <a href="/riwayat-pesanan/detail-pesanan/{{ $pembayaranIdEncrypt }}">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
-                                            fill="currentColor" class="bi bi-info-square" viewBox="0 0 16 16">
-                                            <path
-                                                d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z" />
-                                            <path
-                                                d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0" />
-                                        </svg>
-                                    </a>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </table>
+                <h3><b>DETAIL PESANAN</b></h3>
+                <div class="w3-section w3-bottombar w3-padding-13">
+                </div>
+                <div class="w3-container">
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pelanggan</h2>
+                            <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
+                            <p>Nama Pelanggan : {{ $user->username }}</p>
+                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
+                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
+                            @endif
+
+                        </div>
+                        <div class="w3-half">
+                            <h2>Informasi Pesanan</h2>
+                            @php
+                                $totalSemuaPesanan = 0; // Inisialisasi variabel totalSemuaPesanan
+                            @endphp
+                            @foreach ($data as $item)
+                                <p>Pesanan : {{ $item->keranjang->menu }}</p>
+                                <p>Jumlah Pesanan : {{ $item->keranjang->qty }} pcs</p>
+                                <p>Total Harga Yang Dibayar : Rp.
+                                    {{ number_format($item->keranjang->qty * $item->keranjang->harga, 0, ',', '.') }}
+                                </p>
+                                <br>
+                                @php
+                                    $totalSemuaPesanan += $item->keranjang->qty * $item->keranjang->harga;
+                                @endphp
+                            @endforeach
+                            <p style="color: red;"><b>Total Harga Semua Pesanan: Rp.
+                                    {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                        </div>
+                    </div>
+
+                    <div class="w3-row-padding">
+                        <div class="w3-half">
+                            <h2>Informasi Pembayaran</h2>
+                            <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
+                            <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
+
+                        </div>
+                        <div class="w3-half">
+                            <h2>Status</h2>
+                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
+                            <p style="color: red;">Status Validasi Pembayaran :
+                                {{ $data->first()->pembayaran->status }}</p>
+                            <p style="color: red;">Status Dapur : {{ $data->first()->keranjang->status }}</p>
+                        </div>
+                    </div>
+
+                    <!-- Tombol Konfirmasi Pembayaran -->
+                    <div class="w3-row-padding w3-margin-top">
+                        <div class="w3-half">
+                            <a href="/pesanan-selesai" class="w3-button w3-white w3-hover-red w3-border"
+                                style="text-decoration: none;">Kembali</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </header>
     </div>
+    <script>
+        var batalkanPengiriman = document.querySelector('select[name="batalkan_pengiriman"]');
+        var batalkanPengirimanInput = document.getElementById('batalkan_pengiriman_input');
+        var batalkanPengirimanLabel = document.getElementById('batalkanPengirimanLabel');
+
+
+        batalkanPengiriman.addEventListener('change', function() {
+            if (batalkanPengiriman.value === 'Alasan Lainnya') {
+                batalkanPengirimanInput.style.display = 'block'; // Tampilkan input jika "Antarkan" dipilih
+                batalkanPengirimanLabel.style.display = 'block'; // Tampilkan label jika "Antarkan" dipilih
+            } else {
+                batalkanPengirimanInput.style.display = 'none'; // Sembunyikan input jika pilihan lain dipilih
+                batalkanPengirimanLabel.style.display = 'none'; // Sembunyikan label jika pilihan lain dipilih
+                batalkanPengirimanInput.value = ''; // Kosongkan nilai input saat disembunyikan
+            }
+        });
+    </script>
 </body>
 
 </html>

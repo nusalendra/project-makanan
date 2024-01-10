@@ -69,22 +69,20 @@
 
     <!-- About Section -->
     <div class="w3-content w3-justify w3-text-black" id="about">
-        <h2 class="w3-text-light-black">Edit Data Makanan</h2>
+        <h2 class="w3-text-light-black">Tambah Menu</h2>
         <hr style="width:240px" class="w3-opacity">
 
         <header class="w3-container">
             <div class="modal-body">
-                <form action="{{ route('editmakanan', ['id' => $tambahmakanan->id]) }}" method="GET"
-                    enctype="multipart/form-data">
+                <form action="/addmakanan" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Pilih Kategori</label>
                         <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror"
-                            name="kategori" value="{{ $tambahmakanan->kategori }}" required autocomplete=""
-                            autofocus />>
+                            name="kategori" value="{{ old('kategori') }}" required autocomplete="" autofocus />>
                         <option></option>
-                        <option>Makanan</option>
-                        <option>Minuman</option>
+                        <option value="Makanan">Makanan</option>
+                        <option value="Minuman">Minuman</option>
                         </select>
                         @error('kategori')
                             <span class="invalid-feedback" role="alert">
@@ -97,7 +95,7 @@
                         <label for="exampleInputEmail1">No Produk</label>
                         <input id="exampleInputEmail1" type="number" placeholder=""
                             class="form-control @error('no_produk') is-invalid @enderror" name="no_produk"
-                            value="{{ $tambahmakanan->no_produk }}" required autocomplete="" autofocus />
+                            value="{{ old('no_produk') }}" required autocomplete="" autofocus />
                         @error('no_produk')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -109,7 +107,7 @@
                         <label for="exampleInputEmail1">Nama Produk</label>
                         <input id="exampleInputEmail1" type="" placeholder=""
                             class="form-control @error('nama_prdk') is-invalid @enderror" name="nama_prdk"
-                            value="{{ $tambahmakanan->nama_prdk }}" required autocomplete="" autofocus />
+                            value="{{ old('nama_prdk') }}" required autocomplete="" autofocus />
                         @error('nama_prdk')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -121,7 +119,7 @@
                         <label for="exampleInputEmail1">Komposisi</label>
                         <input id="exampleInputEmail1" type="" placeholder=""
                             class="form-control @error('komposisi') is-invalid @enderror" name="komposisi"
-                            value="{{ $tambahmakanan->komposisi }}" required autocomplete="" autofocus />
+                            value="{{ old('komposisi') }}" required autocomplete="" autofocus />
                         @error('komposisi')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -130,21 +128,22 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="email" class="cols-sm-2 control-label">Qty</label>
-                        <div class="cols-sm-10">
-                            <div class="quantity">
-                                <input type='button' value='-' class='qtyminus minus' field='qty' />
-                                <input type='text' name='qty' value='1' class='qty' />
-                                <input type='button' value='+' class='qtyplus plus' field='qty' />
-                            </div>
-                        </div>
+                        <label for="kuota">Kuota Menu</label>
+                        <input id="kuota" type="number" placeholder=""
+                            class="form-control @error('kuota') is-invalid @enderror" name="kuota"
+                            value="{{ old('kuota') }}" required autocomplete="" autofocus />
+                        @error('kuota')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Harga</label>
-                        <input id="exampleInputEmail1" value="Rp. " type="" placeholder=""
+                        <input id="exampleInputEmail1" value="" type="" placeholder=""
                             class="form-control @error('harga') is-invalid @enderror" name="harga"
-                            value="{{ $tambahmakanan->harga }}" required autocomplete="" autofocus />
+                            value="{{ old('harga') }}" required autocomplete="" autofocus />
                         @error('harga')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -166,7 +165,7 @@
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
+                <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
                 </form>
             </div>
         </header>

@@ -69,107 +69,64 @@
 
     <!-- About Section -->
     <div class="w3-content w3-justify w3-text-black" id="about">
-        <h2 class="w3-text-light-black">Tambah Data Makanan</h2>
+        <h2 class="w3-text-light-black">Edit Menu</h2>
         <hr style="width:240px" class="w3-opacity">
 
         <header class="w3-container">
-            <div class="modal-body">
-                <form action="/addmakanan" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('editmakanan', ['id' => $tambahmakanan->id]) }}" method="POST"
+                enctype="multipart/form-data">
+                <div class="modal-body">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="">Pilih Kategori</label>
-                        <select name="kategori" class="form-control select2 @error('kategori') is-invalid @enderror"
-                            name="kategori" value="{{ old('kategori') }}" required autocomplete="" autofocus />>
+                        <select name="kategori" class="form-control select2" name="kategori"
+                            value="{{ $tambahmakanan->kategori }}" />>
                         <option></option>
                         <option value="Makanan">Makanan</option>
                         <option value="Minuman">Minuman</option>
                         </select>
-                        @error('kategori')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">No Produk</label>
-                        <input id="exampleInputEmail1" type="number" placeholder=""
-                            class="form-control @error('no_produk') is-invalid @enderror" name="no_produk"
-                            value="{{ old('no_produk') }}" required autocomplete="" autofocus />
-                        @error('no_produk')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <label for="nomor_produk">No Produk</label>
+                        <input id="nomor_produk" type="number" name="nomor_produk" class="form-control"
+                            value="{{ $tambahmakanan->no_produk }}" />
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Nama Produk</label>
-                        <input id="exampleInputEmail1" type="" placeholder=""
-                            class="form-control @error('nama_prdk') is-invalid @enderror" name="nama_prdk"
-                            value="{{ old('nama_prdk') }}" required autocomplete="" autofocus />
-                        @error('nama_prdk')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <label for="nama_produk">Nama Produk</label>
+                        <input id="nama_produk" name="nama_produk" type="text" class="form-control"
+                            value="{{ $tambahmakanan->nama_prdk }}" />
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">komposisi</label>
-                        <input id="exampleInputEmail1" type="" placeholder=""
-                            class="form-control @error('komposisi') is-invalid @enderror" name="komposisi"
-                            value="{{ old('komposisi') }}" required autocomplete="" autofocus />
-                        @error('komposisi')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <label for="komposisi">Komposisi</label>
+                        <input id="komposisi" name="komposisi" type="text" class="form-control"
+                            value="{{ $tambahmakanan->komposisi }}" />
                     </div>
 
                     <div class="form-group">
-
-                        <div class="cols-sm-10">
-                            <div class="quantity">
-                                <input type='button' value='-' class='qtyminus minus' field='qty'
-                                    style="display: none" />
-                                <input type='text' name='qty' value='1' class='qty'
-                                    style="display: none" />
-                                <input type='button' value='+' class='qtyplus plus' field='qty'
-                                    style="display: none" />
-                            </div>
-                        </div>
+                        <label for="kuota">Kuota</label>
+                        <input id="kuota" type="number" name="kuota" class="form-control"
+                            value="{{ $tambahmakanan->kuota }}" />
                     </div>
 
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Harga</label>
-                        <input id="exampleInputEmail1" value="" type="" placeholder=""
-                            class="form-control @error('harga') is-invalid @enderror" name="harga"
-                            value="{{ old('harga') }}" required autocomplete="" autofocus />
-                        @error('harga')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <label for="harga">Harga</label>
+                        <input id="harga" name="harga" value="{{ $tambahmakanan->harga }}" type="number"
+                            class="form-control" value="{{ $tambahmakanan->harga }}" />
                     </div>
 
                     <div class="form-group">
                         <label for="exampleInputEmail1">Gambar</label>
-                        <input name="images" type="file" class="@error('images') is-invalid @enderror" required
-                            autocomplete="images" id="image" aria-describedby="emailHelp"
-                            placeholder="Nama Blog" accept="image/gif, image/jpeg, image/png">
-                        @error('images')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                        <input name="gambar" type="file" accept=".gif, .jpg, .jpeg ,.png">
                     </div>
-            </div>
+                </div>
 
-            <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
-                </form>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary w3-red">SIMPAN</button>
+                </div>
+            </form>
         </header>
     </div>
     </div>

@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Crypt;
 use App\Models\PembeliPesananOffline;
 use App\Models\PesananOffline;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\File;
 
 class AdminController extends Controller
 {
@@ -35,10 +36,10 @@ class AdminController extends Controller
         return view('admin.loginadmin');
     }
 
-    public function tambahmakanan(request $request)
+    public function tambahMenu(request $request)
     {
         $tambahmakanan = tambahmakanan::all();
-        return view('admin.tambahmakanan', compact('tambahmakanan'));
+        return view('admin.tambah-menu', compact('tambahmakanan'));
     }
 
     public function tambahlokasi(request $request)
@@ -147,6 +148,7 @@ class AdminController extends Controller
             'kategori' => 'required',
             'no_produk' => 'required',
             'nama_prdk' => 'required',
+            'kuota' => 'required',
             'harga' => 'required',
             'images' => 'required',
             // 'gambar'=>'required|mimes:jpeg,png,jpg,gif,svg|max:2048'
@@ -167,7 +169,14 @@ class AdminController extends Controller
 
     public function hapusmakanan($id)
     {
-        tambahmakanan::where('id', $id)->delete();
+        $tambahmakanan = tambahmakanan::find($id);
+        
+        if ($tambahmakanan) {
+            File::delete('makanan/' . $tambahmakanan->images);
+        }
+
+        $tambahmakanan->delete();
+
         return redirect()->back();
     }
 
@@ -175,23 +184,32 @@ class AdminController extends Controller
     {
         $tambahmakanan = tambahmakanan::find($id);
         $tambahmakanan->kategori = $request->input('kategori');
-        $tambahmakanan->no_produk = $request->input('no_produk');
-        $tambahmakanan->nama_prdk = $request->input('nama_prdk');
-        $tambahmakanan->qty = $request->input('qty');
+        $tambahmakanan->no_produk = $request->input('nomor_produk');
+        $tambahmakanan->nama_prdk = $request->input('nama_produk');
+        $tambahmakanan->kuota = $request->input('kuota');
         $tambahmakanan->harga = $request->input('harga');
-        $tambahmakanan->images = $request->input('images');
+
+        $image = $request->file('gambar');
+        $destinationPath = 'makanan/';
+        $nama = $tambahmakanan->id . "" . "slider" . "." . $image->getClientOriginalExtension();
+        $tambahmakanan->images = $nama;
+        $image->move($destinationPath, $nama);
+
         $tambahmakanan->save();
+
         return redirect('/homeadmin');
     }
 
     public function findidmakanan($id)
     {
-        $tambahmakanan = tambahmakanan::where('id', $id)->first();
+        $idDecrypt = Crypt::decrypt($id);
+
+        $tambahmakanan = tambahmakanan::where('id', $idDecrypt)->first();
         $data = [
             'title' => 'tambahmakanan',
             'tambahmakanan' => $tambahmakanan
         ];
-        return view('admin.editmakanan', $data);
+        return view('admin.edit-menu', $data);
     }
 
     public function datacust()

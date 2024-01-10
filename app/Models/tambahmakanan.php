@@ -10,7 +10,7 @@ class tambahmakanan extends Model
     use HasFactory;
     protected $table = 'tambahmakanan';
     protected $primarykey = 'id';
-    protected $fillable = ['kategori','no_produk','nama_prdk','komposisi','harga','images']; 
+    protected $fillable = ['kategori','no_produk','nama_prdk','komposisi', 'kuota' ,'harga','images']; 
 
     public function keranjang() {
         return $this->belongsToMany(keranjang::class);

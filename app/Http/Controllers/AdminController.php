@@ -21,6 +21,7 @@ use App\Models\PembeliPesananOffline;
 use App\Models\PesananOffline;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 class AdminController extends Controller
 {
@@ -170,7 +171,7 @@ class AdminController extends Controller
     public function hapusmakanan($id)
     {
         $tambahmakanan = tambahmakanan::find($id);
-        
+
         if ($tambahmakanan) {
             File::delete('makanan/' . $tambahmakanan->images);
         }
@@ -219,12 +220,104 @@ class AdminController extends Controller
         return view('admin.datacust', compact('data_cust', 'user'));
     }
 
-    public function dashboard(request $request)
+    public function dashboard(Request $request)
     {
         $user = Auth::user();
-        $keranjang = keranjang::all();
-        $total_orderan_online = keranjang::selectraw("sum(harga*qty) as totalorderan")->first();
-        return view('admin.dashboard', compact('user', 'keranjang', 'total_orderan_online'));
+
+        $currentYear = Carbon::now()->year;
+        $namaBulan = [
+            1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April',
+            5 => 'Mei', 6 => 'Juni', 7 => 'Juli', 8 => 'Agustus',
+            9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember',
+        ];
+
+        // Total Pendapatan Per Bulan
+        $totalPendapatanPembayaran = [];
+        for ($bulan = 1; $bulan <= 12; $bulan++) {
+            $tanggalAwal = Carbon::create($currentYear, $bulan, 1, 0, 0, 0);
+            $tanggalAkhir = $tanggalAwal->copy()->endOfMonth();
+
+            $totalPendapatan = Pembayaran::where('status', 'Diterima')
+                ->whereHas('keranjang', function ($query) {
+                    $query->where('status', '=', 'Pesanan Diambil');
+                })
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->sum('total_harga_semua_pesanan');
+
+            $totalPendapatanPembayaran[] = [
+                'bulan' => $namaBulan[$bulan],
+                'total_pendapatan' => $totalPendapatan,
+            ];
+        }
+
+        // Query untuk total pendapatan per bulan dari tabel Pembeli
+        $totalPendapatanPembeli = [];
+        for ($bulan = 1; $bulan <= 12; $bulan++) {
+            $tanggalAwal = Carbon::create($currentYear, $bulan, 1, 0, 0, 0);
+            $tanggalAkhir = $tanggalAwal->copy()->endOfMonth();
+
+            $totalPendapatan = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+                ->whereHas('pesananOffline', function ($query) {
+                    $query->where('status_pesanan', '=', 'Pesanan Diambil');
+                })
+                ->whereBetween('created_at', [$tanggalAwal, $tanggalAkhir])
+                ->sum('total_harga_semua_pesanan');
+
+            $totalPendapatanPembeli[] = [
+                'bulan' => $namaBulan[$bulan],
+                'total_pendapatan' => $totalPendapatan,
+            ];
+        }
+
+        // Gabungkan data dari kedua tabel
+        $totalPendapatanPerBulan = [];
+        for ($bulan = 1; $bulan <= 12; $bulan++) {
+            // Tambahkan penanganan kesalahan jika diperlukan
+            $totalPendapatanPembayaran[$bulan - 1]['total_pendapatan'] = $totalPendapatanPembayaran[$bulan - 1]['total_pendapatan'] ?? 0;
+            $totalPendapatanPembeli[$bulan - 1]['total_pendapatan'] = $totalPendapatanPembeli[$bulan - 1]['total_pendapatan'] ?? 0;
+
+            $totalPendapatan = $totalPendapatanPembayaran[$bulan - 1]['total_pendapatan'] +
+                $totalPendapatanPembeli[$bulan - 1]['total_pendapatan'];
+
+            $totalPendapatanPerBulan[] = [
+                'bulan' => $namaBulan[$bulan],
+                'total_pendapatan' => $totalPendapatan,
+            ];
+        }
+
+        // Total Pendapatan Harian
+        $totalPendapatanHarian = [];
+        $daysOfWeek = ['Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu', 'Minggu'];
+
+        foreach ($daysOfWeek as $index => $day) {
+            $totalPendapatanPembayaran = Pembayaran::where('status', 'Diterima')
+                ->whereHas('keranjang', function ($query) {
+                    $query->where('status', '=', 'Pesanan Diambil');
+                })
+                ->whereRaw("DAYOFWEEK(DATE(created_at)) = " . ($index + 1))
+                ->sum('total_harga_semua_pesanan');
+
+            $totalPendapatanPembeli = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+                ->whereHas('pesananOffline', function ($query) {
+                    $query->where('status_pesanan', '=', 'Pesanan Diambil');
+                })
+                ->whereRaw("DAYOFWEEK(DATE(created_at)) = " . ($index + 1))
+                ->sum('total_harga_semua_pesanan');
+
+            $totalPendapatan = $totalPendapatanPembayaran + $totalPendapatanPembeli;
+
+            $totalPendapatanPembayaranHarian[] = [
+                'hari' => $day,
+                'total_pendapatan' => $totalPendapatanPembayaran,
+            ];
+
+            $totalPendapatanPembeliHarian[] = [
+                'hari' => $day,
+                'total_pendapatan' => $totalPendapatanPembeli,
+            ];
+        }
+
+        return view('admin.dashboard', compact('user', 'totalPendapatanPerBulan', 'totalPendapatanPembayaranHarian', 'totalPendapatanPembeliHarian'));
     }
 
     public function reportOnline(request $request)

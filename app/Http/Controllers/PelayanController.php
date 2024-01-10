@@ -146,7 +146,7 @@ class PelayanController extends Controller
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
-        
+
         return view('kasir.detail-pesanan-online-dibatalkan', compact('data'));
     }
 
@@ -270,7 +270,8 @@ class PelayanController extends Controller
 
     public function orderOffline()
     {
-        $data = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+        $data = Pembeli::where('status_pembayaran', 'Belum Bayar')
+            ->orWhere('status_pembayaran', 'Sudah Bayar')
             ->whereHas('pesananOffline', function ($query) {
                 $query->where('status_pesanan', '!=', 'Pesanan Diambil');
             })->get();
@@ -320,7 +321,7 @@ class PelayanController extends Controller
         return view('pelayan.order-online', compact('data'));
     }
 
-    public function detailPesananonline($id)
+    public function detailPesananOnline($id)
     {
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')

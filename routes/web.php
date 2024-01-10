@@ -84,7 +84,7 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/homeadmin', 'AdminController@indexadmin')->name('homeadmin');
     Route::get('/loginadmin', 'AdminController@loginadmin');
     Route::get('/datacust', 'AdminController@datacust');
-    Route::get('/dashboard', 'AdminController@dashboard');
+    Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::get('/report-pesanan-online', 'AdminController@reportOnline');
     Route::get('/report-pesanan-online/cetak-pdf', 'AdminController@cetakPdfOnline');
     Route::get('/report-pesanan-online/detail-pesanan/{id}', 'AdminController@detailPesananReportOnline');

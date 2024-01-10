@@ -164,10 +164,11 @@
                             <br>
                             @php
                                 $totalSemuaPesanan += $item->pesananOffline->qty * $item->pesananOffline->harga;
-                            @endphp 
+                            @endphp
                         @endforeach
 
-                        <p style="color: red;"><b>Total Semua Pesanan : Rp. {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
+                        <p style="color: red;"><b>Total Semua Pesanan : Rp.
+                                {{ number_format($totalSemuaPesanan, 0, ',', '.') }}</b></p>
                     </div>
                 </div>
 
@@ -188,9 +189,19 @@
                         @foreach ($data as $item)
                             <input type="hidden" name="pesananOfflineId[]" value="{{ $item->pesananOffline->id }}">
                         @endforeach
-                        <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
-                            Pesanan Sudah Diambil
-                        </button>
+                        @if ($data->first()->pembeli->status_pembayaran === 'Belum Bayar')
+                            <button type="submit" class="w3-button w3-orange w3-hover-orange w3-border" disabled>
+                                Pesanan Sudah Diambil
+                            </button>
+                        @elseif($data->first()->pesananOffline->status_pesanan === 'Proses')
+                            <button type="submit" class="w3-button w3-orange w3-hover-orange w3-border" disabled>
+                                Pesanan Sudah Diambil
+                            </button>
+                        @else
+                            <button type="submit" class="w3-button w3-white w3-hover-orange w3-border">
+                                Pesanan Sudah Diambil
+                            </button>
+                        @endif
                     </form>
                 </div>
             </div>

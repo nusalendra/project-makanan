@@ -195,7 +195,7 @@
                 <a href="/homepage"><button class="w3-button w3-white"><i
                             class="fa fa-cutlery w3-margin-right"></i>Snack</button></a>
             </div>
-            <a href="/tambahmakanan"><button class="w3-button w3-white">Tambah Data</button></a>
+            <a href="/tambah-menu"><button class="w3-button w3-white">Tambah Data</button></a>
             <div class="w3-row">
                 <table class="table">
                     <tr>
@@ -218,8 +218,11 @@
                                     width="35px">
                             </td>
                             <td>
+                                @php
+                                    $tambahmakananEncrypId = Crypt::encrypt($tambahmakanan->id);
+                                @endphp
                                 <a href="/hapusmakanan/{{ $tambahmakanan->id }}" class="btn fa fa-trash w3-red"></a>
-                                <a href="/prosesviewdatamakanan/{{ $tambahmakanan->id }}"
+                                <a href="/data-menu/edit/{{ $tambahmakananEncrypId }}"
                                     class="btn fa fa-edit w3-blue"></a>
                             </td>
                         </tr>

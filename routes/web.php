@@ -93,12 +93,12 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/editstatusadmin/{id}', 'AdminController@editstatusadmin')->name('editstatusadmin');
 
     //FUNCTION DATA MAKANAN
-    Route::get('/tambahmakanan', 'AdminController@tambahmakanan');
+    Route::get('/tambah-menu', 'AdminController@tambahMenu');
     Route::get('/tambahlokasi', 'AdminController@tambahlokasi');
     Route::post('/addmakanan', 'AdminController@addmakanan');
     Route::get('/hapusmakanan/{id}', 'AdminController@hapusmakanan');
-    Route::get('/editmakanan/{id}', 'AdminController@editmakanan')->name('editmakanan');
-    Route::get('/prosesviewdatamakanan/{id}', 'AdminController@findidmakanan');
+    Route::post('/editmakanan/{id}', 'AdminController@editmakanan')->name('editmakanan');
+    Route::get('/data-menu/edit/{id}', 'AdminController@findidmakanan');
 
     //FUNCTION DATA LOKASI
     Route::post('/addlokasi', 'AdminController@addlokasi');

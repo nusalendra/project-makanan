@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('no_produk');
             $table->string('nama_prdk');
             $table->string('komposisi');
+            $table->integer('kuota');
             $table->bigInteger('harga');
             $table->string('images');
             $table->timestamps();

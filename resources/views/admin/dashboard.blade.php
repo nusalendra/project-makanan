@@ -85,6 +85,36 @@
             display: table;
             clear: both;
         }
+
+        /* Gaya dasar untuk container utama */
+        .container {
+            max-width: 1140px;
+            /* Sesuaikan dengan lebar yang diinginkan */
+            margin: 0 auto;
+            /* Membuat container berada di tengah halaman */
+            /* Ruang di sekitar konten */
+        }
+
+        /* Gaya dasar untuk elemen canvas */
+        .canvas-container {
+            margin-bottom: 20px;
+            /* Ruang bawah di antara elemen canvas */
+        }
+
+        /* Gaya dasar untuk grid */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Dua kolom dengan lebar yang sama */
+            gap: 20px;
+            /* Ruang antara kolom */
+        }
+
+        /* Gaya dasar untuk elemen canvas dalam grid */
+        .grid .canvas {
+            width: 100%;
+            /* Lebar penuh */
+        }
     </style>
     <title>ADMIN PAGE</title>
 </head>
@@ -129,10 +159,185 @@
             <div class="w3-section w3-bottombar ">
             </div>
             <div class="w3-row-padding">
-                <div style="width: 30%; height: 30%; background-color: blue;">
+                <div class="container">
+                    <div class="canvas-container">
+                        <canvas id="chartTotalPendapatanPerBulan" class="canvas"></canvas>
+                    </div>
+                    <div class="grid">
+                        <div class="canvas-container">
+                            <canvas id="chartTotalPendapatanPembayaranHarian" class="canvas"></canvas>
+                        </div>
+                        <div class="canvas-container">
+                            <canvas id="chartTotalPendapatanPembeliHarian" class="canvas"></canvas>
+                        </div>
+                    </div>
                 </div>
+                {{-- @foreach ($totalPendapatanPerBulan as $data)
+                    <tr>
+                        <td>{{ $data['bulan'] }}</td>
+                        <td>{{ $data['total_pendapatan'] }}</td>
+                    </tr>
+                @endforeach --}}
             </div>
         </div>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script>
+            // Chart Total Pendapatan Per Bulan
+            var pendapatan_perbulan = document.getElementById('chartTotalPendapatanPerBulan').getContext('2d');
+
+            var chartDataPendapatanPerBulan = @json($totalPendapatanPerBulan);
+
+            var labels_pendapatan_perbulan = chartDataPendapatanPerBulan.map(item => item.bulan);
+            var total_pendapatan_perbulan = chartDataPendapatanPerBulan.map(item => item.total_pendapatan);
+
+            new Chart(pendapatan_perbulan, {
+                type: 'bar',
+                data: {
+                    labels: labels_pendapatan_perbulan,
+                    datasets: [{
+                        label: 'Total Pendapatan',
+                        data: total_pendapatan_perbulan,
+                        backgroundColor: 'rgba(185, 39, 0, 0.7)',
+                        borderColor: 'rgba(185, 39, 0, 0.7)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 10000000,
+                            ticks: {
+                                stepSize: 1000000,
+                                callback: function(value, index, values) {
+                                    if (value === 0) {
+                                        return 'Rp 0';
+                                    } else {
+                                        return 'Rp ' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total Pendapatan Per Bulan',
+                            font: {
+                                size: 20
+                            },
+                            fontColor: '#000',
+                            fontFamily: 'Arial, sans-serif',
+                            fontStyle: 'bold'
+                        }
+                    }
+                }
+            });
+
+            var ctx_pendapatan_pembayaran_harian = document.getElementById('chartTotalPendapatanPembayaranHarian').getContext(
+                '2d');
+
+            var chartDataPendapatanPembayaranHarian = @json($totalPendapatanPembayaranHarian);
+
+            var labels_pendapatan_pembayaran_harian = chartDataPendapatanPembayaranHarian.map(item => item.hari);
+            var total_pendapatan_pembayaran_harian = chartDataPendapatanPembayaranHarian.map(item => item.total_pendapatan);
+
+            new Chart(ctx_pendapatan_pembayaran_harian, {
+                type: 'line',
+                data: {
+                    labels: labels_pendapatan_pembayaran_harian,
+                    datasets: [{
+                        label: 'Total Pendapatan',
+                        data: total_pendapatan_pembayaran_harian,
+                        backgroundColor: 'rgba(82, 94, 225, 0.9)',
+                        borderColor: 'rgba(82, 94, 225, 0.9)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 3000000,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    if (value === 0) {
+                                        return 'Rp 0';
+                                    } else {
+                                        return 'Rp ' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total Pendapatan Harian Pesanan Online',
+                            font: {
+                                size: 20
+                            },
+                            fontColor: '#000',
+                            fontFamily: 'Arial, sans-serif',
+                            fontStyle: 'bold'
+                        }
+                    }
+                }
+            });
+
+            var ctx_pendapatan_pembeli_harian = document.getElementById('chartTotalPendapatanPembeliHarian').getContext('2d');
+
+            var chartDataPendapatanPembeliHarian = @json($totalPendapatanPembeliHarian);
+
+            var labels_pendapatan_pembeli_harian = chartDataPendapatanPembeliHarian.map(item => item.hari);
+            var total_pendapatan_pembeli_harian = chartDataPendapatanPembeliHarian.map(item => item.total_pendapatan);
+
+            new Chart(ctx_pendapatan_pembeli_harian, {
+                type: 'line',
+                data: {
+                    labels: labels_pendapatan_pembeli_harian,
+                    datasets: [{
+                        label: 'Total Pendapatan',
+                        data: total_pendapatan_pembeli_harian,
+                        backgroundColor: 'rgba(82, 112, 60, 0.9)',
+                        borderColor: 'rgba(82, 112, 60, 0.9)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 3000000,
+                            ticks: {
+                                callback: function(value, index, values) {
+                                    if (value === 0) {
+                                        return 'Rp 0';
+                                    } else {
+                                        return 'Rp ' + value.toLocaleString();
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Total Pendapatan Harian Pesanan Offline',
+                            font: {
+                                size: 20
+                            },
+                            fontColor: '#000',
+                            fontFamily: 'Arial, sans-serif',
+                            fontStyle: 'bold'
+                        }
+                    }
+                }
+            });
+        </script>
 </body>
 
 </html>

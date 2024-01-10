@@ -68,7 +68,7 @@ class Login extends Component
                 return redirect()->route('homekoki'); 
             } 
             elseif(Auth::user()->role == 'Pemilik'){
-                return redirect()->route('homeadmin'); 
+                return redirect()->route('dashboard'); 
             }
         }
         // elseif(Auth::attempt(['username' => $this->username, 'password'=> $this->password])){

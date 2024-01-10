@@ -93,9 +93,11 @@
             <a href="/keranjang" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-cart-plus fa-fw w3-margin-right"></i>KERANJANG</a>
             <a href="/riwayat-pesanan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
-                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>Riwayat Pesanan</a>
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
             <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
+            <a href="/pesanan-selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN SELESAI</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -124,7 +126,7 @@
                             @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
                                 <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
                             @endif
-
+                            
                         </div>
                         <div class="w3-half">
                             <h2>Informasi Pesanan</h2>

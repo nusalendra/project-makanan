@@ -98,6 +98,8 @@
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>RIWAYAT PESANAN</a>
             <a href="/pesanan-dibatalkan" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN DIBATALKAN</a>
+            <a href="/pesanan-selesai" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
+                    class="fa fa-shopping-basket fa-fw w3-margin-right"></i>PESANAN SELESAI</a>
             <a href="/loginuser" onclick="w3_close()" class="w3-bar-item w3-button w3-padding"><i
                     class="fa fa-sign-out fa-fw w3-margin-right"></i>LOGOUT</a>
         </div>
@@ -221,8 +223,14 @@
                                 <div class="form-group">
                                     <label for="telepon_input" id="teleponLabel" style="display: none;">Masukkan
                                         Nomor Handphone Anda</label>
-                                    <input id="telepon_input" type="" class="form-control"
-                                        name="telepon_input" style="display: none;" value="{{ $user->telepon }}">
+                                    @if ($user->telepon == null)
+                                        <input id="telepon_input" type="" class="form-control"
+                                            name="telepon_input" style="display: none;">
+                                    @else
+                                        <input id="telepon_input" type="" class="form-control"
+                                            name="telepon_input" style="display: none;" value="{{ $user->telepon }}"
+                                            disabled>
+                                    @endif
                                 </div>
                                 <div class="form-group">
                                     <h4><b>Pilih Metode Pembayaran & Isi ID Pembayaran</b></h4>
@@ -353,18 +361,30 @@ jQuery(document).ready(($) => {
         var teleponLabel = document.getElementById('teleponLabel');
 
         opsi_pengiriman.addEventListener('change', function() {
+            // Sembunyikan semua elemen terlebih dahulu
+            alamatInput.style.display = 'none';
+            alamatLabel.style.display = 'none';
+            teleponInput.style.display = 'none';
+            teleponLabel.style.display = 'none';
+
             if (opsi_pengiriman.value === 'Antarkan') {
-                alamatInput.style.display = 'block'; // Tampilkan input jika "Antarkan" dipilih
-                alamatLabel.style.display = 'block'; // Tampilkan label jika "Antarkan" dipilih
-                teleponInput.style.display = 'block'; // Tampilkan input jika "Antarkan" dipilih
-                teleponLabel.style.display = 'block'; // Tampilkan label jika "Antarkan" dipilih
-            } else {
-                alamatInput.style.display = 'none'; // Sembunyikan input jika pilihan lain dipilih
-                alamatLabel.style.display = 'none'; // Sembunyikan label jika pilihan lain dipilih
-                teleponInput.style.display = 'none'; // Sembunyikan input jika pilihan lain dipilih
-                teleponLabel.style.display = 'none'; // Sembunyikan label jika pilihan lain dipilih
-                alamatInput.value = ''; // Kosongkan nilai input saat disembunyikan
-                teleponInput.value = ''; // Kosongkan nilai input saat disembunyikan
+                // Tampilkan alamat dan telepon jika "Antarkan" dipilih
+                alamatInput.style.display = 'block';
+                alamatLabel.style.display = 'block';
+                teleponInput.style.display = 'block';
+                teleponLabel.style.display = 'block';
+            } else if (opsi_pengiriman.value === 'Ambil Di Tempat') {
+                // Tampilkan telepon saja jika "Ambil Di Tempat" dipilih
+                teleponInput.style.display = 'block';
+                teleponLabel.style.display = 'block';
+            }
+
+            // Kosongkan nilai input saat disembunyikan
+            if (alamatInput.style.display === 'none') {
+                alamatInput.value = '';
+            }
+            if (teleponInput.style.display === 'none') {
+                teleponInput.value = '';
             }
         });
     </script>

@@ -203,6 +203,7 @@
                         <th>No Produk</th>
                         <th>Nama Produk</th>
                         <th>Komposisi</th>
+                        <th>Kuota</th>
                         <th>Harga</th>
                         <th>Gambar</th>
                         <th>Action</th>
@@ -213,6 +214,7 @@
                             <td>{{ $tambahmakanan->no_produk }}</td>
                             <td>{{ $tambahmakanan->nama_prdk }}</td>
                             <td>{{ $tambahmakanan->komposisi }}</td>
+                            <td>{{ $tambahmakanan->kuota }}</td>
                             <td>{{ $tambahmakanan->harga }}</td>
                             <td><img src="{{ asset('makanan/' . $tambahmakanan->images) }}" height="35px"
                                     width="35px">

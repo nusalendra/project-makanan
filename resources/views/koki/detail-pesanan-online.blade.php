@@ -126,6 +126,7 @@
                     </div>
                     <div class="w3-half">
                         <h2>Status</h2>
+                        <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
                         <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
                         <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                     </div>

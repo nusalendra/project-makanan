@@ -137,8 +137,6 @@ class user_controller extends Controller
         // Simpan array ID keranjang ke dalam relasi many-to-many
         $pembayaran = new Pembayaran();
         $pembayaran->nomor_order = 'ORD_' . rand(100000000, 999999999);
-        $pembayaran->opsi_pengiriman = $request->opsi_pengiriman;
-        $pembayaran->alamat = $request->alamat_input;
         $pembayaran->metode = $request->metode;
         $pembayaran->id_pembayaran = $request->id_pembayaran;
         $pembayaran->total_harga_semua_pesanan = $totalSemuaPesanan;

@@ -10,7 +10,7 @@ class Pembayaran extends Model
     use HasFactory;
     protected $table = 'pembayaran';
     protected $primarykey = 'id';
-    protected $fillable = ['nomor_order', 'opsi_pengiriman', 'alamat' ,'metode', 'id_pembayaran', 'total_harga_semua_pesanan', 'status', 'alasan_pembatalan_pesanan', 'ongkos_kirim'];
+    protected $fillable = ['nomor_order', 'metode', 'id_pembayaran', 'total_harga_semua_pesanan', 'status', 'alasan_pembatalan_pesanan', 'ongkos_kirim'];
 
     public function keranjang() {
         return $this->belongsToMany(keranjang::class);

@@ -139,9 +139,7 @@
                             <h2>Informasi Pelanggan</h2>
                             <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
                             <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
-                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
-                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
-                            @endif
+                            <p>{{ $data->first()->keranjang->user->telepon }}</p>
                         </div>
                         <div class="w3-half">
                             <h2>Informasi Pesanan</h2>
@@ -170,17 +168,11 @@
                             <h2>Informasi Pembayaran</h2>
                             <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
                             <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
-                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->ongkos_kirim)
-                                <p style="color: red;"><b>Ongkos Kirim :
-                                        {{ number_format($data->first()->pembayaran->ongkos_kirim, 0, ',', '.') }}</b>
-                                </p>
-                            @endif
-
                         </div>
                         <div class="w3-half">
                             <h2>Status</h2>
-                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
-                            <p style="color: red;">Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
+                            <p style="color: red;">Status Validasi Pembayaran :
+                                {{ $data->first()->pembayaran->status }}</p>
                             <p style="color: red;">Status Dapur : {{ $data->first()->keranjang->status }}</p>
                         </div>
                     </div>

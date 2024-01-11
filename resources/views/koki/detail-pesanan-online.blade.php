@@ -104,6 +104,7 @@
                         <h2>Informasi Pelanggan</h2>
                         <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
                         <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
+                        <p>Telepon : {{ $data->first()->keranjang->user->telepon }}</p>
                     </div>
                     <div class="w3-half">
                         <h2>Informasi Pesanan</h2>
@@ -126,7 +127,6 @@
                     </div>
                     <div class="w3-half">
                         <h2>Status</h2>
-                        <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
                         <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
                         <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                     </div>

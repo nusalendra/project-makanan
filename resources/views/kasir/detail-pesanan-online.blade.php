@@ -139,9 +139,7 @@
                             <h2>Informasi Pelanggan</h2>
                             <p>Nomor Order : {{ $data->first()->pembayaran->nomor_order }}</p>
                             <p>Nama Pelanggan : {{ $data->first()->keranjang->user->name }}</p>
-                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->alamat)
-                                <p>Alamat: {{ $data->first()->pembayaran->alamat }}</p>
-                            @endif
+                            <p>Telepon : {{ $data->first()->keranjang->user->telepon }}</p>
                         </div>
                         <div class="w3-half">
                             <h2>Informasi Pesanan</h2>
@@ -170,16 +168,9 @@
                             <h2>Informasi Pembayaran</h2>
                             <p>Metode Pembayaran : {{ $data->first()->pembayaran->metode }}</p>
                             <p>ID Pembayaran : {{ $data->first()->pembayaran->id_pembayaran }}</p>
-                            @if ($data->first() && $data->first()->pembayaran && $data->first()->pembayaran->ongkos_kirim)
-                                <p style="color: red;"><b>Ongkos Kirim :
-                                        {{ number_format($data->first()->pembayaran->ongkos_kirim, 0, ',', '.') }}</b>
-                                </p>
-                            @endif
-
                         </div>
                         <div class="w3-half">
                             <h2>Status</h2>
-                            <p>Status Pengiriman : {{ $data->first()->pembayaran->opsi_pengiriman }}</p>
                             <p>Status Validasi Pembayaran : {{ $data->first()->pembayaran->status }}</p>
                             <p>Status Dapur : {{ $data->first()->keranjang->status }}</p>
                         </div>
@@ -196,36 +187,6 @@
                                 style="margin-right: 5px;">
                                 Validasi Pembayaran
                             </button>
-                        </form>
-                        <button data-toggle="modal" data-target="#modalTambahOngkir"
-                            class="w3-button w3-white w3-hover-orange w3-border">
-                            Tambah Ongkos Kirim
-                        </button>
-                        <form action="/kasir-online/tambah-ongkir" method="POST">
-                            @csrf
-                            <input type="hidden" name="pembayaranId" value="{{ $item->pembayaran->id }}">
-                            <div class="modal fade" id="modalTambahOngkir" role="dialog">
-                                <div class="modal-dialog modal-sm">
-                                    <div class="modal-content" style="width: 200%;">
-                                        <div class="modal-header">
-                                            <button type="button" class="close"
-                                                data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title" style="font-weight: bold;">Tambah Ongkos Kirim
-                                                Pesanan
-                                            </h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group">
-                                                <input type="number" class="form-control" name="ongkos_kirim">
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="submit" class="btn btn-primary" data-toggle="modal"
-                                                    data-target="#modalTambahOngkir">Tambah</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </form>
                     </div>
                 </div>

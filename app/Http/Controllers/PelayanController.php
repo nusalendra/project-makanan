@@ -110,22 +110,6 @@ class PelayanController extends Controller
         return redirect('/kasir-online');
     }
 
-    public function tambahOngkir(Request $request)
-    {
-        $pembayaranIds = $request->input('pembayaranId');
-
-        $data = Pembayaran::find($pembayaranIds);
-
-        if ($data) {
-            $data->status = 'Diterima';
-            $data->ongkos_kirim = $request->ongkos_kirim;
-
-            $data->save();
-        }
-
-        return redirect('/kasir-online');
-    }
-
     public function pesananOnlineDibatalkan()
     {
         $data = Pembayaran::with('keranjang')

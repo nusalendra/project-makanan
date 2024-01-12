@@ -9,9 +9,10 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> --}}
     <style>
         body,
         h1,
@@ -115,6 +116,49 @@
             width: 100%;
             /* Lebar penuh */
         }
+
+        #tanggal {
+            display: inline-block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: orangered;
+            /* Warna latar belakang tombol */
+            color: #fff;
+            /* Warna teks tombol */
+            border: none;
+            cursor: pointer;
+        }
+
+        #inputTanggal[disabled] {
+            color: #000;
+            /* Warna teks input */
+            background-color: #fff;
+            /* Warna latar belakang input */
+            border: 1px solid #ccc;
+            /* Garis tepi input */
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .well {
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .offline-box {
+            background-color: #3498db;
+            /* Warna biru */
+            color: #ffffff;
+            /* Warna teks putih */
+        }
+
+        .online-box {
+            background-color: #2ecc71;
+            /* Warna hijau */
+            color: #ffffff;
+            /* Warna teks putih */
+        }
     </style>
     <title>ADMIN PAGE</title>
 </head>
@@ -156,186 +200,89 @@
     <div class="w3-main" style="margin-left:300px">
         <div class="w3-container">
             <h1><b>Dashboard</b></h1>
-            <div class="w3-section w3-bottombar ">
+            <div class="w3-section w3-bottombar "></div>
+            <div style="text-align: center">
+                <h3 style="font-weight: bold">Filter Tanggal Pesanan Harian</h3>
+                <div style="display: flex; justify-content: center">
+                    <button id="tanggal">
+                        Pilih Tanggal
+                    </button>
+                    <h4 style="margin-left: 5px; margin-right: 5px;">-</h4>
+                    <input type="text" id="inputTanggal" name="inputTanggal" disabled style="text-align: center">
+                </div>
             </div>
             <div class="w3-row-padding">
-                <div class="container">
-                    <div class="canvas-container">
-                        <canvas id="chartTotalPendapatanPerBulan" class="canvas"></canvas>
-                    </div>
-                    <div class="grid">
-                        <div class="canvas-container">
-                            <canvas id="chartTotalPendapatanPembayaranHarian" class="canvas"></canvas>
+                <div class="container-fluid">
+                    <div class="row content" style="margin-top: 20px;">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="well offline-box">
+                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Offline</h4>
+                                    <p id="totalPendapatanOffline" class="text-center">Rp. <span class="amount">0</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <div class="well online-box">
+                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Online</h4>
+                                    <p id="totalPendapatanOnline" class="text-center">Rp. <span class="amount">0</span>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="canvas-container">
-                            <canvas id="chartTotalPendapatanPembeliHarian" class="canvas"></canvas>
-                        </div>
+
+                        {{-- <div class="row">
+                            <div class="col-sm-8">
+                                <div class="well">
+                                    <p>Text</p>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="well">
+                                    <p>Text</p>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
-                {{-- @foreach ($totalPendapatanPerBulan as $data)
-                    <tr>
-                        <td>{{ $data['bulan'] }}</td>
-                        <td>{{ $data['total_pendapatan'] }}</td>
-                    </tr>
-                @endforeach --}}
             </div>
         </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
         <script>
-            // Chart Total Pendapatan Per Bulan
-            var pendapatan_perbulan = document.getElementById('chartTotalPendapatanPerBulan').getContext('2d');
-
-            var chartDataPendapatanPerBulan = @json($totalPendapatanPerBulan);
-
-            var labels_pendapatan_perbulan = chartDataPendapatanPerBulan.map(item => item.bulan);
-            var total_pendapatan_perbulan = chartDataPendapatanPerBulan.map(item => item.total_pendapatan);
-
-            new Chart(pendapatan_perbulan, {
-                type: 'bar',
-                data: {
-                    labels: labels_pendapatan_perbulan,
-                    datasets: [{
-                        label: 'Total Pendapatan',
-                        data: total_pendapatan_perbulan,
-                        backgroundColor: 'rgba(185, 39, 0, 0.7)',
-                        borderColor: 'rgba(185, 39, 0, 0.7)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 10000000,
-                            ticks: {
-                                stepSize: 1000000,
-                                callback: function(value, index, values) {
-                                    if (value === 0) {
-                                        return 'Rp 0';
-                                    } else {
-                                        return 'Rp ' + value.toLocaleString();
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Total Pendapatan Per Bulan',
-                            font: {
-                                size: 20
+            document.addEventListener('DOMContentLoaded', function() {
+                flatpickr("#tanggal", {
+                    dateFormat: "d-m-Y", // Format tanggal yang diinginkan
+                    onClose: function(selectedDates, dateStr, instance) {
+                        document.getElementById('inputTanggal').value = dateStr;
+                        // Menggunakan jQuery untuk mengirim nilai dateFormat ke server
+                        var dateFormatValue = dateStr;
+                        // console.log(dateFormatValue);
+                        $.ajax({
+                            type: 'POST',
+                            url: 'api/get-data-dashboard', // Sesuaikan dengan rute yang Anda buat di Laravel
+                            data: {
+                                filterTanggal: dateFormatValue
+                            }, // Menggunakan nama parameter yang sesuai dengan yang diharapkan oleh controller
+                            success: function(response) {
+                                // console.log(response);
+                                // console.log('Data berhasil dikirim ke server');
+                                // console.log(response.totalPendapatanOffline);
+                                // Menangkap respons dan menampilkan data di dalam elemen masing-masing
+                                $('#totalPendapatanOffline').text(
+                                    'Rp. ' + response
+                                    .totalPendapatanOffline);
+                                $('#totalPendapatanOnline').text(
+                                    'Rp. ' + response
+                                    .totalPendapatanOnline);
                             },
-                            fontColor: '#000',
-                            fontFamily: 'Arial, sans-serif',
-                            fontStyle: 'bold'
-                        }
-                    }
-                }
-            });
-
-            var ctx_pendapatan_pembayaran_harian = document.getElementById('chartTotalPendapatanPembayaranHarian').getContext(
-                '2d');
-
-            var chartDataPendapatanPembayaranHarian = @json($totalPendapatanPembayaranHarian);
-
-            var labels_pendapatan_pembayaran_harian = chartDataPendapatanPembayaranHarian.map(item => item.hari);
-            var total_pendapatan_pembayaran_harian = chartDataPendapatanPembayaranHarian.map(item => item.total_pendapatan);
-
-            new Chart(ctx_pendapatan_pembayaran_harian, {
-                type: 'line',
-                data: {
-                    labels: labels_pendapatan_pembayaran_harian,
-                    datasets: [{
-                        label: 'Total Pendapatan',
-                        data: total_pendapatan_pembayaran_harian,
-                        backgroundColor: 'rgba(82, 94, 225, 0.9)',
-                        borderColor: 'rgba(82, 94, 225, 0.9)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 3000000,
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    if (value === 0) {
-                                        return 'Rp 0';
-                                    } else {
-                                        return 'Rp ' + value.toLocaleString();
-                                    }
-                                }
+                            error: function(error) {
+                                console.error('Gagal mengirim data ke server', error
+                                    .responseText);
                             }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Total Pendapatan Harian Pesanan Online',
-                            font: {
-                                size: 20
-                            },
-                            fontColor: '#000',
-                            fontFamily: 'Arial, sans-serif',
-                            fontStyle: 'bold'
-                        }
+                        });
                     }
-                }
-            });
-
-            var ctx_pendapatan_pembeli_harian = document.getElementById('chartTotalPendapatanPembeliHarian').getContext('2d');
-
-            var chartDataPendapatanPembeliHarian = @json($totalPendapatanPembeliHarian);
-
-            var labels_pendapatan_pembeli_harian = chartDataPendapatanPembeliHarian.map(item => item.hari);
-            var total_pendapatan_pembeli_harian = chartDataPendapatanPembeliHarian.map(item => item.total_pendapatan);
-
-            new Chart(ctx_pendapatan_pembeli_harian, {
-                type: 'line',
-                data: {
-                    labels: labels_pendapatan_pembeli_harian,
-                    datasets: [{
-                        label: 'Total Pendapatan',
-                        data: total_pendapatan_pembeli_harian,
-                        backgroundColor: 'rgba(82, 112, 60, 0.9)',
-                        borderColor: 'rgba(82, 112, 60, 0.9)',
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            max: 3000000,
-                            ticks: {
-                                callback: function(value, index, values) {
-                                    if (value === 0) {
-                                        return 'Rp 0';
-                                    } else {
-                                        return 'Rp ' + value.toLocaleString();
-                                    }
-                                }
-                            }
-                        }
-                    },
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'Total Pendapatan Harian Pesanan Offline',
-                            font: {
-                                size: 20
-                            },
-                            fontColor: '#000',
-                            fontFamily: 'Arial, sans-serif',
-                            fontStyle: 'bold'
-                        }
-                    }
-                }
+                });
             });
         </script>
 </body>

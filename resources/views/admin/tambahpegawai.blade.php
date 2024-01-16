@@ -134,7 +134,6 @@
 
     <div class="w3-row" style="margin-left:320px">
         <h1><b>Data Pegawai Sushi Key</b></h1>
-        <a href="/formtambahpegawai"><button class="w3-button w3-white">Tambah Data Pegawai</button></a>
         <table class="table">
             <tr>
                 <th>No</th>

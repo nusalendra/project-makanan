@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     {{-- <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script> --}}
@@ -140,6 +141,29 @@
             font-size: 16px;
         }
 
+        #bulan {
+            display: inline-block;
+            padding: 10px;
+            font-size: 16px;
+            background-color: orangered;
+            /* Warna latar belakang tombol */
+            color: #fff;
+            /* Warna teks tombol */
+            border: none;
+            cursor: pointer;
+        }
+
+        #inputBulan[disabled] {
+            color: #000;
+            /* Warna teks input */
+            background-color: #fff;
+            /* Warna latar belakang input */
+            border: 1px solid #ccc;
+            /* Garis tepi input */
+            padding: 5px;
+            font-size: 16px;
+        }
+
         .well {
             padding: 20px;
             margin-bottom: 20px;
@@ -154,7 +178,7 @@
         }
 
         .online-box {
-            background-color: #2ecc71;
+            background-color: #3498db;
             /* Warna hijau */
             color: #ffffff;
             /* Warna teks putih */
@@ -217,38 +241,47 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="well offline-box">
-                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Offline</h4>
+                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Offline
+                                    </h4>
                                     <p id="totalPendapatanOffline" class="text-center">Rp. <span class="amount">0</span>
                                     </p>
                                 </div>
                             </div>
                             <div class="col-sm-6">
                                 <div class="well online-box">
-                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Online</h4>
+                                    <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Harian Online
+                                    </h4>
                                     <p id="totalPendapatanOnline" class="text-center">Rp. <span class="amount">0</span>
                                     </p>
                                 </div>
                             </div>
                         </div>
-
-                        {{-- <div class="row">
-                            <div class="col-sm-8">
-                                <div class="well">
-                                    <p>Text</p>
-                                </div>
+                        <div style="text-align: center">
+                            <h3 style="font-weight: bold">Filter Pesanan Bulanan</h3>
+                            <div style="display: flex; justify-content: center">
+                                <button id="bulan">
+                                    Pilih Bulan
+                                </button>
+                                <h4 style="margin-left: 5px; margin-right: 5px;">-</h4>
+                                <input type="text" id="inputBulan" name="inputBulan" disabled
+                                    style="text-align: center">
                             </div>
-                            <div class="col-sm-4">
-                                <div class="well">
-                                    <p>Text</p>
-                                </div>
+                        </div>
+                        <div class="row" style="margin-top: 20px;">
+                            <div class="well offline-box">
+                                <h4 class="text-center" style="font-weight: bold;">Total Pendapatan Bulanan
+                                </h4>
+                                <p id="totalPendapatanBulanan" class="text-center">Rp. <span class="amount">0</span>
+                                </p>
                             </div>
-                        </div> --}}
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/plugins/monthSelect/index.js"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 flatpickr("#tanggal", {
@@ -257,10 +290,10 @@
                         document.getElementById('inputTanggal').value = dateStr;
                         // Menggunakan jQuery untuk mengirim nilai dateFormat ke server
                         var dateFormatValue = dateStr;
-                        // console.log(dateFormatValue);
+                        console.log(dateFormatValue);
                         $.ajax({
                             type: 'POST',
-                            url: 'api/get-data-dashboard', // Sesuaikan dengan rute yang Anda buat di Laravel
+                            url: 'api/get-data-tanggal', // Sesuaikan dengan rute yang Anda buat di Laravel
                             data: {
                                 filterTanggal: dateFormatValue
                             }, // Menggunakan nama parameter yang sesuai dengan yang diharapkan oleh controller
@@ -283,6 +316,44 @@
                         });
                     }
                 });
+
+                flatpickr("#bulan", {
+                    plugins: [
+                        new monthSelectPlugin({
+                            shorthand: true, //defaults to false
+                            dateFormat: "m-Y", //defaults to "F Y"
+                            altFormat: "F Y", //defaults to "F Y"
+                            // theme: "dark" // defaults to "light"
+                        })
+                    ],
+                    onClose: function(selectedDates, dateStr, instance) {
+                        document.getElementById('inputBulan').value = dateStr;
+                        // Menggunakan jQuery untuk mengirim nilai dateFormat ke server
+                        var dateFormatValue = dateStr;
+                        console.log(dateFormatValue);
+                        $.ajax({
+                            type: 'POST',
+                            url: 'api/get-data-bulan', // Sesuaikan dengan rute yang Anda buat di Laravel
+                            data: {
+                                filterBulan: dateFormatValue
+                            }, // Menggunakan nama parameter yang sesuai dengan yang diharapkan oleh controller
+                            success: function(response) {
+                                console.log(response);
+                                // console.log('Data berhasil dikirim ke server');
+                                // console.log(response.totalPendapatanBulanan);
+                                // Menangkap respons dan menampilkan data di dalam elemen masing-masing
+                                $('#totalPendapatanBulanan').text(
+                                    'Rp. ' + response
+                                    .totalPendapatanBulanan);
+                            },
+                            error: function(error) {
+                                console.error('Gagal mengirim data ke server', error
+                                    .responseText);
+                            }
+                        });
+                    }
+                });
+
             });
         </script>
 </body>

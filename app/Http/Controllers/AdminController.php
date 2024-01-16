@@ -227,37 +227,64 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('user'));
     }
 
-    public function getDataDashboard(Request $request)
+    public function getDataTanggal(Request $request)
     {
-        try {
-            $tanggal = $request->input('filterTanggal');
+        $tanggal = $request->input('filterTanggal');
 
-            $totalPendapatanOffline = Pembeli::where('status_pembayaran', 'Sudah Bayar')
-                ->whereHas('pesananOffline', function ($query) use ($tanggal) {
-                    $formattedTanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
-                    $query->where('status_pesanan', '=', 'Pesanan Diambil')
-                        ->whereDate('pembeli.created_at', '=', $formattedTanggal);
-                })
-                ->sum('total_harga_semua_pesanan');
+        $totalPendapatanOffline = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+            ->whereHas('pesananOffline', function ($query) use ($tanggal) {
+                $formattedTanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
+                $query->where('status_pesanan', '=', 'Pesanan Diambil')
+                    ->whereDate('pembeli.created_at', '=', $formattedTanggal);
+            })
+            ->sum('total_harga_semua_pesanan');
 
-            // Total Pendapatan Online
-            $totalPendapatanOnline = Pembayaran::where('status', 'Diterima')
-                ->whereHas('keranjang', function ($query) use ($tanggal) {
-                    $formattedTanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
-                    $query->where('status', '=', 'Pesanan Diambil')
-                        ->whereDate('pembayaran.created_at', '=', $formattedTanggal);
-                })
-                ->sum('total_harga_semua_pesanan');
+        // Total Pendapatan Online
+        $totalPendapatanOnline = Pembayaran::where('status', 'Diterima')
+            ->whereHas('keranjang', function ($query) use ($tanggal) {
+                $formattedTanggal = \Carbon\Carbon::createFromFormat('d-m-Y', $tanggal);
+                $query->where('status', '=', 'Pesanan Diambil')
+                    ->whereDate('pembayaran.created_at', '=', $formattedTanggal);
+            })
+            ->sum('total_harga_semua_pesanan');
 
-            return response()->json([
-                'totalPendapatanOffline' => $totalPendapatanOffline,
-                'totalPendapatanOnline' => $totalPendapatanOnline,
-            ]);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
+        return response()->json([
+            'totalPendapatanOffline' => $totalPendapatanOffline,
+            'totalPendapatanOnline' => $totalPendapatanOnline,
+        ]);
     }
 
+    public function getDataBulan(Request $request)
+    {
+        $bulan = $request->input('filterBulan');
+
+        $formattedBulan = \Carbon\Carbon::createFromFormat('m-Y', $bulan);
+
+        $totalPendapatanOffline = Pembeli::where('status_pembayaran', 'Sudah Bayar')
+            ->whereHas('pesananOffline', function ($query) use ($formattedBulan) {
+                $query->where('status_pesanan', '=', 'Pesanan Diambil')
+                    ->whereMonth('pembeli.created_at', $formattedBulan->format('m'))
+                    ->whereYear('pembeli.created_at', $formattedBulan->format('Y'));
+            })
+            ->sum('total_harga_semua_pesanan');
+
+        // Total Pendapatan Online
+        $totalPendapatanOnline = Pembayaran::where('status', 'Diterima')
+            ->whereHas('keranjang', function ($query) use ($formattedBulan) {
+                $query->where('status', '=', 'Pesanan Diambil')
+                    ->whereMonth('pembayaran.created_at', $formattedBulan->format('m'))
+                    ->whereYear('pembayaran.created_at', $formattedBulan->format('Y'));
+            })
+            ->sum('total_harga_semua_pesanan');
+
+        $totalPendapatanBulanan = $totalPendapatanOnline + $totalPendapatanOffline;
+
+        return response()->json(
+            [
+                'totalPendapatanBulanan' => $totalPendapatanBulanan,
+            ]
+        );
+    }
 
     public function reportOnline(request $request)
     {

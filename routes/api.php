@@ -19,4 +19,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/get-data-dashboard', [AdminController::class, 'getDataDashboard']);
+Route::post('/get-data-tanggal', [AdminController::class, 'getDataTanggal']);
+Route::post('/get-data-bulan', [AdminController::class, 'getDataBulan']);

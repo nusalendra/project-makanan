@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\pemesananoffline;
 use App\Models\keranjang;
 use App\Models\Pembayaran;
 use App\Models\KeranjangPembayaran;
@@ -117,11 +116,6 @@ class koki_controller extends Controller
         return view('koki.detail-pesanan-offline-selesai', compact('data', 'user'));
     }
 
-    public function loginkoki(request $request)
-    {
-        return view('koki.loginkoki');
-    }
-
     public function orderselesaikoki(request $request)
     {
         $user = Auth::user();
@@ -138,21 +132,5 @@ class koki_controller extends Controller
             })->get();
 
         return view('koki.orderselesaikoki', compact('orderSelesaiOnline', 'orderSelesaiOffline', 'user'));
-    }
-
-    public function editstatus(request $request, $id)
-    {
-        $tambahmakanan = keranjang::find($id);
-        $tambahmakanan->status = $request->input('status');
-        $tambahmakanan->save();
-        return redirect('/koki');
-    }
-
-    public function editstatusoffline(request $request, $id)
-    {
-        $pemesananoffline = pemesananoffline::find($id);
-        $pemesananoffline->status_offline = $request->input('status_offline');
-        $pemesananoffline->save();
-        return redirect('/kokioffline');
     }
 }

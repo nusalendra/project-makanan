@@ -32,22 +32,10 @@ class AdminController extends Controller
         return view('admin.homeadmin', compact('tambahmakanan', 'user'));
     }
 
-    public function loginadmin(request $request)
-    {
-        return view('admin.loginadmin');
-    }
-
     public function tambahMenu(request $request)
     {
         $tambahmakanan = tambahmakanan::all();
         return view('admin.tambah-menu', compact('tambahmakanan'));
-    }
-
-    public function tambahlokasi(request $request)
-    {
-        $user = Auth::user();
-        $data_lokasi = lokasi::all();
-        return view('admin.tambahlokasi', compact('data_lokasi', 'user'));
     }
 
     public function tambahpegawai(request $request)
@@ -60,67 +48,6 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.tambahpegawai', compact('data', 'user'));
-    }
-
-    public function editpegawai(request $request, $id)
-    {
-        $data_pegawai = pegawai::find($id);
-        $data_pegawai->nip = $request->input('nip');
-        $data_pegawai->nama_pegawai = $request->input('nama_pegawai');
-        $data_pegawai->username = $request->input('username');
-        $data_pegawai->password = $request->input('password');
-        $data_pegawai->lokasi_penempatan = $request->input('lokasi_penempatan');
-        $data_pegawai->save();
-        return redirect('tambahpegawai');
-    }
-
-    public function findidpegawai($id)
-    {
-        $data_pegawai = pegawai::where('id', $id)->first();
-        $data = [
-            'title' => 'pegawai',
-            'data_pegawai' => $data_pegawai
-        ];
-        return view('admin.editpegawai', $data);
-    }
-
-    public function hapuspegawai($id)
-    {
-        pegawai::where('id', $id)->delete();
-        return redirect()->back();
-    }
-
-    public function addlokasi(request $request)
-    {
-        lokasi::create($request->all());
-        return redirect('tambahlokasi')->with('sukses', 'penambahan telah berhasil!');
-    }
-
-    public function editlokasi(request $request, $id)
-    {
-        $user = Auth::user();
-        $data_lokasi = lokasi::find($id);
-        $data_lokasi->kode = $request->input('kode');
-        $data_lokasi->nama_lokasi = $request->input('nama_lokasi');
-        $data_lokasi->jalan = $request->input('jalan');
-        $data_lokasi->save();
-        return redirect('tambahlokasi', 'user');
-    }
-
-    public function findidlokasi($id)
-    {
-        $data_lokasi = lokasi::where('id', $id)->first();
-        $data = [
-            'title' => 'lokasi',
-            'data_lokasi' => $data_lokasi
-        ];
-        return view('admin.editlokasi', $data);
-    }
-
-    public function hapuslokasi($id)
-    {
-        lokasi::where('id', $id)->delete();
-        return redirect()->back();
     }
 
     public function addmakanan(Request $request)
@@ -363,46 +290,5 @@ class AdminController extends Controller
             ->get();
 
         return view('admin.detail-pesanan-report-offline', compact('data', 'user'));
-    }
-
-    public function editstatusadmin(request $request, $id)
-    {
-        $item = validasibayar::find($id);
-        $item->status = $request->input('status');
-        $item->save();
-        return redirect('/validasibayar');
-    }
-
-    public function indexvalidasi(request $request)
-    {
-        $data = DB::table('keranjang')
-            ->join('validasibayar', 'validasibayar.id', '=', 'keranjang.id')
-            ->join('pembayaran', 'pembayaran.id', '=', 'validasibayar.id')
-            ->get();
-        return view('admin.validasibayar')->with('data', $data);
-    }
-
-    public function hitungpemasukanonline(request $request)
-    {
-        $operasi = $request->input('operasi');
-        $bil_pertama = $request->input('bil_1');
-        $bil_kedua = $request->input('bil_2');
-        $result = $bil_pertama + $bil_kedua;
-
-        // if($operasi == "tambah"){
-        //     $result = $bil_pertama + $bil_kedua;
-        // }
-
-        return redirect('dashboard')->with('info', 'pemasukkan online anda : ' . $result);
-    }
-
-    public function hitungpemasukanoffline(request $request)
-    {
-        $operasi = $request->input('operasi');
-        $bil_pertama = $request->input('bil_1');
-        $bil_kedua = $request->input('bil_2');
-        $result = $bil_pertama + $bil_kedua;
-
-        return redirect('dashboard')->with('info', 'pemasukkan offline anda : ' . $result);
     }
 }

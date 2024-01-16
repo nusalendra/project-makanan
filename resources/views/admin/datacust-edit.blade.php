@@ -5,7 +5,7 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <head>
-    <title>Halaman Tambah Akun Pegawai</title>
+    <title>Halaman Edit Akun Pegawai</title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" type="image/x-icon" href="asset/images/logo2.jpg">
@@ -69,77 +69,46 @@
 
     <!-- About Section -->
     <div class="w3-content w3-justify w3-text-black" id="about">
-        <h2 class="w3-text-light-black">Tambah Akun Pegawai</h2>
+        <h2 class="w3-text-light-black">Edit Akun Pegawai</h2>
         <hr style="width:240px" class="w3-opacity">
 
         <header class="w3-container">
             <div class="modal-body">
-                <form action="/addpegawai" method="POST" enctype="multipart/form-data">
+                <form action="/datacust/update/{{ $customer->id }}" method="POST" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <label for="username">Username</label>
                         <input id="username" type="" placeholder=""
                             class="form-control @error('username') is-invalid @enderror" name="username"
-                            value="{{ old('username') }}" required autocomplete="" autofocus />
-                        @error('username')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            value="{{ $customer->username }}" />
                     </div>
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input id="email" type="email" placeholder=""
                             class="form-control @error('email') is-invalid @enderror" name="email"
-                            value="{{ old('email') }}" required autocomplete="" autofocus />
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            value="{{ $customer->email }}" />
                     </div>
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input id="name" type="text" placeholder=""
                             class="form-control @error('name') is-invalid @enderror" name="name"
-                            value="{{ old('name') }}" required autocomplete="" autofocus />
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-                    <div class="form-group">
-                        <label for="password">Password</label>
-                        <input id="password" type="password" placeholder=""
-                            class="form-control @error('password') is-invalid @enderror" name="password"
-                            value="{{ old('password') }}" required autocomplete="" autofocus />
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
+                            value="{{ $customer->name }}" />
                     </div>
                     <div class="form-group">
                         <label for="">Tentukan Role / Bagian</label>
                         <select name="role" class="form-control select2 @error('role') is-invalid @enderror"
-                            name="role" value="{{ old('role') }}" required autocomplete="" autofocus />>
+                            name="role" />
                         <option></option>
                         <option value="Pemilik">Pemilik</option>
                         <option value="Kasir">Kasir</option>
                         <option value="Koki">Koki</option>
                         <option value="Pelayan">Pelayan</option>
                         </select>
-                        @error('role')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
                     </div>
             </div>
 
             <div class="modal-footer">
-                <button type="submit" class="btn btn-primary w3-red">TAMBAH DATA</button>
+                <button type="submit" class="btn btn-primary w3-red">EDIT DATA</button>
                 </form>
             </div>
         </header>

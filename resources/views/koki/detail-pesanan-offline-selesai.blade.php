@@ -75,7 +75,8 @@
                 <i class="fa fa-remove"></i>
             </a>
             <h4><b>KOKI PAGE</b></h4>
-            <p class="w3-text-white">Welcome to koki page!</p>
+            <p class="w3-text-white">Selamat Datang <strong>{{ $user->username }} !</strong></p>
+            <p class="w3-text-white">Status Anda saat ini : <strong>{{ $user->role }}</strong></p>
         </div>
         <div class="w3-bar-block">
             <a href="/koki" onclick="w3_close()" class="w3-bar-item w3-button w3-padding w3-text-white"><i

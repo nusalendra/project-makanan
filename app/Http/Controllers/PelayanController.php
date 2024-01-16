@@ -15,6 +15,7 @@ use App\Models\PembeliPesananOffline;
 use App\Models\PesananOffline;
 use Illuminate\Support\Facades\PDF;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Auth;
 use Termwind\Components\Raw;
 
 class PelayanController extends Controller
@@ -27,19 +28,21 @@ class PelayanController extends Controller
 
     public function indexkasiroffline(request $request)
     {
+        $user = Auth::user();
         $data = Pembeli::with('pesananOffline')->get();
         // $total_orderan = pemesananoffline::selectraw("sum(harga_offline*qty_offline) as totalorderan")->first();
-        return view('kasir.kasir-offline', compact('data'));
+        return view('kasir.kasir-offline', compact('data', 'user'));
     }
 
     public function detailPesananKasirOffline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('kasir.detail-pesanan-offline', compact('data'));
+        return view('kasir.detail-pesanan-offline', compact('data', 'user'));
     }
 
     public function pembayaran($id, Request $request)
@@ -63,6 +66,7 @@ class PelayanController extends Controller
 
     public function indexkasironline(request $request)
     {
+        $user = Auth::user();
         $data = Pembayaran::with('keranjang')
             ->where(function ($query) {
                 $query->where('status', '!=', 'Pesanan Dibatalkan');
@@ -72,17 +76,18 @@ class PelayanController extends Controller
             })
             ->get();
 
-        return view('kasir.kasironline')->with('data', $data);
+        return view('kasir.kasironline', compact('data', 'user'));
     }
 
     public function detailPesananKasirOnline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('kasir.detail-pesanan-online', compact('data'));
+        return view('kasir.detail-pesanan-online', compact('data', 'user'));
     }
 
     public function validasiPesanan(Request $request)
@@ -112,6 +117,7 @@ class PelayanController extends Controller
 
     public function pesananOnlineDibatalkan()
     {
+        $user = Auth::user();
         $data = Pembayaran::with('keranjang')
             ->where(function ($query) {
                 $query->where('status', 'Pesanan Dibatalkan');
@@ -121,17 +127,18 @@ class PelayanController extends Controller
             })
             ->get();
 
-        return view('kasir.pesanan-online-dibatalkan', compact('data'));
+        return view('kasir.pesanan-online-dibatalkan', compact('data', 'user'));
     }
 
     public function detailPesananOnlineDibatalkan($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
 
-        return view('kasir.detail-pesanan-online-dibatalkan', compact('data'));
+        return view('kasir.detail-pesanan-online-dibatalkan', compact('data', 'user'));
     }
 
     // public function indexdetailpesanan(request $request)
@@ -175,14 +182,14 @@ class PelayanController extends Controller
 
     public function menuPelanggan(request $request)
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $tambahmakanan = tambahmakanan::all();
 
         $keranjang = keranjang::where('user_id', $user->id)
             ->where('status', 'Dalam Keranjang')
             ->pluck('tambahmakanan_id');
 
-        return view('pelayan.menu-pelanggan', compact('tambahmakanan', 'keranjang'));
+        return view('pelayan.menu-pelanggan', compact('tambahmakanan', 'keranjang', 'user'));
     }
 
     public function tambahKeranjang(Request $request)
@@ -200,9 +207,10 @@ class PelayanController extends Controller
 
     public function keranjangOffline()
     {
+        $user = Auth::user();
         $pesananOffline = PesananOffline::with('tambahMakanan')->where('status_pesanan', '=', 'Dalam Keranjang')->get();
         // dd($pesananOffline);
-        return view('pelayan.keranjang-offline', compact('pesananOffline'));
+        return view('pelayan.keranjang-offline', compact('pesananOffline', 'user'));
     }
 
     public function keranjangDelete($id)
@@ -254,18 +262,19 @@ class PelayanController extends Controller
 
     public function orderOffline()
     {
+        $user = Auth::user();
         $data = Pembeli::where('status_pembayaran', 'Belum Bayar')
             ->orWhere('status_pembayaran', 'Sudah Bayar')
             ->whereHas('pesananOffline', function ($query) {
                 $query->where('status_pesanan', '!=', 'Pesanan Diambil');
             })->get();
 
-        return view('pelayan.order-offline', compact('data'));
+        return view('pelayan.order-offline', compact('data', 'user'));
     }
 
     public function detailPesananOffline($id)
     {
-
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)->get();
@@ -273,7 +282,7 @@ class PelayanController extends Controller
         //     ->where('pembayaran_id', $idDecrypt)
         //     ->get();
 
-        return view('pelayan.detail-pesanan-offline', compact('data'));
+        return view('pelayan.detail-pesanan-offline', compact('data', 'user'));
     }
 
     public function pesananDiambilOffline(Request $request)
@@ -295,6 +304,7 @@ class PelayanController extends Controller
 
     public function indexpelayanonline(request $request)
     {
+        $user = Auth::user();
         $data = Pembayaran::with('keranjang')
             ->where('status', 'Diterima')
             ->whereHas('keranjang', function ($query) {
@@ -302,17 +312,18 @@ class PelayanController extends Controller
             })
             ->get();
 
-        return view('pelayan.order-online', compact('data'));
+        return view('pelayan.order-online', compact('data', 'user'));
     }
 
     public function detailPesananOnline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('pelayan.detail-pesanan-online', compact('data'));
+        return view('pelayan.detail-pesanan-online', compact('data', 'user'));
     }
 
     public function pesananDiambilOnline(Request $request)
@@ -334,6 +345,7 @@ class PelayanController extends Controller
 
     public function orderSelesai()
     {
+        $user = Auth::user();
         $orderSelesaiOffline = Pembeli::with('pesananOffline')
             ->whereHas('pesananOffline', function ($query) {
                 $query->where(function ($subquery) {
@@ -350,26 +362,28 @@ class PelayanController extends Controller
             ->where('status', 'Diterima')
             ->get();
 
-        return view('pelayan.order-selesai', compact('orderSelesaiOffline', 'orderSelesaiOnline'));
+        return view('pelayan.order-selesai', compact('orderSelesaiOffline', 'orderSelesaiOnline', 'user'));
     }
 
     public function detailPesananOrderanSelesaiOnline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
 
-        return view('pelayan.detail-pesanan-online-order-selesai', compact('data'));
+        return view('pelayan.detail-pesanan-online-order-selesai', compact('data', 'user'));
     }
 
     public function detailPesananOrderanSelesaiOffline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)->get();
 
-        return view('pelayan.detail-pesanan-offline-order-selesai', compact('data'));
+        return view('pelayan.detail-pesanan-offline-order-selesai', compact('data', 'user'));
     }
 
     // public function addorderoffline(request $request)

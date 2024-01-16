@@ -11,11 +11,13 @@ use App\Models\Pembeli;
 use App\Models\PembeliPesananOffline;
 use App\Models\PesananOffline;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Auth;
 
 class koki_controller extends Controller
 {
     public function koki(request $request)
     {
+        $user = Auth::user();
         $data = Pembayaran::with('keranjang')
             ->where('status', 'Diterima')
             ->whereHas('keranjang', function ($query) {
@@ -23,11 +25,12 @@ class koki_controller extends Controller
             })
             ->get();
 
-        return view('koki.homekoki', compact('data'));
+        return view('koki.homekoki', compact('data', 'user'));
     }
 
     public function pesananSiapOffline(Request $request)
     {
+        $user = Auth::user();
         $pesananOfflineIds = $request->input('pesananOfflineId');
 
         foreach ($pesananOfflineIds as $index => $pesananOfflineId) {
@@ -45,12 +48,13 @@ class koki_controller extends Controller
 
     public function detailPesananOnline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('koki.detail-pesanan-online', compact('data'));
+        return view('koki.detail-pesanan-online', compact('data', 'user'));
     }
 
     public function pesananSiapOnline(Request $request)
@@ -72,42 +76,45 @@ class koki_controller extends Controller
 
     public function detailPesananOnlineSelesai($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = KeranjangPembayaran::with('keranjang', 'pembayaran')
             ->where('pembayaran_id', $idDecrypt)
             ->get();
         // dd($data);
-        return view('koki.detail-pesanan-online-selesai', compact('data'));
+        return view('koki.detail-pesanan-online-selesai', compact('data', 'user'));
     }
 
     public function kokioffline(request $request)
     {
+        $user = Auth::user();
         $data = Pembeli::with('pesananOffline')
             ->whereHas('pesananOffline', function ($query) {
                 $query->where('status_pesanan', 'Proses');
             })
             ->get();
 
-        return view('koki.kokioffline', compact('data'));
+        return view('koki.kokioffline', compact('data', 'user'));
     }
 
     public function detailPesananOffline($id)
     {
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)->get();
         // dd($data);
-        return view('koki.detail-pesanan-offline', compact('data'));
+        return view('koki.detail-pesanan-offline', compact('data', 'user'));
     }
 
     public function detailPesananOfflineSelesai($id)
     {
-
+        $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
         $data = PembeliPesananOffline::with('pesananOffline', 'pembeli')
             ->where('pembeli_id', $idDecrypt)->get();
 
-        return view('koki.detail-pesanan-offline-selesai', compact('data'));
+        return view('koki.detail-pesanan-offline-selesai', compact('data', 'user'));
     }
 
     public function loginkoki(request $request)
@@ -117,6 +124,7 @@ class koki_controller extends Controller
 
     public function orderselesaikoki(request $request)
     {
+        $user = Auth::user();
         $orderSelesaiOnline = Pembayaran::with('keranjang')
             ->where('status', 'Diterima')
             ->whereHas('keranjang', function ($query) {
@@ -129,7 +137,7 @@ class koki_controller extends Controller
                 $query->where('status_pesanan', '=', 'Pesanan Sudah Siap')->orWhere('status_pesanan', '=', 'Pesanan Diambil');
             })->get();
 
-        return view('koki.orderselesaikoki', compact('orderSelesaiOnline', 'orderSelesaiOffline'));
+        return view('koki.orderselesaikoki', compact('orderSelesaiOnline', 'orderSelesaiOffline', 'user'));
     }
 
     public function editstatus(request $request, $id)

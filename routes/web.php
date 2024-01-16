@@ -83,6 +83,8 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
     Route::get('/homeadmin', 'AdminController@indexadmin')->name('homeadmin');
     Route::get('/loginadmin', 'AdminController@loginadmin');
     Route::get('/datacust', 'AdminController@datacust');
+    Route::get('/datacust/edit/{id}', 'AdminController@datacustEdit');
+    Route::post('/datacust/update/{id}', 'AdminController@datacustUpdate');
     Route::get('/dashboard', 'AdminController@dashboard')->name('dashboard');
     Route::get('/report-pesanan-online', 'AdminController@reportOnline');
     Route::get('/report-pesanan-online/cetak-pdf', 'AdminController@cetakPdfOnline');
@@ -109,8 +111,6 @@ Route::middleware(['auth:sanctum', 'verified', 'role:Pemilik'])->group(function 
 
     //FUNCTION DATA PEGAWAI
     Route::get('/tambahpegawai', 'AdminController@tambahpegawai');
-    Route::get('/formtambahpegawai', 'AdminController@formtambahpegawai');
-    Route::post('/addpegawai', 'AdminController@addpegawai');
     Route::get('/editpegawai/{id}', 'AdminController@editpegawai')->name('editpegawai');
     Route::get('/prosesviewdata/{id}', 'AdminController@findidpegawai');
     Route::get('/deletepegawai/{id}', 'AdminController@hapuspegawai');

@@ -62,26 +62,6 @@ class AdminController extends Controller
         return view('admin.tambahpegawai', compact('data', 'user'));
     }
 
-    public function formtambahpegawai()
-    {
-        return view('admin.formtambahpegawai');
-    }
-
-    public function addpegawai(request $request)
-    {
-        $user = new User();
-
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->name = $request->name;
-        $user->password = bcrypt('password');
-        $user->role = $request->role;
-        // dd($user);
-        $user->save();
-
-        return redirect('tambahpegawai')->with('sukses', 'penambahan telah berhasil!');
-    }
-
     public function editpegawai(request $request, $id)
     {
         $data_pegawai = pegawai::find($id);
@@ -220,6 +200,28 @@ class AdminController extends Controller
         return view('admin.datacust', compact('data_cust', 'user'));
     }
 
+    public function datacustEdit($id)
+    {
+        $customerDecryptId = Crypt::decrypt($id);
+
+        $customer = User::find($customerDecryptId);
+
+        return view('admin.datacust-edit', compact('customer'));
+    }
+
+    public function datacustUpdate($id, Request $request)
+    {
+        $customer = User::find($id);
+        $customer->username = $request->username;
+        $customer->email = $request->email;
+        $customer->name = $request->name;
+        $customer->role = $request->role;
+
+        $customer->save();
+
+        return redirect('/datacust');
+    }
+
     public function dashboard(Request $request)
     {
         $user = Auth::user();
@@ -314,7 +316,6 @@ class AdminController extends Controller
 
     public function detailPesananReportOnline($id)
     {
-
         $user = Auth::user();
         $idDecrypt = Crypt::decrypt($id);
 

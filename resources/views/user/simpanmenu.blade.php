@@ -153,7 +153,7 @@
                                                         field='qty' />
                                                     <input type='text' id="qtyinput" name='qty[]'
                                                         value="{{ $item->qty }}" class='qty'
-                                                        data-rowid="{{ $item->id }}" />
+                                                        data-rowid="{{ $item->id }}" readonly />
                                                     <input type='button' value='+' class='qtyplus plus'
                                                         field='qty' />
                                                 </div>

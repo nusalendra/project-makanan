@@ -186,15 +186,6 @@
     <div class="w3-main" style="margin-left:300px">
         <div class="w3-container">
             <h3><b>DATA MENU</b></h3>
-            <div class="w3-section w3-bottombar w3-padding-13">
-                <button class="w3-button w3-black">ALL</button>
-                <a href="/homepage"><button class="w3-button w3-white"><i
-                            class="fa fa-cutlery w3-margin-right"></i>Makanan</button></a>
-                <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i
-                            class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
-                <a href="/homepage"><button class="w3-button w3-white"><i
-                            class="fa fa-cutlery w3-margin-right"></i>Snack</button></a>
-            </div>
             <a href="/tambah-menu"><button class="w3-button w3-white">Tambah Data</button></a>
             <div class="w3-row">
                 <table class="table">

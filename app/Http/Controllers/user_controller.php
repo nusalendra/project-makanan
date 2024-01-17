@@ -50,18 +50,6 @@ class user_controller extends Controller
         return redirect()->back();
     }
 
-    public function indexminum()
-    {
-        $orderan = orderan::all();
-        return view('user.minumanpage', compact('orderan'));
-    }
-
-    public function indexalacarte()
-    {
-        $orderan = orderan::all();
-        return view('user.alacartepage', compact('orderan'));
-    }
-
     public function profil(request $request)
     {
         $user = Auth::user();

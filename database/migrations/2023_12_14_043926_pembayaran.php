@@ -21,7 +21,6 @@ return new class extends Migration
             $table->string('total_harga_semua_pesanan');
             $table->string('status');
             $table->text('alasan_pembatalan_pesanan')->nullable();
-            $table->integer('ongkos_kirim')->nullable();
             $table->timestamps();
         });
     }

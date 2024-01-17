@@ -105,16 +105,8 @@
             <span class="w3-button w3-hide-large w3-xxlarge w3-hover-text-grey" onclick="w3_open()"><i
                     class="fa fa-bars"></i></span>
             <div class="w3-container">
-                <h1><b>Menu Paket Sushi</b></h1>
-                <div class="w3-section w3-bottombar w3-padding-16">
-                    <span class="w3-margin-right">Filter:</span>
-                    <button class="w3-button w3-black">ALL</button>
-                    <a href="/homepage"><button class="w3-button w3-white"><i
-                                class="fa fa-cutlery w3-margin-right"></i>Paket Sushi</button></a>
-                    <a href="/pagealacarte"><button class="w3-button w3-white w3-hide-small"><i
-                                class="fa fa-cutlery w3-margin-right"></i>Ala Carte Sushi</button></a>
-                    <a href="/pageminuman"><button class="w3-button w3-white w3-hide-small"><i
-                                class="fa fa fa-glass w3-margin-right"></i>Minuman</button></a>
+                <h1><b>Data Menu</b></h1>
+                <div class="w3-section w3-bottombar ">
                 </div>
             </div>
         </header>
